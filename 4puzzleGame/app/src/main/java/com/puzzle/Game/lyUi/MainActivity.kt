@@ -12,15 +12,12 @@ import com.puzzle.Game.R
 import com.puzzle.Game.lyLogicalBusiness.Player
 
 class MainActivity : AppCompatActivity() {
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
 
-        val btn_click_begin = findViewById(R.id.btnStart) as Button
+        val btn_click_begin = btnStart
         btn_click_begin.setOnClickListener{
 
             val player = Player(1,"PruebaUser","Prueba")

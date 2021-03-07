@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".lyUi.MainActivity">
+    tools:context=".lyUi.MainActivity"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="128dp"
+        android:layout_height="114dp"
+        android:background="@color/bg_azul">
 
         <TextView
             android:id="@+id/textView2"
@@ -24,8 +26,8 @@
 
         <Button
             android:id="@+id/btnStart"
-            android:layout_width="236dp"
-            android:layout_height="62dp"
+            android:layout_width="65dp"
+            android:layout_height="110dp"
             android:layout_marginTop="488dp"
             android:text="@string/btnStart"
             android:textSize="18sp"

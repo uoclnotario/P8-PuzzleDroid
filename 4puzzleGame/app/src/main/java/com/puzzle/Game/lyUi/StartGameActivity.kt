@@ -17,7 +17,7 @@ class StartGameActivity : AppCompatActivity() {
         var player = intent.getSerializableExtra("player") as Player
 
         //De prueba lo muestro
-        var txtPrueba = findViewById<TextView>(R.id.txtPrueba)
+        var txtPrueba = txtPrueba
         txtPrueba.text=player.name
     }
 
