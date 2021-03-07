@@ -3,5 +3,6 @@
     <string name="app_name">4puzzleGame</string>
     <string name="title_activity_main">Inicio</string>
     <string name="hi">Hola</string>
+    <string name="btnStart">Begin</string>
 
 </resources>

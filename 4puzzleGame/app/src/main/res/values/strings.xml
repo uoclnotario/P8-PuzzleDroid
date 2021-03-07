@@ -2,5 +2,6 @@
     <string name="app_name">4puzzleGame</string>
     <string name="title_activity_main">Welcom</string>
     <string name="hi">Welcome</string>
+    <string name="btnStart">Begin</string>
 
 </resources>

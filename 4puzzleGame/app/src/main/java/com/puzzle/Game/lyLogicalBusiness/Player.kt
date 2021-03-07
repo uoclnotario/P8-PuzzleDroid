@@ -1,7 +1,9 @@
 package com.puzzle.Game.lyLogicalBusiness
 
-class Player {
-    lateinit var id:Number
-    lateinit var name:String
-    lateinit var uid:String
+import java.io.Serializable
+
+class Player(Id:Number,Name:String,Uid:String) : Serializable  {
+    var id:Number = Id
+    var name:String = Name
+    var uid:String = Uid
 }

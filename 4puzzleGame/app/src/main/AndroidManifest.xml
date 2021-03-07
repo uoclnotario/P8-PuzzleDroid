@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.4puzzleGame">
+        <activity android:name=".lyUi.StartGameActivity"></activity>
         <activity
             android:name=".lyUi.MainActivity"
             android:label="@string/title_activity_main"
