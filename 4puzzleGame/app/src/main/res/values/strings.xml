@@ -3,5 +3,11 @@
     <string name="title_activity_main">Welcom</string>
     <string name="hi">Welcome</string>
     <string name="btnStart">Begin</string>
+    <string name="newGame">New Game</string>
+    <string name="score">Score</string>
+    <string name="continues">Continues</string>
+    <string name="Easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
 
 </resources>

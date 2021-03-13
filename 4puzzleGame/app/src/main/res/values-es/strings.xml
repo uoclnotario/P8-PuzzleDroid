@@ -3,6 +3,12 @@
     <string name="app_name">4puzzleGame</string>
     <string name="title_activity_main">Inicio</string>
     <string name="hi">Hola</string>
-    <string name="btnStart">Begin</string>
+    <string name="btnStart">Empezar</string>
+    <string name="newGame">Nueva Partida</string>
+    <string name="score">Score</string>
+    <string name="continues">Continues</string>
+    <string name="Easy">Easy</string>
+    <string name="medium">Medium</string>
+    <string name="hard">Hard</string>
 
 </resources>

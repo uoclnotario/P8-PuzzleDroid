@@ -1,12 +1,14 @@
 package com.puzzle.Game.lyLogicalBusiness
 
 import android.graphics.Bitmap
+import android.widget.ImageView
+import java.io.Serializable
 
-class Picture {
-    lateinit var picture:Bitmap
+class Picture : Serializable {
+    lateinit var fileDir: String
     lateinit var hasPicture:String
     lateinit var rute:String
-    var realWidth:Float = 0.0f
-    var realHeigth:Float = 0.0f
+    var realWidth:Int = 0
+    var realHeigth:Int = 0
 
 }
