@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".lyUi.MainActivity"
-    >
+    tools:context=".lyUi.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="128dp"
-        android:layout_height="114dp"
-        android:background="@color/bg_azul">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textView2"
@@ -26,11 +24,14 @@
 
         <Button
             android:id="@+id/btnStart"
-            android:layout_width="65dp"
-            android:layout_height="110dp"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="236dp"
+            android:layout_height="62dp"
             android:layout_marginTop="488dp"
+            android:background="#C83131"
             android:text="@string/btnStart"
             android:textSize="18sp"
+            app:iconTint="@color/purple_200"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
