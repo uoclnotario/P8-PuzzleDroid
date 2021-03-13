@@ -54,6 +54,7 @@ class SelectPictureActivity : AppCompatActivity() {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
             val fo: FileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE)
             fo.write(bytes.toByteArray())
+
             // remember close file output
             fo.close()
         } catch (e: Exception) {
