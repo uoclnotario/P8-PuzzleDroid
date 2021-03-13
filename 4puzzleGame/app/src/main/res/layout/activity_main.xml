@@ -24,11 +24,14 @@
 
         <Button
             android:id="@+id/btnStart"
+            style="@style/Widget.AppCompat.Button.Small"
             android:layout_width="236dp"
             android:layout_height="62dp"
             android:layout_marginTop="488dp"
+            android:background="#C83131"
             android:text="@string/btnStart"
             android:textSize="18sp"
+            app:iconTint="@color/purple_200"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
