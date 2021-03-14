@@ -1,6 +1,5 @@
 package com.puzzle.Game.lyUi
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -23,40 +22,42 @@ class GameActivity : AppCompatActivity() {
         var player = intent.getSerializableExtra("player") as Player
         var _pictur = intent.getSerializableExtra("pictur") as Picture
         var dificult = intent.getSerializableExtra("dificul") as Number
-
-        val iv: ImageView = findViewById<View>(R.id.imageView2) as ImageView
-        val layout  : RelativeLayout = findViewById<View>(R.id.layout) as RelativeLayout
         _game = Game(_pictur,dificult,application.applicationContext)
 
+        val layout  : RelativeLayout = findViewById<View>(R.id.layout) as RelativeLayout
+        val ivTablero  : ImageView = findViewById<View>(R.id.ivTablero) as ImageView
 
 
         if(::_game.isInitialized) {
             if(_game._puzzle!=null) {
-               // _game._puzzle.renderizarImagen(applicationContext,iv.width,iv.height)
+/*
+                val displayMetrics = DisplayMetrics()
+                var width= Resources.getSystem().getDisplayMetrics().widthPixels
+                var height= Resources.getSystem().getDisplayMetrics().heightPixels
+                //Caclamos el 80% del alto y el 95% del ancho
+                //b*c/a
+              width = width*95/100
+                height = height*75/100
+*/
+                ivTablero.post {
+                    _game._puzzle.redimensionarImagen(applicationContext,ivTablero.width, ivTablero.height )
+                    if (_game._puzzle._pictureResize != null) {
+                        _game._puzzle.generarPiezas(application.applicationContext,ivTablero.x.toInt(),ivTablero.y.toInt())
 
-                if (_game._puzzle._pictureResize != null) {
-                    iv.setImageBitmap(_game._puzzle._pictureResize)
-
-                    iv.post {
-                        _game._puzzle.generarPiezas(application.applicationContext, iv)
-                        val touchListener = TouchListener(this)
+                        val touchListener = TouchListener(this,_game._puzzle.offsetX.toFloat(),_game._puzzle.offsetY.toFloat())
                         for (piece in _game._puzzle.piezas!!) {
                             layout.addView(piece)
                             piece.setOnTouchListener(touchListener)
-
-                            /*val lParams = piece.getLayoutParams()
-                            lParams.leftMargin = Random().nextInt(layout.getWidth() - piece.pieceWidth)
-                            lParams.topMargin = layout.getHeight() - piece.pieceHeight
-                            piece.setLayoutParams(lParams)*/
+                            piece.y = piece.yCoord.toFloat()
+                            piece.x = piece.xCoord.toFloat()
                         }
 
-                        iv.alpha= 0.5F
-                    }
 
+                    }
                 }
+
             }
         }
-
 
 
     }

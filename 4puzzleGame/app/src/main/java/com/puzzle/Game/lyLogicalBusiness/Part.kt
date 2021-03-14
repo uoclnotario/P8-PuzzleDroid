@@ -17,10 +17,10 @@ class Part : AppCompatImageView {
     }
     lateinit var id: Number
     lateinit var setImageBitmap:Bitmap
-    lateinit var xCoord:Number
-    lateinit var yCoord:Number
+     var xCoord:Int = 0
+     var yCoord:Int = 0
     lateinit var pieceWidth:Number
     lateinit var pieceHeight:Number
-
+    var canMove : Boolean = true
 
 }
