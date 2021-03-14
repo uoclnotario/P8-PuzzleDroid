@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">4puzzleGame</string>
     <string name="title_activity_main">Welcom</string>
@@ -9,5 +10,8 @@
     <string name="Easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
+    <string name="name_intro">Before we start... What\'s your name?</string>
+    <string name="continua">Continue</string>
+    <string name="newPlayerName">Your name</string>
 
 </resources>

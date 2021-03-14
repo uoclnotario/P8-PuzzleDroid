@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.puzzle.Game.R
 import com.puzzle.Game.lyLogicalBusiness.Picture
 import com.puzzle.Game.lyLogicalBusiness.Player
+import kotlinx.android.synthetic.main.activity_selectpicture.*
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 
@@ -22,14 +23,14 @@ class SelectPictureActivity : AppCompatActivity() {
         setContentView(R.layout.activity_selectpicture)
 
 
-        val btn_click_btnSelectImg = findViewById(R.id.btnSelectImg) as Button
+        //val btn_click_btnSelectImg = findViewById(R.id.btnSelectImg) as Button
 
         //De esta manera recogemos los datos del intent...
         var player = intent.getSerializableExtra("player") as Player
 
 
 
-        btn_click_btnSelectImg.setOnClickListener{
+        btnSelectImg.setOnClickListener{
            var pictur = Picture()
             var pic = findViewById(R.id.imageView) as ImageView
 

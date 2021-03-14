@@ -10,5 +10,9 @@
     <string name="Easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
+    <string name="name_intro">Antes de empezar... ¿Cómo te llamas?</string>
+    <string name="continua">Continua</string>
+    <string name="newPlayerName">Tu nombre</string>
+
 
 </resources>
