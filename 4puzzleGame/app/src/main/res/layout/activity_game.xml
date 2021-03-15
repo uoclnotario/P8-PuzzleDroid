@@ -6,19 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".lyUi.MainActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.4puzzleGame.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="#173D8D"
+            app:popupTheme="@style/Theme.4puzzleGame.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#97DBFF">
+
+        <ImageView
+            android:id="@+id/ivTablero2"
+            android:layout_width="358dp"
+            android:layout_height="597dp"
+            android:background="#173D8D"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.773" />
 
         <ImageView
             android:id="@+id/ivTablero"
             android:layout_width="347dp"
-            android:layout_height="594dp"
-            android:background="#605F5F"
+            android:layout_height="586dp"
+            android:background="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.755" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout

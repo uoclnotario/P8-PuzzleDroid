@@ -9,12 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.4puzzleGame">
-        <activity android:name=".lyUi.GameActivity" />
-        <activity android:name=".lyUi.StartGameActivity" />
-        <activity android:name=".lyUi.SelectPictureActivity" />
-        <activity android:name=".lyUi.SelectDificultyActivity" />
-        <activity android:name=".lyUi.GameStopActivity" />
-        <activity android:name=".lyUi.NamePlayerActivity" />
+        <activity android:name=".lyUi.GameActivity"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
+        <activity android:name=".lyUi.StartGameActivity"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
+        <activity android:name=".lyUi.SelectPictureActivity"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
+        <activity android:name=".lyUi.SelectDificultyActivity"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
+        <activity android:name=".lyUi.GameStopActivity"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
+        <activity android:name=".lyUi.NamePlayerActivity"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.MainActivity"
             android:label="@string/title_activity_main"
