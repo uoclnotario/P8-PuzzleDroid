@@ -15,6 +15,8 @@ class Puzzle {
     var piezas: ArrayList<Part>? = null
     var offsetX: Int =0
     var offsetY : Int = 0
+    var pieceWidth = 0
+    var pieceHeight = 0
 
     constructor(picture: Picture, ctx:Context){
         //Obtenemos en el constructor el obtejo picture, el cual nos da el contexto de la imagen que vamos utilizar para el juego
@@ -52,8 +54,8 @@ class Puzzle {
         piezas = ArrayList<Part>(rows * cols)
 
         // Calcula las dimensiones que tendrá cada pieza.
-        var pieceWidth = (_pictureResize?.getWidth() ?: 0) /cols;
-        var pieceHeight = (_pictureResize?.getHeight() ?: 0) /rows;
+         pieceWidth = (_pictureResize?.getWidth() ?: 0) /cols;
+         pieceHeight = (_pictureResize?.getHeight() ?: 0) /rows;
 
 
         // Create each bitmap piece and add it to the resulting array
