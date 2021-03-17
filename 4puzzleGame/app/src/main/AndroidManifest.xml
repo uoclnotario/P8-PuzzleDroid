@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.puzzle.Game">
+    package="com.puzzle.game">
 
     <application
         android:allowBackup="true"
@@ -9,14 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.4puzzleGame">
-        <activity android:name=".lyUi.GameActivity" />
-        <activity android:name=".lyUi.StartGameActivity" />
-        <activity android:name=".lyUi.SelectPictureActivity" />
-        <activity android:name=".lyUi.SelectDificultyActivity" />
-        <activity android:name=".lyUi.GameStopActivity" />
-        <activity android:name=".lyUi.NamePlayerActivity" />
+        <activity android:name="com.puzzle.game.lyUi.GameActivity" />
+        <activity android:name="com.puzzle.game.lyUi.StartGameActivity" />
+        <activity android:name="com.puzzle.game.lyUi.SelectPictureActivity" />
+        <activity android:name="com.puzzle.game.lyUi.SelectDificultyActivity" />
+        <activity android:name="com.puzzle.game.lyUi.GameStopActivity" />
+        <activity android:name="com.puzzle.game.lyUi.NamePlayerActivity" />
         <activity
-            android:name=".lyUi.MainActivity"
+            android:name="com.puzzle.game.lyUi.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.4puzzleGame.NoActionBar" >
             <intent-filter>

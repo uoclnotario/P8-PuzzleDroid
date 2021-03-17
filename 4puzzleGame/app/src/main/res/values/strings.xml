@@ -13,5 +13,7 @@
     <string name="name_intro">Before we start... What\'s your name?</string>
     <string name="continua">Continue</string>
     <string name="newPlayerName">Your name</string>
+    <string name="continuar">Continue</string>
+    <string name="puntuacion">Scores</string>
 
 </resources>
