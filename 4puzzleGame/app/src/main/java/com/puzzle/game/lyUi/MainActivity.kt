@@ -2,48 +2,36 @@ package com.puzzle.game.lyUi
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Property.of
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders.of
 import androidx.room.Room
 import com.puzzle.game.R
 import com.puzzle.game.lyDataAcces.AppDatabase
 import com.puzzle.game.lyDataAcces.entities.PlayerData
+import com.puzzle.game.lyLogicalBusiness.Player
+import com.puzzle.game.viewModels.PlayerViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    lateinit var player:PlayerData
-    lateinit var db:AppDatabase
+    var player: Player? = null
+    private lateinit var playerViewModel: PlayerViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java, "puzzle-db"
-        ).build()
-        println("Lanzamos el GlobalScope")
-        GlobalScope.launch {
-            println("dentro del async")
-            try {
-                player = db.playerDao().findLastPlayer()
-                println("Player encontrado: $player")
-            }catch (e:Exception)
-            {
-                println("Lanzamos el player: $e")
-                player = PlayerData(-1L,"","")
-            }
+        playerViewModel = run { ViewModelProvider(this).get(PlayerViewModel::class.java) }
 
-        }
-        // Cargamos el Player
-        // Hay que crear el método para obtener los datos de usuario guardados
-        // Para testeo creamos uno de prueba
-        //val player = Player(1,"PruebaUser","Prueba")
+        player = playerViewModel.findLastPlayer()
+        println("Query: ${playerViewModel.players}")
     }
     fun onClick(view: View) {
         //Si existe almacenado un nombre de usuario
-        if(player.PlayerId == -1L)
+        if(player == null)
         {
             val intent = Intent(this, NamePlayerActivity::class.java)
             startActivity(intent)
@@ -51,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         else
         {
             val intent = Intent(this, StartGameActivity::class.java)
-            intent.putExtra("playerID",player.nombre)
+            intent.putExtra("player",player)
             startActivity(intent)
         }
     }

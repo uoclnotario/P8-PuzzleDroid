@@ -1,12 +1,29 @@
 package com.puzzle.game.lyLogicalBusiness
 
+import androidx.room.ColumnInfo
 import java.io.Serializable
 
-class Player(Id:Number,Name:String,Uid:String) : Serializable  {
-    var id:Number = Id
-    var name:String = Name
-    var uid:String = Uid
+class Player : Serializable  {
+    @ColumnInfo(name = "PlayerId")
+    var PlayerId : Int
+    @ColumnInfo(name = "nombre")
+    var nombre:String
+    @ColumnInfo(name = "last_access")
+    var last_access:String?
 
+    constructor(nombre:String,last_access:String) {
+        this.PlayerId = 0
+        this.nombre = nombre
+        this.last_access = last_access
+    }
+    constructor(PlayerId:Int,nombre:String,last_access:String) {
+        this.PlayerId = PlayerId
+        this.nombre = nombre
+        this.last_access = last_access
+    }
 
-    constructor(): this(-1,"","")
+    fun imprimirdatos() : String {
+        val rs = "PlayerID: $PlayerId ; nombre: $nombre ; last_access: $last_access"
+        return rs
+    }
 }

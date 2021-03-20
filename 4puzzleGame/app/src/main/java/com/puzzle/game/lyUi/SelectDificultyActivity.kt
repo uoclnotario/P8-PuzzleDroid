@@ -9,7 +9,7 @@ import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
 
 class SelectDificultyActivity : AppCompatActivity() {
-     var _player =Player()
+     /*var _player =Player()
      var _pictur = Picture()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,5 +45,5 @@ class SelectDificultyActivity : AppCompatActivity() {
             putExtra("dificul",dificulty)
         }
         startActivity(intent)
-    }
+    }*/
 }
