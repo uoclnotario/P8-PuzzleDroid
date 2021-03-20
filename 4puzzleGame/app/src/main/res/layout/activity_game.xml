@@ -7,20 +7,45 @@
     tools:context=".lyUi.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="83dp"
         android:theme="@style/Theme.4puzzleGame.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:background="#173D8D"
-            app:popupTheme="@style/Theme.4puzzleGame.PopupOverlay" />
+            android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/timer"
+                android:layout_width="156dp"
+                android:layout_height="41dp"
+                android:textAlignment="viewEnd"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.921"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="00:00:00" />
+
+            <TextView
+                android:id="@+id/movements"
+                android:layout_width="128dp"
+                android:layout_height="28dp"
+                android:layout_marginTop="60dp"
+                android:text="0 Movimientos"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.929"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#97DBFF">
@@ -48,6 +73,14 @@
             app:layout_constraintVertical_bias="0.755" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_anchor="@+id/appBarLayout"
+        app:layout_anchorGravity="top|center" />
 
     <RelativeLayout
         android:id="@+id/layout"

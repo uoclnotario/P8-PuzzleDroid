@@ -9,7 +9,16 @@ class Part : AppCompatImageView {
     constructor(ctx:Context) : super(ctx){
 
     }
-    constructor(ctx:Context, puzzlePicture:Bitmap,pieceWidth:Int,pieceHeight:Int,xCoord:Int,yCoord:Int,marginOffsetX:Int,marginOffsetY:Int,tipoParte: TpePart):super(ctx){
+
+    constructor(
+        ctx:Context, puzzlePicture:Bitmap,
+        pieceWidth:Int,
+        pieceHeight:Int,
+        xCoord:Int,
+        yCoord:Int,
+        marginOffsetX: Int,
+        marginOffsetY:Int,
+        tipoParte: TpePart):super(ctx){
         this.pieceHeight = pieceHeight
         this.pieceWidth = pieceWidth
         this.tipoParte = tipoParte
@@ -50,7 +59,9 @@ class Part : AppCompatImageView {
         
         imgWidth = pieceBitmap.width
         imgHeight = pieceBitmap.height
-        
+
+
+
         val bumpSize = pieceHeight.toInt() / 4
         val canvas = Canvas(puzzlePiece)
         val path = Path()

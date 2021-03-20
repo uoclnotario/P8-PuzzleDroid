@@ -11,15 +11,13 @@ import com.puzzle.Game.R
 import com.puzzle.Game.lyLogicalBusiness.Part
 
 
-class TouchListener(activity: GameActivity, offx:Float,offy:Float) : OnTouchListener {
-    private var offsetX = 0f
-    private var offsetY  = 0f
+class TouchListener(activity: GameActivity,minx:Int,minh:Int ) : OnTouchListener {
     private var xDelta = 0f
     private var yDelta = 0f
     private var wDelta = 0f
     private var hDelta = 0f
-    var minx = -2
-    var minh= 0
+    private var minx = minx
+    private var minh= minh
 
     val TOLERANCIA = 30f
     private val activity: GameActivity
@@ -49,11 +47,12 @@ class TouchListener(activity: GameActivity, offx:Float,offy:Float) : OnTouchList
                 wDelta = x - lParams.rightMargin
                 hDelta = y - lParams.bottomMargin
                 piece.bringToFront()
+
             }
             MotionEvent.ACTION_MOVE -> {
 
 
-                println("x=>"+piece.x.toString()+" xdelta-->"+(x - xDelta).toString())
+              //  println("x=>"+piece.x.toString()+" xdelta-->"+(x - xDelta).toString())
 
                 if(!((x - xDelta).toInt() < minx))
                 lParams.leftMargin = (x - xDelta).toInt()
@@ -64,6 +63,7 @@ class TouchListener(activity: GameActivity, offx:Float,offy:Float) : OnTouchList
                 view.setLayoutParams(lParams)
             }
             MotionEvent.ACTION_UP -> {
+                activity.sumMove()
                 if (    (piece.x  >= piece.xCoord.toFloat()-TOLERANCIA && piece.x <= piece.xCoord.toFloat() + TOLERANCIA) &&
                         (piece.y >= piece.yCoord.toFloat()-TOLERANCIA && piece.y <= piece.yCoord.toFloat() + TOLERANCIA)) {
                    // piece.canMove = false
@@ -74,7 +74,7 @@ class TouchListener(activity: GameActivity, offx:Float,offy:Float) : OnTouchList
 
                     view.setLayoutParams(lParams)
                     sendViewToBack(piece)
-                    //activity.checkGameOver()
+                    activity.checkGameOver()
                 }
             }
         }
