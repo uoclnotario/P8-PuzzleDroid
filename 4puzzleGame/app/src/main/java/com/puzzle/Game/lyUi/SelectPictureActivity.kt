@@ -12,11 +12,88 @@ import android.widget.GridView
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.puzzle.Game.R
+import com.puzzle.Game.lyLogicalBusiness.Picture
 import java.util.*
-
+import kotlinx.android.synthetic.main.activity_selectpicture.*
 
 class SelectPictureActivity : AppCompatActivity() {
-    private val REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE = 2
+
+    var modalList = ArrayList<Picture>()
+
+    var images = intArrayOf(
+        R.drawable.image1,
+        R.drawable.image2,
+        R.drawable.image3,
+        R.drawable.image4,
+        R.drawable.image5,
+        R.drawable.image6,
+        R.drawable.image7,
+        R.drawable.image8,
+        R.drawable.image9,
+        R.drawable.image10
+    )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_selectpicture)
+
+
+        for(i in images.indices){
+            modalList.add(Picture(images[i]))
+        }
+
+        var customAdapter = CustomAdapter(modalList,this);
+
+        //val gridView = findViewById<GridView>(R.id.gridView)
+        gridView.adapter = customAdapter;
+
+        gridView.setOnItemClickListener { adapterView, view, i, l ->
+            var intent = Intent(this,ClickedItemActivity::class.java)
+            intent.putExtra("data",modalList[i])
+            startActivity(intent);
+        }
+
+    }
+
+
+    class CustomAdapter(
+        var itemModel: ArrayList<Picture>,
+        var context: Context
+    ) : BaseAdapter(){
+
+        var layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
+            var view = view;
+            if(view == null){
+                view = layoutInflater.inflate(R.layout.row_items,viewGroup,false);
+            }
+
+            var imageView = view?.findViewById<ImageView>(R.id.imageView);
+
+            imageView?.setImageResource(itemModel[position].image!!)
+
+            return view!!;
+
+        }
+
+        override fun getItem(p0: Int): Any {
+            return itemModel[p0]
+        }
+
+        override fun getItemId(p0: Int): Long {
+            return p0.toLong()
+        }
+
+        override fun getCount(): Int {
+            return itemModel.size
+        }
+
+    }
+
+}
+
+
+/*private val REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE = 2
     private val REQUEST_IMAGE_CAPTURE = 1
     val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 3
     val REQUEST_IMAGE_GALLERY = 4
@@ -65,9 +142,8 @@ class SelectPictureActivity : AppCompatActivity() {
             return view
         }
 
-    }
+    }*/
 
-}
 
 
 /*val btn_click_btnSelectImg = findViewById(R.id.btnSelectImg) as Button

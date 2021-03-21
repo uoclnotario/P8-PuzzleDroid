@@ -10,11 +10,9 @@ class Picture : Serializable {
     var realWidth: Int = 0
     var realHeigth: Int = 0
 
-    var name:String? = null
     var image:Int? = null
 
-    constructor(name: String?, image: Int?) {
-        this.name = name
+    constructor( image: Int?) {
         this.image = image
     }
 

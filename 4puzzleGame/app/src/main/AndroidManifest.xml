@@ -26,7 +26,7 @@
             android:name=".lyUi.SelectDificultyActivity"
             android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
-            android:name=".lyUi.GameStopActivity"
+            android:name=".lyUi.ClickedItemActivity"
             android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.NamePlayerActivity"

@@ -10,7 +10,7 @@ import com.puzzle.Game.lyLogicalBusiness.Player
 
 class SelectDificultyActivity : AppCompatActivity() {
      var _player =Player()
-     var _pictur = Picture(null,null)
+     var _pictur = Picture(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
