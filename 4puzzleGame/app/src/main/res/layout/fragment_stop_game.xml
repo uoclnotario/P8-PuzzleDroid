@@ -61,7 +61,7 @@
                 android:fontFamily="@font/mainfont_bold"
                 android:gravity="center"
                 android:paddingLeft="20dp"
-                android:text="CONTINUAR"
+                android:text="@string/stopGameContinue"
                 android:textAlignment="textStart"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
@@ -94,7 +94,39 @@
                 android:fontFamily="@font/mainfont_bold"
                 android:gravity="center"
                 android:paddingLeft="20dp"
-                android:text="REINICIAR"
+                android:text="@string/stopGameRestart"
+                android:textAlignment="textStart"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#FAFAFA"
+                android:src="@drawable/ic_launcher_foreground" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnLayoutBack"
+            android:layout_width="386dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLayoutReiniciar"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:fontFamily="@font/mainfont_bold"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:text="@string/stopGamebackMenu"
                 android:textAlignment="textStart"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
@@ -117,7 +149,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnLayoutReiniciar"
+            app:layout_constraintTop_toBottomOf="@+id/btnLayoutBack"
             app:layout_constraintVertical_bias="0.0">
 
             <TextView
@@ -127,7 +159,7 @@
                 android:fontFamily="@font/mainfont_bold"
                 android:gravity="center"
                 android:paddingLeft="20dp"
-                android:text="SALIR"
+                android:text="@string/stopGameExit"
                 android:textAlignment="textStart"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"

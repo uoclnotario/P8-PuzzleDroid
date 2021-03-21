@@ -79,7 +79,7 @@
             android:id="@+id/ivTablero"
             android:layout_width="308dp"
             android:layout_height="501dp"
-            android:background="@drawable/fondo"
+            android:background="@drawable/fondotablergame"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

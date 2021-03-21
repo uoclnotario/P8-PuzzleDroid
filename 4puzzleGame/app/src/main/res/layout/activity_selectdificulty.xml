@@ -4,42 +4,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#97DBFF"
     tools:context=".lyUi.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btnHard"
-            android:layout_width="131dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="392dp"
-            android:text="@string/hard"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="83dp"
+            android:theme="@style/Theme.4puzzleGame.AppBarOverlay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#173D8D">
+
+                <ImageView
+                    android:id="@+id/btnClose"
+                    android:layout_width="88dp"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="7dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/menubtn" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ImageView
+            android:id="@+id/ivTablero"
+            android:layout_width="294dp"
+            android:layout_height="366dp"
+            android:background="@drawable/fondotransparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
         <Button
             android:id="@+id/btnMedium"
-            android:layout_width="133dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="328dp"
+            android:layout_width="224dp"
+            android:layout_height="67dp"
+            android:layout_marginTop="228dp"
             android:text="@string/medium"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+        <Button
+            android:id="@+id/btnHard"
+            android:layout_width="224dp"
+            android:layout_height="67dp"
+            android:layout_marginTop="312dp"
+            android:text="@string/hard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
         <Button
             android:id="@+id/btnEasy"
-            android:layout_width="134dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="260dp"
+            android:layout_width="224dp"
+            android:layout_height="67dp"
+            android:layout_marginTop="144dp"
             android:text="@string/Easy"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -13,9 +13,12 @@
     <string name="FinishContiune">Continue</string>
     <string name="finishScore">Score</string>
     <string name="finisTime">Time to finish</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="stopGameExit">EXIT</string>
+    <string name="stopGameRestart">RESTART</string>
+    <string name="stopGameContinue">CONTINUE</string>
+    <string name="stopGamebackMenu">BACK TO MENU</string>
+
 
 </resources>

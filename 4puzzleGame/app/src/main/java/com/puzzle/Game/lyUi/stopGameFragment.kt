@@ -62,7 +62,7 @@ class stopGameFragment() : Fragment() {
         val btnContinuar : LinearLayout = getActivity()?.findViewById<View>(R.id.btnLayoutContinuar) as LinearLayout
         val btnSalir : LinearLayout = getActivity()?.findViewById<View>(R.id.btnLayoutSalir) as LinearLayout
         val btnRestart : LinearLayout = getActivity()?.findViewById<View>(R.id.btnLayoutReiniciar) as LinearLayout
-
+        val btnBackMenu : LinearLayout = getActivity()?.findViewById<View>(R.id.btnLayoutBack) as LinearLayout
 
         toolBarClose.setOnClickListener {
             activi.timerStart()
@@ -86,7 +86,12 @@ class stopGameFragment() : Fragment() {
             startActivity(intent)
         }
 
-
+        btnBackMenu.setOnClickListener{
+            val intent = Intent(getActivity()?.applicationContext, StartGameActivity::class.java).apply {
+                putExtra("player",activi.player)
+            }
+            startActivity(intent)
+        }
 
         btnSalir.setOnClickListener{
             getActivity()?.finishAffinity();

@@ -5,14 +5,19 @@
     <string name="hi">Hola</string>
     <string name="btnStart">Empezar</string>
     <string name="newGame">Nueva Partida</string>
-    <string name="score">Score</string>
+    <string name="score">Puntuación</string>
     <string name="continues">Continues</string>
-    <string name="Easy">Easy</string>
-    <string name="medium">Medium</string>
-    <string name="hard">Hard</string>
-    <string name="completePuzzle">Puzzle completed</string>
-    <string name="FinishContiune">Continue</string>
-    <string name="finishScore">Score</string>
-    <string name="finisTime">Time to finish</string>
+    <string name="Easy">Facil</string>
+    <string name="medium">Intermedio</string>
+    <string name="hard">Dificil</string>
+    <string name="completePuzzle">Puzzle Completado</string>
+    <string name="FinishContiune">Continuar</string>
+    <string name="finishScore">Puntuación</string>
+    <string name="finisTime">Tiempo en finalizar</string>
+
+    <string name="stopGameExit">SALIR</string>
+    <string name="stopGameRestart">REINICIAR</string>
+    <string name="stopGameContinue">CONTINUAR</string>
+    <string name="stopGamebackMenu">VOLVER AL MENU</string>
 
 </resources>
