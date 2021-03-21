@@ -15,5 +15,6 @@
     <string name="newPlayerName">Your name</string>
     <string name="continuar">Continue</string>
     <string name="puntuacion">Scores</string>
+    <string name="nameError">Invalid name</string>
 
 </resources>

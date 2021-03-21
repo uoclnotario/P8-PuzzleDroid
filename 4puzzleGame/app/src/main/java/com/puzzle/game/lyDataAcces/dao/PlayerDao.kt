@@ -7,15 +7,15 @@ import com.puzzle.game.lyDataAcces.entities.PlayerData
 @Dao
 interface PlayerDao {
     @Query("SELECT * FROM " + PlayerData.TABLE_NAME)
-    fun getAll(): LiveData<List<PlayerData>?>
+    fun getAll(): List<PlayerData>?
 
     @Query("SELECT * FROM " + PlayerData.TABLE_NAME + " WHERE PlayerId IN (:playerIds)")
-    fun loadAllByIds(playerIds: List<Int>): LiveData<List<PlayerData>?>
+    fun loadAllByIds(playerIds: List<Int>): List<PlayerData>?
 
     @Query("SELECT * FROM " + PlayerData.TABLE_NAME + " WHERE PlayerId == :id LIMIT 1")
     fun findById(id: Int): PlayerData?
 
-    @Query("SELECT * FROM " + PlayerData.TABLE_NAME + " WHERE nombre LIKE :nombre LIMIT 1")
+    @Query("SELECT * FROM " + PlayerData.TABLE_NAME + " WHERE nombre == :nombre LIMIT 1")
     fun findByName(nombre: String): PlayerData?
 
     @Query("SELECT * FROM " + PlayerData.TABLE_NAME + " ORDER BY last_access DESC LIMIT 1")

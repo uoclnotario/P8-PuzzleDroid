@@ -22,6 +22,13 @@
         <item name="android:textColor">@color/main_azul</item>
     </style>
 
+    <style name="Theme.4puzzleGame.ErrorText" parent="Theme.4puzzleGame" >
+        <item name="android:fontFamily">@font/mainfont_regular</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/red</item>
+    </style>
+
     <style name="Theme.4puzzleGame.inputText" parent="Theme.4puzzleGame" >
         <item name="android:textColorHighlight">@color/bg_azul</item>
         <item name="colorControlNormal">@color/black</item>

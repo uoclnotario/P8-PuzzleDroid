@@ -25,16 +25,15 @@
         <TextView
             android:id="@+id/labelNewName"
             style="@style/Theme.4puzzleGame.SimpleText"
-            android:layout_width="240dp"
-            android:layout_height="100dp"
+            android:layout_width="293dp"
+            android:layout_height="73dp"
             android:text="@string/name_intro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.346" />
-
+            app:layout_constraintVertical_bias="0.30" />
 
         <Button
             android:id="@+id/btnStart"
@@ -62,6 +61,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/labelNewName"
             app:srcCompat="@drawable/btn_oscuro" />
+
+        <TextView
+            android:id="@+id/errorName"
+            style="@style/Theme.4puzzleGame.ErrorText"
+            android:layout_width="245dp"
+            android:layout_height="33dp"
+            android:text="@string/nameError"
+            app:layout_constraintBottom_toTopOf="@+id/btnMarco"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelNewName"
+            app:layout_constraintVertical_bias="0.20"
+            android:visibility="invisible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

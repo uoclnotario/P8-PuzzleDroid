@@ -1,17 +1,13 @@
 package com.puzzle.game.lyDataAcces.repository
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import com.puzzle.game.lyDataAcces.dao.PlayerDao
 import com.puzzle.game.lyDataAcces.AppDatabase
 import com.puzzle.game.lyDataAcces.entities.PlayerData
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.viewModels.PlayerViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.joinAll
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.lang.Exception
 
 class PlayerRepository(application: Application) {
@@ -20,21 +16,29 @@ class PlayerRepository(application: Application) {
     suspend fun insertOne(player:Player): Long? {
         var rs : Long? = null
         println("datos Player: ${player.nombre}")
-        if(player.nombre!!.length > 3 && this.findByName(player.nombre) == null )
+        if(player.nombre!!.length > 3)
         {
             try {
-                val rutina: Job = GlobalScope.launch {
-                    val playerdata: PlayerData = PlayerData(player.PlayerId, player.nombre, player.last_access!!)
-                    PlayerViewModel.long = playerDao?.insertOne(playerdata)
+                PlayerViewModel.player = null
+                var bloque = GlobalScope.launch {
+                    PlayerViewModel.player = findByName(player.nombre)
+                    println("Buscando usuario ${PlayerViewModel.player}")
                 }
-                rutina.join()
-                joinAll()
-                do {
-                    if(rutina.isCompleted)
-                    {
-                        rs = PlayerViewModel.long
+                while (bloque.isActive){ delay(1L)}
+                PlayerViewModel.long = null
+                if(PlayerViewModel.player == null) {
+                    println("Agregando usuario")
+                    val rutina: Job = GlobalScope.launch {
+                        val playerdata: PlayerData = PlayerData(player.PlayerId, player.nombre, player.last_access!!)
+                        PlayerViewModel.long = playerDao?.insertOne(playerdata)
                     }
-                }while (rutina.isActive)
+                    rutina.join()
+                    joinAll()
+                    while (rutina.isActive){}
+                }else{
+                    println("Nombre ya existe")
+                }
+                rs = PlayerViewModel.long
 
             }catch (e:Exception)
             {
@@ -50,125 +54,121 @@ class PlayerRepository(application: Application) {
             return null
         }
     }
-    fun getAll() : LiveData<List<Player>>? {
-        var lista : LiveData<List<PlayerData>?>?
-        var newList : LiveData<List<Player>>? = null
-        try {
-            val t: Thread = Thread(Runnable() {
-                @Override
-                fun run(){
-                    lista = playerDao?.getAll()
-                    newList = lista as LiveData<List<Player>>
-                }
-            })
-            t.start()
-            t.join()
-
-        }catch (e: Exception)
-        {
-            println("Hilo GetAll players: $e")
-        }
-
-        return newList
-    }
-    fun loadAllByIds(list : List<Int>) : LiveData<List<Player>>? {
-
-        var lista : LiveData<List<PlayerData>?>?
-        var newList : LiveData<List<Player>>? = null
-        try {
-            val t: Thread = Thread(Runnable() {
-                @Override
-                fun run(){
-                    lista = playerDao?.loadAllByIds(list)
-                    newList = lista as LiveData<List<Player>>
-                }
-            })
-            t.start()
-            t.join()
-
-        }catch (e: Exception)
-        {
-            println("Hilo all players by ID: $e")
-        }
-
-        return newList
-    }
-    fun findById(id: Int): Player? {
-        var player: Player? = null
-        try {
-            val t: Thread = Thread(Runnable() {
-                @Override
-                fun run(){
-                    player = playerDao?.findById(id) as Player?
-                }
-            })
-            t.start()
-            t.join()
-
-        }catch (e: Exception)
-        {
-            println("Hilo Find by Id: $e")
-        }
-        return player
-    }
-
-    suspend fun findByName(nombre: String): Player? {
-        var player: Player?
-
+    suspend fun getAll() : List<Player>? {
+        var newList : List<Player>? = null
         try {
             val rutina: Job = GlobalScope.launch {
-                PlayerViewModel.player = playerDao?.findByName(nombre) as Player ?
+                PlayerViewModel.playerlist = playerDao?.getAll()
+
             }
             rutina.join()
             joinAll()
-            while (rutina.isActive)
+            while (rutina.isActive){}
+            if(PlayerViewModel.playerlist!!.count() > 0)
             {
-                Thread.sleep(10L)
+                newList = ArrayList<Player>()
+                for(p:PlayerData in PlayerViewModel.playerlist!!)
+                {
+                    newList.set(p.PlayerId, Player(p.PlayerId,p.nombre,p.last_access))
+                }
             }
+
+        }catch (e:Exception)
+        {
+            println("Hilo no devuelve lista: $e")
+        }
+        finally {
+            return newList
+        }
+
+    }
+    suspend fun loadAllByIds(list : List<Int>) : List<Player>? {
+        var newList : List<Player>? = null
+        try {
+            val rutina: Job = GlobalScope.launch {
+                PlayerViewModel.playerlist = playerDao?.loadAllByIds(list)
+
+            }
+            rutina.join()
+            joinAll()
+            while (rutina.isActive){}
+            if(PlayerViewModel.playerlist!!.count() > 0)
+            {
+                newList = ArrayList<Player>()
+                for(p:PlayerData in PlayerViewModel.playerlist!!)
+                {
+                    newList.set(p.PlayerId, Player(p.PlayerId,p.nombre,p.last_access))
+                }
+            }
+
+        }catch (e:Exception)
+        {
+            println("Hilo no devuelve lista por ID: $e")
+        }
+        finally {
+            return newList
+        }
+
+    }
+    suspend fun findById(id: Int): Player? {
+        var player: Player? = null
+        try {
+            val rutina: Job = GlobalScope.launch {
+                val p:PlayerData? = playerDao?.findById(id)
+                if (player != null) PlayerViewModel.player = Player(p!!.PlayerId,p.nombre,p.last_access)
+                else PlayerViewModel.player = null
+            }
+            rutina.join()
+            joinAll()
+            while (rutina.isActive){}
+            player = PlayerViewModel.player;
+        }catch (e:Exception)
+        {
+            println("Error buscando player by ID: $e")
+        }
+        finally {
+            return player
+        }
+
+    }
+
+    suspend fun findByName(nombre: String): Player? {
+        var player: Player? = null
+
+        try {
+            val rutina: Job = GlobalScope.launch {
+                val p:PlayerData? = playerDao?.findByName(nombre)
+                println("findByName: ${p.toString()}")
+                if (p != null) PlayerViewModel.player = Player(p!!.PlayerId,p.nombre,p.last_access)
+                else PlayerViewModel.player = null
+            }
+            rutina.join()
+            joinAll()
+            while (rutina.isActive){}
+            player = PlayerViewModel.player;
 
         }catch (e:Exception)
         {
             println("Error buscando player by name: $e")
         }
         finally {
-            return PlayerViewModel.player
+            return player
         }
 
-
-
-
-
-
-        /*
-        try {
-            val t: Thread = Thread(Runnable() {
-                @Override
-                fun run(){
-                    player = playerDao?.findByName(nombre) as Player ?
-                }
-            })
-            t.start()
-            t.join()
-
-        }catch (e: Exception)
-        {
-            println("Hilo Find by name player: $e")
-        }
-        return player
-        */
     }
 
-    fun findLastPlayer(): Player? {
+    suspend fun findLastPlayer(): Player? {
         var player: Player? = null
         try {
-            val t: Thread = Thread(Runnable() {
-                @Override
-                fun run(){
-                    player = playerDao?.findLastPlayer() as Player?
-                }
-            })
-            t.start()
-            t.join()
+            val rutina: Job = GlobalScope.launch {
+                val p:PlayerData? = playerDao?.findLastPlayer()
+                if (player != null) PlayerViewModel.player = Player(p!!.PlayerId,p.nombre,p.last_access)
+                else PlayerViewModel.player = null
+            }
+            rutina.join()
+            joinAll()
+            while (rutina.isActive){}
+            player = PlayerViewModel.player;
 
         }catch (e: Exception)
         {
@@ -180,14 +180,10 @@ class PlayerRepository(application: Application) {
     fun delete(user: Player) {
         if(user.PlayerId!! > 0) {
             try {
-                val t: Thread = Thread(Runnable() {
-                    @Override
-                    fun run() {
-                        playerDao?.delete(user as PlayerData)
-                    }
-                })
-                t.start()
-                t.join()
+                val rutina: Job = GlobalScope.launch {
+                    val p:PlayerData = PlayerData(user.PlayerId!!,user.nombre,user.last_access!!)
+                    playerDao?.delete(p)
+                }
 
             } catch (e: Exception) {
                 println("Hilo borrar Player: $e")
@@ -197,14 +193,10 @@ class PlayerRepository(application: Application) {
     fun update(user: Player) {
         if(user.nombre.length > 3 && user.PlayerId!! > 0 ) {
             try {
-                val t: Thread = Thread(Runnable() {
-                    @Override
-                    fun run() {
-                        playerDao?.updateOne(user as PlayerData)
-                    }
-                })
-                t.start()
-                t.join()
+                val rutina: Job = GlobalScope.launch {
+                    val p:PlayerData = PlayerData(user.PlayerId!!,user.nombre,user.last_access!!)
+                    playerDao?.updateOne(p)
+                }
 
             } catch (e: Exception) {
                 println("Hilo actualizar Player: $e")

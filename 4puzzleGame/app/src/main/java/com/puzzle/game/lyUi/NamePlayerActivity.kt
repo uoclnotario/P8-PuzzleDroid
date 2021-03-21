@@ -34,10 +34,12 @@ class NamePlayerActivity : AppCompatActivity() {
 
     private fun changeView()
     {
+        println("Lanzamos el ChangeView")
         val intent = Intent(this, StartGameActivity::class.java)
-        intent.putExtra("player",player!!)
+        intent.putExtra("player",PlayerViewModel.player)
         startActivity(intent)
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun onClick(view: View) {
         var newPlayer : Player?
@@ -52,12 +54,12 @@ class NamePlayerActivity : AppCompatActivity() {
 
 
             try {
-
+                PlayerViewModel.long = null
                 player = Player(0 ,newName.text.toString(), Time.from(Instant.now()).toString())
                 val rutina: Job = GlobalScope.launch {
                     val playerdata: PlayerData = PlayerData(0, player!!.nombre, player!!.last_access!!)
                     PlayerViewModel.long = playerViewModel.insertOne(player!!)
-
+                    if(PlayerViewModel.long != null)  PlayerViewModel.player = Player(PlayerViewModel.long!!.toInt(), player!!.nombre, player!!.last_access!!)
                     println("El ultimo ID introducido es: ${PlayerViewModel.long}")
                 }
                 var timeSleep:Long = 0L
@@ -73,17 +75,14 @@ class NamePlayerActivity : AppCompatActivity() {
             {
                 println("Hilo no inserta player: $e")
             }
-            finally {
-                lastId = PlayerViewModel.long
-            }
-            // Creamos la variable Int que recogerá el ID
 
         }
-
-        if(lastId!! > 0) changeView()
+        println("El valor de PlayerViewModel.long es: ${PlayerViewModel.long}")
+        if(PlayerViewModel.long != null) changeView()
         else
         {
-            println("El valor de LastID es: $lastId")
+            println("El valor de LastID es: ${PlayerViewModel.long}")
+            errorName.visibility=View.VISIBLE
             btnStart.isClickable = true
             btnStart.visibility=View.VISIBLE
             btnMarco.visibility=View.VISIBLE
