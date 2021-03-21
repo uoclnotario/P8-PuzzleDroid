@@ -19,6 +19,9 @@
     <string name="stopGameRestart">RESTART</string>
     <string name="stopGameContinue">CONTINUE</string>
     <string name="stopGamebackMenu">BACK TO MENU</string>
+    <string name="todo">TODO</string>
+    <string name="todo1">TODO1</string>
+    <string name="Selectimg">Select picture</string>
 
 
 </resources>
