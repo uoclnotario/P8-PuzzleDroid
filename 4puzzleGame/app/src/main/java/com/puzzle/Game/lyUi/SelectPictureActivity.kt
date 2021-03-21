@@ -1,24 +1,18 @@
 package com.puzzle.Game.lyUi
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
+import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
+import android.widget.BaseAdapter
+import android.widget.GridView
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.ContextCompat
 import com.puzzle.Game.R
-import com.puzzle.Game.lyLogicalBusiness.Picture
-import com.puzzle.Game.lyLogicalBusiness.Player
-import java.io.ByteArrayOutputStream
-import java.io.FileOutputStream
+import java.util.*
 
 
 class SelectPictureActivity : AppCompatActivity() {
@@ -27,13 +21,56 @@ class SelectPictureActivity : AppCompatActivity() {
     val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 3
     val REQUEST_IMAGE_GALLERY = 4
 
+    var gridView: GridView? = null
+
+    var images = intArrayOf(R.drawable.image1, R.drawable.image2, R.drawable.image3, R.drawable.image4, R.drawable.image5, R.drawable.image6, R.drawable.image7, R.drawable.image8, R.drawable.image9, R.drawable.image10)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_selectpicture)
+        setContentView(R.layout.activity_main)
+        gridView = findViewById(R.id.gridView)
+        val customAdapter = CustomAdapter(images, this)
+        gridView?.run {
+            adapter = customAdapter
+        }
+
+        gridView.setOnItemClickListener(OnItemClickListener { adapterView, view, i, l ->
+            val selectedImage = images[i]
+            startActivity(Intent(this@SelectPictureActivity, ClickedItemActivity::class.java).putExtra("image", selectedImage))
+        })
+
+    }
+
+    class CustomAdapter(private val imagesPhoto: IntArray, private val context: Context) : BaseAdapter() {
+        private val layoutInflater: LayoutInflater = context.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        override fun getCount(): Int {
+            return imagesPhoto.size
+        }
+
+        override fun getItem(i: Int): Any? {
+            return null
+        }
+
+        override fun getItemId(i: Int): Long {
+            return 0
+        }
+
+        override fun getView(i: Int, view: View, viewGroup: ViewGroup): View {
+            var view = view
+            if (view == null) {
+                view = layoutInflater.inflate(R.layout.row_items, viewGroup, false)
+            }
+            val imageView = view.findViewById<ImageView>(R.id.imageView)
+            imageView.setImageResource(imagesPhoto[i])
+            return view
+        }
+
+    }
+
+}
 
 
-        val btn_click_btnSelectImg = findViewById(R.id.btnSelectImg) as Button
+/*val btn_click_btnSelectImg = findViewById(R.id.btnSelectImg) as Button
 
         //De esta manera recogemos los datos del intent...
         var player = intent.getSerializableExtra("player") as Player
@@ -73,11 +110,12 @@ class SelectPictureActivity : AppCompatActivity() {
             fileName = null
         }
         return fileName
-    }
+
+         */
 
 
 
-}
+
 
 /*
 
