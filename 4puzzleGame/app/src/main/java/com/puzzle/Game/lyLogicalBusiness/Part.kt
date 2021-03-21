@@ -5,6 +5,17 @@ import android.graphics.*
 import androidx.appcompat.widget.AppCompatImageView
 
 class Part : AppCompatImageView {
+    var offsetX:Int = 0
+    var offsetY:Int = 0
+    var imgWidth:Int = 0
+    var imgHeight:Int = 0
+    var xCoord:Int = 0
+    var yCoord:Int = 0
+    var pieceWidth:Int = 0
+    var pieceHeight:Int = 0
+    var canMove : Boolean = true
+    var positionOK : Boolean = false
+
 
     constructor(ctx:Context) : super(ctx){
 
@@ -39,17 +50,7 @@ class Part : AppCompatImageView {
     }
     lateinit var tipoParte : TpePart
 
-    var offsetX:Int = 0
-    var offsetY:Int = 0
 
-    var imgWidth:Int = 0
-    var imgHeight:Int = 0
-    
-    var xCoord:Int = 0
-    var yCoord:Int = 0
-    var pieceWidth:Int = 0
-    var pieceHeight:Int = 0
-    var canMove : Boolean = true
 
 
     fun crearImagen(puzzlePicture:Bitmap,xCoord:Int,yCoord:Int) {

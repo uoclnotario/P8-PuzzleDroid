@@ -7,12 +7,13 @@ import android.os.CountDownTimer
 import android.os.health.TimerStat
 import android.text.BoringLayout
 import android.widget.ImageView
+import java.io.Serializable
 import java.lang.Exception
 import java.util.*
 import kotlin.concurrent.timerTask
 import kotlin.math.round
 
-class Game {
+class Game : Serializable {
     enum class  Estatus{RUN, FINISH,STOPED}
 
     lateinit var  _estatus: Estatus
@@ -61,23 +62,29 @@ class Game {
        }
 
     }
-
-
     fun isFinish() : Boolean{
         var fin : Boolean = true
-        for (index in 0 until (_puzzle.piezas?.count()?.minus(1) ?: 0)) {
-            fin = false
-            break
+
+        var bucle :Int = 0
+        bucle = _puzzle.piezas?.count() ?: 0
+
+        for (index:Int in 0 until bucle) {
+
+           var pieza: Part = _puzzle.piezas?.get(index)!!
+
+            println(pieza.positionOK.toString())
+            if(pieza.positionOK == false){
+                fin = false
+                break
+            }
         }
+
         this.finalizado = fin
         return fin
     }
-
     fun start(){
         dateSatart =Calendar.getInstance()
     }
-
-
     fun tick() {
         currentIme++
     }

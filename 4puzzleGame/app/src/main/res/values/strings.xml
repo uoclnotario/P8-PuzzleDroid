@@ -9,5 +9,13 @@
     <string name="Easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
+    <string name="completePuzzle">Puzzle completed</string>
+    <string name="FinishContiune">Continue</string>
+    <string name="finishScore">Score</string>
+    <string name="finisTime">Time to finish</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

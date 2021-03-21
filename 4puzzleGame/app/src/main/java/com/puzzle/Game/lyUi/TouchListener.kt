@@ -21,6 +21,7 @@ class TouchListener(activity: GameActivity,minx:Int,minh:Int ) : OnTouchListener
 
     val TOLERANCIA = 30f
     private val activity: GameActivity
+
     override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
         val x = motionEvent.rawX
         val y = motionEvent.rawY
@@ -29,9 +30,6 @@ class TouchListener(activity: GameActivity,minx:Int,minh:Int ) : OnTouchListener
         if (!piece.canMove) {
             return true
         }
-        val metrices = DisplayMetrics()
-        val windowWidth: Int = metrices.widthPixels
-        val windowHeight: Int = metrices.heightPixels
 
         val lParams = view.getLayoutParams() as RelativeLayout.LayoutParams
 
@@ -47,7 +45,7 @@ class TouchListener(activity: GameActivity,minx:Int,minh:Int ) : OnTouchListener
                 wDelta = x - lParams.rightMargin
                 hDelta = y - lParams.bottomMargin
                 piece.bringToFront()
-
+                piece.positionOK = false
             }
             MotionEvent.ACTION_MOVE -> {
 
@@ -70,7 +68,7 @@ class TouchListener(activity: GameActivity,minx:Int,minh:Int ) : OnTouchListener
 
                     piece.x = piece.xCoord.toFloat()
                     piece.y = piece.yCoord.toFloat()
-
+                    piece.positionOK = true
 
                     view.setLayoutParams(lParams)
                     sendViewToBack(piece)
