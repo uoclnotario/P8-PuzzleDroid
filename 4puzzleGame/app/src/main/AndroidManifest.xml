@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.4puzzleGame">
-        <activity android:name=".lyUi.ClickedItemActivity"></activity>
+
+        <activity
+            android:name=".lyUi.FinisGameActivity"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.GameActivity"
             android:theme="@style/Theme.4puzzleGame.NoActionBar" />

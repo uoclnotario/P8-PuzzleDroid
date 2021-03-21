@@ -1,64 +1,174 @@
 package com.puzzle.Game.lyUi
 
+import android.content.Intent
+import android.graphics.RectF
 import android.os.Bundle
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.AppBarLayout
 import com.puzzle.Game.R
 import com.puzzle.Game.lyLogicalBusiness.Game
 import com.puzzle.Game.lyLogicalBusiness.Picture
 import com.puzzle.Game.lyLogicalBusiness.Player
+import java.util.*
+import kotlin.concurrent.scheduleAtFixedRate
 
 
 class GameActivity : AppCompatActivity() {
     lateinit var _game : Game
+    var count = 0
+    var player: Player? = null
+    var pictur: Picture? = null
+    var timer =  Timer("schedule", true)
+    var movements: TextView? = null
+    lateinit var fragmentStop :Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        //TODO PARA QUE NO DE ERROR HAY QUE VERIFICAR QUE  LLEGAN BIEN LOS DATOS.
-        var player = intent.getSerializableExtra("player") as Player
-        var _pictur = intent.getSerializableExtra("pictur") as Picture
-        var dificult = intent.getSerializableExtra("dificul") as Number
-        _game = Game(_pictur,dificult,application.applicationContext)
 
+        //TODO PARA QUE NO DE ERROR HAY QUE VERIFICAR QUE  LLEGAN BIEN LOS DATOS.
         val layout  : RelativeLayout = findViewById<View>(R.id.layout) as RelativeLayout
         val ivTablero  : ImageView = findViewById<View>(R.id.ivTablero) as ImageView
+        val tool  : ConstraintLayout = findViewById<View>(R.id.toolbar) as ConstraintLayout
+        val stopFragment  : FrameLayout = findViewById<View>(R.id.StopFragment) as FrameLayout
+        val appBarLayout  : AppBarLayout = findViewById<View>(R.id.appBarLayout) as AppBarLayout
 
 
-        if(::_game.isInitialized) {
-            if(_game._puzzle!=null) {
-/*
-                val displayMetrics = DisplayMetrics()
-                var width= Resources.getSystem().getDisplayMetrics().widthPixels
-                var height= Resources.getSystem().getDisplayMetrics().heightPixels
-                //Caclamos el 80% del alto y el 95% del ancho
-                //b*c/a
-              width = width*95/100
-                height = height*75/100
-*/
-                ivTablero.post {
-                    _game._puzzle.redimensionarImagen(applicationContext,ivTablero.width, ivTablero.height )
-                    if (_game._puzzle._pictureResize != null) {
-                        _game._puzzle.generarPiezas(application.applicationContext,ivTablero.x.toInt(),ivTablero.y.toInt())
-
-                        val touchListener = TouchListener(this,_game._puzzle.offsetX.toFloat(),_game._puzzle.offsetY.toFloat())
-                        for (piece in _game._puzzle.piezas!!) {
-                            layout.addView(piece)
-                            piece.setOnTouchListener(touchListener)
-                            piece.y = piece.yCoord.toFloat()
-                            piece.x = piece.xCoord.toFloat()
-                        }
+        var dificult = intent.getSerializableExtra("dificul") as Number
 
 
-                    }
+        player = intent.getSerializableExtra("player") as Player
+        movements =findViewById<View>(R.id.movements) as TextView
+        pictur = intent.getSerializableExtra("pictur") as Picture
+
+        var imgButton : ImageView = findViewById<View>(R.id.btnClose) as ImageView
+        imgButton.setOnClickListener{
+
+            // Check that the activity is using the layout version with
+            // the fragment_container FrameLayout
+            if (findViewById<View>(R.id.StopFragment) != null) {
+
+                // However, if we're being restored from a previous state,
+                // then we don't need to do anything and should return or else
+                // we could end up with overlapping fragments.
+                if (savedInstanceState != null) {
+                    return@setOnClickListener
                 }
 
+                // Create a new Fragment to be placed in the activity layout
+                val firstFragment = stopGameFragment()
+
+                // In case this activity was started with special instructions from an
+                // Intent, pass the Intent's extras to the fragment as arguments
+                firstFragment.arguments = intent.extras
+
+                appBarLayout.setVisibility(View.INVISIBLE)
+                layout.setVisibility(View.INVISIBLE)
+                timer.cancel()
+                // Add the fragment to the 'fragment_container' FrameLayout
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.StopFragment, firstFragment).commit()
             }
         }
 
 
+
+
+
+        ivTablero.post {
+            _game = Game(pictur!!,dificult,application.applicationContext,  RectF(ivTablero.x,ivTablero.y,ivTablero.width.toFloat(),ivTablero.height.toFloat()
+            ))
+            if (!_game.error) {
+                val touchListener = TouchListener(this, 0, tool.height)
+                Collections.shuffle(_game._puzzle.piezas)
+                for (piece in _game._puzzle.piezas!!) {
+                    layout.addView(piece)
+                    piece.setOnTouchListener(touchListener)
+
+
+                    val lParams = piece.layoutParams as RelativeLayout.LayoutParams
+                    /*
+                    lParams.leftMargin = Random().nextInt(layout.width - piece.pieceWidth)
+                    lParams.topMargin = layout.height - piece.pieceHeight
+                    */
+                    lParams.leftMargin = piece.xCoord
+                    lParams.topMargin = piece.yCoord
+
+                    piece.layoutParams = lParams
+                }
+            }else{
+                println("Se ha producido un error"+ (_game.getError?.message ?: "sin error"))
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        timer.cancel()
+    }
+
+
+
+    //Funcionan que inicializan o vuelven a poner en marcha el contador.
+    override fun onResume() {
+        super.onResume()
+        timerStart()
+    }
+    fun timerStart(){
+        timer = Timer("schedule", true);
+        timer.scheduleAtFixedRate(1000, 1000) {
+            val txtTimer : TextView = findViewById<View>(R.id.timer) as TextView
+            _game.tick()
+            txtTimer.text = _game.getTime()
+        }
+    }
+
+    fun closeStopFrame()
+    {
+        supportFragmentManager.beginTransaction().hide(fragmentStop)
+    }
+
+
+    fun checkGameOver(){
+        println("check")
+        if(_game.isFinish()){
+            //Finalizar
+            //Si existe almacenado un nombre de usuario
+            val intent = Intent(this, FinisGameActivity::class.java).apply {
+                putExtra("player",player)
+
+                putExtra("dificulty",_game._dificuty)
+                putExtra("time",_game.getTime())
+                putExtra("moviments",_game._movements)
+
+                putExtra("pictur",pictur)
+            }
+            startActivity(intent)
+        }
+
+    }
+    fun sumMove(){
+        _game._movements++
+        if(movements != null){
+            movements!!.text = _game._movements.toString()+" Movimientos"
+        }
+    }
+
+
+    //Elimina la función de volver atras..
+    override fun onBackPressed() {
+        return
     }
 }
+
+
+
+

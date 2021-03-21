@@ -6,46 +6,92 @@
     android:layout_height="match_parent"
     tools:context=".lyUi.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.4puzzleGame.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:background="#173D8D"
-            app:popupTheme="@style/Theme.4puzzleGame.PopupOverlay" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+    <ImageView
+        android:id="@+id/ivTablero2"
+        android:layout_width="358dp"
+        android:layout_height="597dp"
+        android:layout_marginTop="21dp"
+        android:background="#173D8D" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#97DBFF">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="83dp"
+            android:theme="@style/Theme.4puzzleGame.AppBarOverlay"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#173D8D">
+
+                <ImageView
+                    android:id="@+id/btnClose"
+                    android:layout_width="88dp"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="7dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/btnpause" />
+
+                <TextView
+                    android:id="@+id/timer"
+                    android:layout_width="156dp"
+                    android:layout_height="41dp"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.921"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.166"
+                    tools:text="00:00:00" />
+
+                <TextView
+                    android:id="@+id/movements"
+                    android:layout_width="128dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="48dp"
+                    android:text="0 Movimientos"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.929"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
         <ImageView
-            android:id="@+id/ivTablero2"
-            android:layout_width="358dp"
-            android:layout_height="597dp"
-            android:background="#173D8D"
+            android:id="@+id/ivTablero3"
+            android:layout_width="316dp"
+            android:layout_height="518dp"
+            android:background="#313435"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.773" />
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintVertical_bias="0.422" />
 
         <ImageView
             android:id="@+id/ivTablero"
-            android:layout_width="347dp"
-            android:layout_height="586dp"
+            android:layout_width="308dp"
+            android:layout_height="501dp"
             android:background="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.755" />
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintVertical_bias="0.422" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -55,5 +101,12 @@
         android:layout_height="match_parent">
 
     </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/StopFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

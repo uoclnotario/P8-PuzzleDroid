@@ -1,23 +1,27 @@
 package com.puzzle.Game.lyUi
 
+import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
-import com.puzzle.Game.lyLogicalBusiness.Game
+import com.puzzle.Game.R
 import com.puzzle.Game.lyLogicalBusiness.Part
-import java.lang.Math.abs
 
 
-class TouchListener(activity: GameActivity, offx:Float,offy:Float) : OnTouchListener {
-    private var offsetX = 0f
-    private var offsetY  = 0f
+class TouchListener(activity: GameActivity,minx:Int,minh:Int ) : OnTouchListener {
     private var xDelta = 0f
     private var yDelta = 0f
-    val TOLERANCIA = 10f
+    private var wDelta = 0f
+    private var hDelta = 0f
+    private var minx = minx
+    private var minh= minh
 
+    val TOLERANCIA = 30f
     private val activity: GameActivity
+
     override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
         val x = motionEvent.rawX
         val y = motionEvent.rawY
@@ -27,8 +31,7 @@ class TouchListener(activity: GameActivity, offx:Float,offy:Float) : OnTouchList
             return true
         }
 
-        val lParams = view.layoutParams as RelativeLayout.LayoutParams
-
+        val lParams = view.getLayoutParams() as RelativeLayout.LayoutParams
 
         when (motionEvent.action and MotionEvent.ACTION_MASK) {
             MotionEvent.ACTION_DOWN -> {
@@ -39,26 +42,37 @@ class TouchListener(activity: GameActivity, offx:Float,offy:Float) : OnTouchList
                 }
                 xDelta = x - lParams.leftMargin
                 yDelta = y - lParams.topMargin
+                wDelta = x - lParams.rightMargin
+                hDelta = y - lParams.bottomMargin
                 piece.bringToFront()
+                piece.positionOK = false
             }
             MotionEvent.ACTION_MOVE -> {
 
+
+              //  println("x=>"+piece.x.toString()+" xdelta-->"+(x - xDelta).toString())
+
+                if(!((x - xDelta).toInt() < minx))
                 lParams.leftMargin = (x - xDelta).toInt()
+
+                if(!((y - yDelta).toInt() < minh))
                 lParams.topMargin = (y - yDelta).toInt()
-                view.layoutParams = lParams
+
+                view.setLayoutParams(lParams)
             }
             MotionEvent.ACTION_UP -> {
-                println("x-> "+piece.x.toString() +" xcoord->"+piece.xCoord.toString())
-                println(" ok si coord es mayor que "+(piece.x -TOLERANCIA).toString() +" y menor que"+(piece.x +TOLERANCIA).toString())
+                activity.sumMove()
                 if (    (piece.x  >= piece.xCoord.toFloat()-TOLERANCIA && piece.x <= piece.xCoord.toFloat() + TOLERANCIA) &&
                         (piece.y >= piece.yCoord.toFloat()-TOLERANCIA && piece.y <= piece.yCoord.toFloat() + TOLERANCIA)) {
                    // piece.canMove = false
 
                     piece.x = piece.xCoord.toFloat()
                     piece.y = piece.yCoord.toFloat()
+                    piece.positionOK = true
 
+                    view.setLayoutParams(lParams)
                     sendViewToBack(piece)
-                    //activity.checkGameOver()
+                    activity.checkGameOver()
                 }
             }
         }

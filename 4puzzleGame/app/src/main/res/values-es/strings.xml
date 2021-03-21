@@ -10,5 +10,9 @@
     <string name="Easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
+    <string name="completePuzzle">Puzzle completed</string>
+    <string name="FinishContiune">Continue</string>
+    <string name="finishScore">Score</string>
+    <string name="finisTime">Time to finish</string>
 
 </resources>
