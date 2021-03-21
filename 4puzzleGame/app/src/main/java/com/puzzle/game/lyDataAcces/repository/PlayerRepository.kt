@@ -162,7 +162,7 @@ class PlayerRepository(application: Application) {
         try {
             val rutina: Job = GlobalScope.launch {
                 val p:PlayerData? = playerDao?.findLastPlayer()
-                if (player != null) PlayerViewModel.player = Player(p!!.PlayerId,p.nombre,p.last_access)
+                if (p != null) PlayerViewModel.player = Player(p!!.PlayerId,p.nombre,p.last_access)
                 else PlayerViewModel.player = null
             }
             rutina.join()

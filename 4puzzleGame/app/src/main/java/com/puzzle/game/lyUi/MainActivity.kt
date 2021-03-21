@@ -3,22 +3,15 @@ package com.puzzle.game.lyUi
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Property.of
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders.of
-import androidx.room.Room
 import com.puzzle.game.R
-import com.puzzle.game.lyDataAcces.AppDatabase
-import com.puzzle.game.lyDataAcces.entities.PlayerData
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.viewModels.PlayerViewModel
-import kotlinx.android.synthetic.main.activity_nameplayer.*
 import kotlinx.coroutines.*
-import java.sql.Time
-import java.time.Instant
+
 
 class MainActivity : AppCompatActivity() {
     var player: Player? = null
@@ -30,8 +23,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         playerViewModel = run { ViewModelProvider(this).get(PlayerViewModel::class.java) }
-        //println("${date()}")
+
     }
+
+
 
     fun onClick(view: View) {
         try {
@@ -39,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 PlayerViewModel.player = playerViewModel.findLastPlayer()
                 println("El player actual es: ${PlayerViewModel.player}")
             }
-            while (rutina.isActive) {}
+            while (!rutina.isCompleted) {  }
 
         }catch (e: java.lang.Exception)
         {
@@ -48,22 +43,16 @@ class MainActivity : AppCompatActivity() {
         finally {
             if(PlayerViewModel.player != null)
             {
-                player = PlayerViewModel.player
+                val intent = Intent(this, StartGameActivity::class.java)
+                intent.putExtra("player", PlayerViewModel.player)
+                startActivity(intent)
+            }else
+            {
+                val intent = Intent(this, NamePlayerActivity::class.java)
+                startActivity(intent)
             }
         }
 
-        //Si existe almacenado un nombre de usuario
-        if(player == null)
-        {
-            val intent = Intent(this, NamePlayerActivity::class.java)
-            startActivity(intent)
-        }
-        else
-        {
-            val intent = Intent(this, StartGameActivity::class.java)
-            intent.putExtra("player",player)
-            startActivity(intent)
-        }
     }
 
 
