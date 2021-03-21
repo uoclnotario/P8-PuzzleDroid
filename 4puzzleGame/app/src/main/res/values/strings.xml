@@ -9,5 +9,6 @@
     <string name="Easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
+    <string name="go">Go</string>
 
 </resources>

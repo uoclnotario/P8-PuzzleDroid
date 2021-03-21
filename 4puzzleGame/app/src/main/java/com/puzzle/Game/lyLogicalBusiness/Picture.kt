@@ -10,6 +10,13 @@ class Picture : Serializable {
     var realWidth: Int = 0
     var realHeigth: Int = 0
 
+    var name:String? = null
+    var image:Int? = null
+
+    constructor(name: String?, image: Int?) {
+        this.name = name
+        this.image = image
+    }
 
     fun hashBitmap(bmp: Bitmap): Long {
         var hash: Long = 31 //or a higher prime at your choice
