@@ -1,12 +1,14 @@
 package com.puzzle.Game.lyUi
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
@@ -51,17 +53,47 @@ class stopGameFragment() : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState)
-        val myFab : ImageView = getActivity()?.findViewById<View>(R.id.btnExit) as ImageView
-        myFab.setOnClickListener {
-            val toolbar : AppBarLayout = getActivity()?.findViewById<View>(R.id.appBarLayout) as AppBarLayout
-            var layout : RelativeLayout = getActivity()?.findViewById<View>(R.id.layout) as RelativeLayout
-            var activi:GameActivity = getActivity() as GameActivity
+        val toolbar : AppBarLayout = getActivity()?.findViewById<View>(R.id.appBarLayout) as AppBarLayout
+        var layout : RelativeLayout = getActivity()?.findViewById<View>(R.id.layout) as RelativeLayout
+        var activi:GameActivity = getActivity() as GameActivity
 
+        val toolBarClose : ImageView = getActivity()?.findViewById<View>(R.id.btnExit) as ImageView
+
+        val btnContinuar : LinearLayout = getActivity()?.findViewById<View>(R.id.btnLayoutContinuar) as LinearLayout
+        val btnSalir : LinearLayout = getActivity()?.findViewById<View>(R.id.btnLayoutSalir) as LinearLayout
+        val btnRestart : LinearLayout = getActivity()?.findViewById<View>(R.id.btnLayoutReiniciar) as LinearLayout
+
+
+        toolBarClose.setOnClickListener {
             activi.timerStart()
             layout.setVisibility(View.VISIBLE)
             toolbar.setVisibility(View.VISIBLE)
             getFragmentManager()?.beginTransaction()?.remove(this)?.commit();
         }
+
+        btnContinuar.setOnClickListener{
+                activi.timerStart()
+                layout.setVisibility(View.VISIBLE)
+                toolbar.setVisibility(View.VISIBLE)
+                getFragmentManager()?.beginTransaction()?.remove(this)?.commit();
+        }
+
+        btnRestart.setOnClickListener{
+            val intent = Intent(getActivity()?.applicationContext, SelectDificultyActivity::class.java).apply {
+                putExtra("player",activi.player)
+                putExtra("pictur",activi.pictur)
+            }
+            startActivity(intent)
+        }
+
+
+
+        btnSalir.setOnClickListener{
+            getActivity()?.finishAffinity();
+        }
+
+
+
     }
 
     companion object {

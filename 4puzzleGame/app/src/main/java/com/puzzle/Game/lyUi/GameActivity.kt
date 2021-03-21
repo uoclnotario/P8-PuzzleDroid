@@ -38,7 +38,6 @@ class GameActivity : AppCompatActivity() {
         val layout  : RelativeLayout = findViewById<View>(R.id.layout) as RelativeLayout
         val ivTablero  : ImageView = findViewById<View>(R.id.ivTablero) as ImageView
         val tool  : ConstraintLayout = findViewById<View>(R.id.toolbar) as ConstraintLayout
-        val stopFragment  : FrameLayout = findViewById<View>(R.id.StopFragment) as FrameLayout
         val appBarLayout  : AppBarLayout = findViewById<View>(R.id.appBarLayout) as AppBarLayout
 
 
@@ -52,28 +51,19 @@ class GameActivity : AppCompatActivity() {
         var imgButton : ImageView = findViewById<View>(R.id.btnClose) as ImageView
         imgButton.setOnClickListener{
 
-            // Check that the activity is using the layout version with
-            // the fragment_container FrameLayout
             if (findViewById<View>(R.id.StopFragment) != null) {
 
-                // However, if we're being restored from a previous state,
-                // then we don't need to do anything and should return or else
-                // we could end up with overlapping fragments.
                 if (savedInstanceState != null) {
                     return@setOnClickListener
                 }
 
-                // Create a new Fragment to be placed in the activity layout
                 val firstFragment = stopGameFragment()
-
-                // In case this activity was started with special instructions from an
-                // Intent, pass the Intent's extras to the fragment as arguments
                 firstFragment.arguments = intent.extras
 
                 appBarLayout.setVisibility(View.INVISIBLE)
                 layout.setVisibility(View.INVISIBLE)
                 timer.cancel()
-                // Add the fragment to the 'fragment_container' FrameLayout
+
                 supportFragmentManager.beginTransaction()
                     .add(R.id.StopFragment, firstFragment).commit()
             }
@@ -95,13 +85,13 @@ class GameActivity : AppCompatActivity() {
 
 
                     val lParams = piece.layoutParams as RelativeLayout.LayoutParams
-                    /*
+
                     lParams.leftMargin = Random().nextInt(layout.width - piece.pieceWidth)
                     lParams.topMargin = layout.height - piece.pieceHeight
-                    */
+                    /*
                     lParams.leftMargin = piece.xCoord
                     lParams.topMargin = piece.yCoord
-
+                    */
                     piece.layoutParams = lParams
                 }
             }else{

@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".lyUi.MainActivity">
 
-    <ImageView
-        android:id="@+id/ivTablero2"
-        android:layout_width="358dp"
-        android:layout_height="597dp"
-        android:layout_marginTop="21dp"
-        android:background="#173D8D" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
@@ -86,7 +79,7 @@
             android:id="@+id/ivTablero"
             android:layout_width="308dp"
             android:layout_height="501dp"
-            android:background="#FFFFFF"
+            android:background="@drawable/fondo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
