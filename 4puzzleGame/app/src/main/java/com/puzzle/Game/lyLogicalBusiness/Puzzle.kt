@@ -30,10 +30,9 @@ class Puzzle {
 
     fun redimensionarImagen(ctx :Context){
         try {
-            var image = BitmapFactory.decodeStream(ctx.openFileInput(_picture.fileDir))
-            if (image != null) {
-                _pictureResize= Bitmap.createScaledBitmap(image,
-                    imgReference.right.toInt(), imgReference.bottom.toInt(),false)
+            if (_picture.image != null) {
+                val image = BitmapFactory.decodeResource(ctx.getResources(), _picture.image!!)
+                _pictureResize= Bitmap.createScaledBitmap(image,imgReference.right.toInt(), imgReference.bottom.toInt(),false)
             }
         }catch (e:Exception){
             println("ERRRRRORRRRRRRRRRR0>"+e.message)

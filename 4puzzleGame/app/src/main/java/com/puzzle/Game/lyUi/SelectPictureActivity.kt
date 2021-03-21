@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_selectpicture.*
 class SelectPictureActivity : AppCompatActivity() {
 
     var _player = Player()
-    var _pictur = Picture(null)
+
 
     var modalList = ArrayList<Picture>()
 
@@ -54,7 +54,11 @@ class SelectPictureActivity : AppCompatActivity() {
 
 
         gridView.setOnItemClickListener { adapterView, view, i, l ->
-            var intent = Intent(this,SelectDificultyActivity::class.java).apply { putExtra("player", _player).putExtra("data",modalList[i]).putExtra("pictur",_pictur)}
+
+            var intent = Intent(this,SelectDificultyActivity::class.java).apply {
+                putExtra("player", _player)
+                putExtra("pictur", modalList[i])
+            }
             startActivity(intent);
         }
 
