@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             val player = Player(1,"PruebaUser","Prueba")
 
             //Si existe almacenado un nombre de usuario
-            val intent = Intent(this, SelectPictureActivity::class.java).apply {
+            val intent = Intent(this, StartGameActivity::class.java).apply {
                 putExtra("player",player)
             }
             startActivity(intent)

@@ -13,10 +13,14 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.puzzle.Game.R
 import com.puzzle.Game.lyLogicalBusiness.Picture
+import com.puzzle.Game.lyLogicalBusiness.Player
 import java.util.*
 import kotlinx.android.synthetic.main.activity_selectpicture.*
 
 class SelectPictureActivity : AppCompatActivity() {
+
+    var _player = Player()
+    var _pictur = Picture(null)
 
     var modalList = ArrayList<Picture>()
 
@@ -37,6 +41,8 @@ class SelectPictureActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selectpicture)
 
+        _player = intent.getSerializableExtra("player") as Player
+
 
         for(i in images.indices){
             modalList.add(Picture(images[i]))
@@ -44,12 +50,11 @@ class SelectPictureActivity : AppCompatActivity() {
 
         var customAdapter = CustomAdapter(modalList,this);
 
-        //val gridView = findViewById<GridView>(R.id.gridView)
         gridView.adapter = customAdapter;
 
+
         gridView.setOnItemClickListener { adapterView, view, i, l ->
-            var intent = Intent(this,ClickedItemActivity::class.java)
-            intent.putExtra("data",modalList[i])
+            var intent = Intent(this,SelectDificultyActivity::class.java).apply { putExtra("player", _player).putExtra("data",modalList[i]).putExtra("pictur",_pictur)}
             startActivity(intent);
         }
 
