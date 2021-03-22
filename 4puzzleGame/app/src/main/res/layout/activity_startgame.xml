@@ -2,66 +2,120 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".lyUi.MainActivity">
+    android:background="@color/bg_azul"
+    tools:context=".lyUi.StartGameActivity" >
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="242dp"
+        android:layout_height="322dp"
+        android:alpha="0.2"
+        android:contentDescription="@string/app_name"
+        app:layout_anchor="@+id/capaContenido"
+        app:layout_anchorGravity="center"
+        app:srcCompat="@drawable/logo4pieces" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+        android:id="@+id/capaContenido"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#97DBFF">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="83dp"
-            android:theme="@style/Theme.4puzzleGame.AppBarOverlay"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#173D8D">
-
-                <ImageView
-                    android:id="@+id/btnClose"
-                    android:layout_width="88dp"
-                    android:layout_height="72dp"
-                    android:layout_marginTop="7dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/menubtn" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.appbar.AppBarLayout>
+        android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/ivTablero"
-            android:layout_width="400dp"
-            android:layout_height="632dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/fondotransparent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/btnNewGameMarco"
+            android:layout_width="237dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="200dp"
+            android:contentDescription="@string/newGame"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.478"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:layout_constraintVertical_bias="0.058" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/btn_oscuro" />
 
         <Button
             android:id="@+id/btnNewGame"
-            android:layout_width="296dp"
-            android:layout_height="74dp"
+            style="@style/Theme.4puzzleGame.Button"
+            android:layout_width="223dp"
+            android:layout_height="42dp"
+            android:onClick="onClickNewGame"
+            android:padding="0dp"
+            android:scaleX="1"
             android:text="@string/newGame"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/btnNewGameMarco"
+            app:layout_constraintEnd_toEndOf="@+id/btnNewGameMarco"
+            app:layout_constraintStart_toStartOf="@+id/btnNewGameMarco"
+            app:layout_constraintTop_toTopOf="@+id/btnNewGameMarco"
+            app:layout_constraintVertical_bias="0.468" />
+
+        <ImageView
+            android:id="@+id/btnContinueMarco"
+            android:layout_width="237dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="30dp"
+            android:contentDescription="@string/continuar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:layout_constraintVertical_bias="0.275" />
+            app:layout_constraintTop_toBottomOf="@+id/btnNewGameMarco"
+            app:srcCompat="@drawable/btn_oscuro"
+            tools:layout_editor_absoluteY="200dp" />
+
+        <Button
+            android:id="@+id/btnContinueGame"
+            style="@style/Theme.4puzzleGame.Button"
+            android:layout_width="223dp"
+            android:layout_height="42dp"
+            android:onClick="onClickContinue"
+            android:padding="0dp"
+            android:scaleX="1"
+            android:text="@string/continuar"
+            app:layout_constraintBottom_toBottomOf="@+id/btnContinueMarco"
+            app:layout_constraintEnd_toEndOf="@+id/btnContinueMarco"
+            app:layout_constraintStart_toStartOf="@+id/btnContinueMarco"
+            app:layout_constraintTop_toTopOf="@+id/btnContinueMarco"
+            app:layout_constraintVertical_bias="0.468" />
+
+        <ImageView
+            android:id="@+id/btnPuntuacionMarco"
+            android:layout_width="237dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="30dp"
+            android:contentDescription="@string/puntuacion"
+            app:layout_anchor="@+id/capaContenido"
+            app:layout_anchorGravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnContinueMarco"
+            app:srcCompat="@drawable/btn_oscuro" />
+
+        <Button
+            android:id="@+id/btnPuntuacion"
+            style="@style/Theme.4puzzleGame.Button"
+            android:layout_width="223dp"
+            android:layout_height="42dp"
+            android:onClick="onClickPuntuacion"
+            android:padding="0dp"
+            android:scaleX="1"
+            android:text="@string/puntuacion"
+            app:layout_constraintBottom_toBottomOf="@+id/btnPuntuacionMarco"
+            app:layout_constraintEnd_toEndOf="@+id/btnPuntuacionMarco"
+            app:layout_constraintStart_toStartOf="@+id/btnPuntuacionMarco"
+            app:layout_constraintTop_toTopOf="@+id/btnPuntuacionMarco"
+            app:layout_constraintVertical_bias="0.468" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryVariant"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" >
+
+
+    </androidx.appcompat.widget.Toolbar>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

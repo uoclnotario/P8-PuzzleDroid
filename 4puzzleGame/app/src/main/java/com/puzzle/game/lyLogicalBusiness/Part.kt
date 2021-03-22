@@ -1,7 +1,7 @@
 package com.puzzle.game.lyLogicalBusiness
 
 import android.content.Context
-import android.graphics.Bitmap
+import android.graphics.*
 import androidx.appcompat.widget.AppCompatImageView
 
 class Part : AppCompatImageView {
@@ -20,7 +20,6 @@ class Part : AppCompatImageView {
     constructor(ctx:Context) : super(ctx){
 
     }
-<<<<<<< HEAD:4puzzleGame/app/src/main/java/com/puzzle/game/lyLogicalBusiness/Part.kt
 
     constructor(
         ctx:Context, puzzlePicture:Bitmap,
@@ -40,15 +39,12 @@ class Part : AppCompatImageView {
         this.yCoord = yCoord + marginOffsetY - offsetY
         crearImagen(puzzlePicture,xCoord,yCoord)
     }
-=======
->>>>>>> parent of dbe0894 (Refactorización del codigo):4puzzleGame/app/src/main/java/com/puzzle/Game/lyLogicalBusiness/Part.kt
 
     enum class  TpePart{
-        LEFT,LEFTUP,LEFTDOWN,LEFTBUTTOM,
-        RIGHT,RIGHTUP,RIGHTDOWN,RIGHTBOTTOM,
+        LEFT,LEFTUP,LEFTDOWN,
+        RIGHT,RIGHTUP,RIGHTDOWN,
         CENTER,CENTERUP,CENTERDOWN
     }
-<<<<<<< HEAD:4puzzleGame/app/src/main/java/com/puzzle/game/lyLogicalBusiness/Part.kt
     enum class TipoEncaje{
         HUECO,RELLENO,PLANO
     }
@@ -242,14 +238,4 @@ class Part : AppCompatImageView {
         return offset
     }
 
-=======
-    lateinit var id: Number
-    lateinit var setImageBitmap:Bitmap
-     var xCoord:Int = 0
-     var yCoord:Int = 0
-    lateinit var pieceWidth:Number
-    lateinit var pieceHeight:Number
-    var canMove : Boolean = true
-
->>>>>>> parent of dbe0894 (Refactorización del codigo):4puzzleGame/app/src/main/java/com/puzzle/Game/lyLogicalBusiness/Part.kt
 }

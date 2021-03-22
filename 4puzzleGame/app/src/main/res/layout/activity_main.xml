@@ -4,39 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".lyUi.MainActivity">
+    android:background="@color/bg_azul"
+    tools:context=".lyUi.MainActivity"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#97DBFF">
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="237dp"
-            android:layout_height="284dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.319"
-            app:srcCompat="@drawable/wdwdw" />
+        android:layout_height="match_parent">
 
         <Button
             android:id="@+id/btnStart"
-            style="@style/Widget.AppCompat.Button.Small"
-            android:layout_width="236dp"
-            android:layout_height="62dp"
-            android:layout_marginTop="488dp"
-            android:background="#C83131"
+            style="@style/Theme.4puzzleGame.Button"
+            android:layout_width="223dp"
+            android:layout_height="42dp"
+            android:layout_marginBottom="128dp"
+            android:padding="0dp"
+            android:scaleX="1"
             android:text="@string/btnStart"
-            android:textSize="18sp"
-            app:iconTint="@color/purple_200"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:onClick="onClick"/>
+
+        <ImageView
+            android:layout_width="237dp"
+            android:layout_height="57dp"
+            android:layout_marginBottom="120dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/btn_oscuro"
+            android:contentDescription="@string/btnStart"  />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="242dp"
+        android:layout_height="322dp"
+        app:layout_anchor="@+id/constraintLayout"
+        app:layout_anchorGravity="center"
+        app:srcCompat="@drawable/logo4pieces"
+        android:contentDescription="@string/app_name"  />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
