@@ -1,4 +1,4 @@
-package com.puzzle.Game.lyLogicalBusiness
+package com.puzzle.game.lyLogicalBusiness
 
 import android.content.Context
 import android.graphics.*

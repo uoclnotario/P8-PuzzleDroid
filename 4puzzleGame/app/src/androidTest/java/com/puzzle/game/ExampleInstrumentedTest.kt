@@ -1,4 +1,4 @@
-package com.puzzle.Game
+package com.puzzle.game
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

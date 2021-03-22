@@ -1,4 +1,4 @@
-package com.puzzle.Game.lyLogicalBusiness
+package com.puzzle.game.lyLogicalBusiness
 
 class SavedGame {
     lateinit var player:Player

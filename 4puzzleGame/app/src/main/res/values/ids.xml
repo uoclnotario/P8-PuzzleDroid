@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="newName" type="id" />
+    <item name="capaContenido" type="id" />
+    <item name="labelNewName" type="id" />
+    <item name="btnMarco" type="id" />
+</resources>
