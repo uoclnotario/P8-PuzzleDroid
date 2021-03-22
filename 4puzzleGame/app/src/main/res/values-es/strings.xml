@@ -17,5 +17,17 @@
     <string name="puntuacion">Puntuación</string>
     <string name="nameError">Nombre no válido</string>
 
+    <string name="stopGameExit">SALIR</string>
+    <string name="stopGameRestart">REINICIAR</string>
+    <string name="stopGameContinue">CONTINUAR</string>
+    <string name="stopGamebackMenu">VOLVER AL MENU</string>
+    <string name="Selectimg">Elige la imagen</string>
+
+    <string name="completePuzzle">Puzzle completed</string>
+    <string name="FinishContiune">Continue</string>
+    <string name="finishScore">Score</string>
+    <string name="finisTime">Time to finish</string>
+
+
 
 </resources>

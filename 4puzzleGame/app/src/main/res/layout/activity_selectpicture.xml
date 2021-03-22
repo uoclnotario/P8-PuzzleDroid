@@ -1,38 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".lyUi.SelectPictureActivity">
+    android:background="#97DBFF">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="-119dp">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btnSelectImg"
-            android:layout_width="195dp"
-            android:layout_height="48dp"
-            android:text="Go"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="194dp"
+            android:layout_height="36dp"
+            android:fontFamily="@font/mainfont_bold"
+            android:foregroundTint="#E32D2D"
+            android:text="@string/Selectimg"
+            android:textAlignment="center"
+            android:textColor="#173D8D"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@+id/ivTablero3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintVertical_bias="0.509" />
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="83dp"
+            android:theme="@style/Theme.4puzzleGame.AppBarOverlay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.778" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#173D8D">
+
+                <ImageView
+                    android:id="@+id/btnClose"
+                    android:layout_width="88dp"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="7dp"
+                    android:contentDescription=""
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/menubtn" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="326dp"
-            android:layout_height="435dp"
+            android:id="@+id/ivTablero3"
+            android:layout_width="316dp"
+            android:layout_height="523dp"
+            android:background="#173D8D"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintHorizontal_bias="0.484"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.209"
-            app:srcCompat="@drawable/download" />
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintVertical_bias="0.712" />
+
+
+        <ImageView
+            android:id="@+id/ivTablero"
+            android:layout_width="308dp"
+            android:layout_height="501dp"
+            android:background="@drawable/fondotablergame"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.48"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintVertical_bias="0.69" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.48"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintVertical_bias="0.7"
+            tools:context=".lyUi.SelectPictureActivity"
+            tools:ignore="MissingConstraints">
+
+            <GridView
+                android:id="@+id/gridView"
+                android:layout_width="300dp"
+                android:layout_height="500dp"
+                android:horizontalSpacing="6dp"
+                android:numColumns="3"
+                android:verticalSpacing="20dp">
+
+            </GridView>
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

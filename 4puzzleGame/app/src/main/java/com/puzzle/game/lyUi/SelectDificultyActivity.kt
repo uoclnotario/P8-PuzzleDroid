@@ -4,13 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Picture
+import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Player
 
 class SelectDificultyActivity : AppCompatActivity() {
-     /*var _player =Player()
-     var _pictur = Picture()
+     lateinit var _player : Player
+     var _pictur = Picture(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,5 +45,5 @@ class SelectDificultyActivity : AppCompatActivity() {
             putExtra("dificul",dificulty)
         }
         startActivity(intent)
-    }*/
+    }
 }
