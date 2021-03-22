@@ -11,6 +11,8 @@ class Player : Serializable  {
     @ColumnInfo(name = "last_access")
     var last_access:String?
 
+
+
     constructor(nombre:String,last_access:String) {
         this.PlayerId = 0
         this.nombre = nombre

@@ -1,10 +1,9 @@
-package com.puzzle.Game.lyLogicalBusiness
+package com.puzzle.game.lyLogicalBusiness
 
 import android.graphics.Bitmap
 import java.io.Serializable
 
 class Picture : Serializable {
-    lateinit var fileDir: String
      var imgResource : Int = 0
 
     lateinit var hasPicture: String

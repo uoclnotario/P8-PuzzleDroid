@@ -1,15 +1,15 @@
-package com.puzzle.Game.lyUi
+package com.puzzle.game.lyUi
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.puzzle.Game.R
-import com.puzzle.Game.lyLogicalBusiness.Picture
-import com.puzzle.Game.lyLogicalBusiness.Player
+import com.puzzle.game.lyLogicalBusiness.Picture
+import com.puzzle.game.R
+import com.puzzle.game.lyLogicalBusiness.Player
 
 class SelectDificultyActivity : AppCompatActivity() {
-     var _player =Player()
+     lateinit var _player : Player
      var _pictur = Picture(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {

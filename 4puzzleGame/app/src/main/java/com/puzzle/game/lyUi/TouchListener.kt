@@ -1,14 +1,11 @@
-package com.puzzle.Game.lyUi
+package com.puzzle.game.lyUi
 
-import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.RelativeLayout
-import com.puzzle.Game.R
-import com.puzzle.Game.lyLogicalBusiness.Part
+import com.puzzle.game.lyLogicalBusiness.Part
 
 
 class TouchListener(activity: GameActivity,minx:Int,minh:Int ) : OnTouchListener {

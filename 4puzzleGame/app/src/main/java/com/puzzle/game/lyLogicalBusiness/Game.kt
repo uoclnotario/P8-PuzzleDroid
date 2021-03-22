@@ -1,17 +1,10 @@
-package com.puzzle.Game.lyLogicalBusiness
+package com.puzzle.game.lyLogicalBusiness
 
 import android.content.Context
-import android.graphics.Rect
 import android.graphics.RectF
-import android.os.CountDownTimer
-import android.os.health.TimerStat
-import android.text.BoringLayout
-import android.widget.ImageView
 import java.io.Serializable
 import java.lang.Exception
 import java.util.*
-import kotlin.concurrent.timerTask
-import kotlin.math.round
 
 class Game : Serializable {
     enum class  Estatus{RUN, FINISH,STOPED}

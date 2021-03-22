@@ -1,10 +1,9 @@
-package com.puzzle.Game.lyUi
+package com.puzzle.game.lyUi
 
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.puzzle.Game.R
-import com.puzzle.Game.lyLogicalBusiness.Picture
+import com.puzzle.game.lyLogicalBusiness.Picture
+import com.puzzle.game.R
 import kotlinx.android.synthetic.main.activity_clicked_item.*
 
 class ClickedItemActivity : AppCompatActivity() {

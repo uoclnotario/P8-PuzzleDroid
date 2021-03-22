@@ -1,4 +1,4 @@
-package com.puzzle.Game.lyUi
+package com.puzzle.game.lyUi
 
 import android.content.Context
 import android.content.Intent
@@ -6,20 +6,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.BaseAdapter
-import android.widget.GridView
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.puzzle.Game.R
-import com.puzzle.Game.lyLogicalBusiness.Picture
-import com.puzzle.Game.lyLogicalBusiness.Player
+import com.puzzle.game.lyLogicalBusiness.Picture
+import com.puzzle.game.R
+import com.puzzle.game.lyLogicalBusiness.Player
 import java.util.*
 import kotlinx.android.synthetic.main.activity_selectpicture.*
 
 class SelectPictureActivity : AppCompatActivity() {
 
-    var _player = Player()
+    lateinit var _player :Player
 
 
     var modalList = ArrayList<Picture>()

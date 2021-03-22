@@ -1,10 +1,9 @@
-package com.puzzle.Game.lyUi
+package com.puzzle.game.lyUi
 
 import android.content.Intent
 import android.graphics.RectF
 import android.os.Bundle
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -12,10 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
-import com.puzzle.Game.R
-import com.puzzle.Game.lyLogicalBusiness.Game
-import com.puzzle.Game.lyLogicalBusiness.Picture
-import com.puzzle.Game.lyLogicalBusiness.Player
+import com.puzzle.game.lyLogicalBusiness.Game
+import com.puzzle.game.lyLogicalBusiness.Picture
+import com.puzzle.game.R
+import com.puzzle.game.lyLogicalBusiness.Player
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
 
