@@ -23,6 +23,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="83dp"
+            android:theme="@style/Theme.4puzzleGame.AppBarOverlay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#173D8D">
+
+                <ImageView
+                    android:id="@+id/btnClose"
+                    android:layout_width="88dp"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="7dp"
+                    android:contentDescription=""
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/menubtn" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
         <ImageView
             android:id="@+id/btnNewGameMarco"
             android:layout_width="237dp"
@@ -108,14 +136,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimaryVariant"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" >
-
-
-    </androidx.appcompat.widget.Toolbar>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
