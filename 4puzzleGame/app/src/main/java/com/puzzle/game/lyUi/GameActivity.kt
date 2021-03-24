@@ -133,11 +133,10 @@ class GameActivity : AppCompatActivity() {
             //Si existe almacenado un nombre de usuario
             val intent = Intent(this, FinisGameActivity::class.java).apply {
                 putExtra("player",player)
-
                 putExtra("dificulty",_game._dificuty)
                 putExtra("time",_game.getTime())
                 putExtra("moviments",_game._movements)
-
+                putExtra("score",_game.getScore())
                 putExtra("pictur",pictur)
             }
             startActivity(intent)

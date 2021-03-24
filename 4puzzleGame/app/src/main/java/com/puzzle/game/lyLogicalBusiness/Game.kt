@@ -80,6 +80,7 @@ class Game : Serializable {
     }
     fun tick() {
         currentIme++
+        println(getScore().toString())
     }
     fun getTime() : String {
         var hours = currentIme / 3600;
@@ -88,5 +89,55 @@ class Game : Serializable {
 
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
+
+
+    fun getScore() : Int{
+/*     NO VA MUY BIEN.
+        //Timpo de Puntuación 1
+        // (piezas / segundos) x (piexasx1000) + BonusDificultad (= 100 x piezas)
+        var piezas = _puzzle.piezas?.count()
+        var segundos = currentIme
+        if (piezas != null) {
+            var puntuacion : Int = ((piezas / segundos) * (piezas *1000) + (_dificuty.toInt() * 100 * piezas)).toInt()
+            if(puntuacion > 0){
+                return  puntuacion
+            }else{
+                return 0
+            }
+
+        }
+        return  0
+ */
+
+       //Tipo de puntuación 2
+
+        var maximoTime = 0
+        var maxScore = 0
+
+        when(_dificuty){
+            1->{maximoTime = 35
+                maxScore =50
+            }
+            2->{maximoTime = 8*60 //8 minutos
+                maxScore = 100
+            }
+            3->{maximoTime = 15*60
+                maxScore = 200
+            }
+        }
+
+
+            when{
+                    (currentIme <= maximoTime)->{return maxScore}
+                    (currentIme>maximoTime * 5)->{return 0}
+                    (currentIme>maximoTime * 4)->{return (maxScore/4).toInt()}
+                    (currentIme>maximoTime * 3)->{return (maxScore/3).toInt()}
+                    (currentIme>maximoTime * 2)->{return (maxScore/2).toInt()}
+                    (currentIme>maximoTime)->{return (maxScore/1.5).toInt()}
+                }
+
+            return 0
+        }
+
 
 }

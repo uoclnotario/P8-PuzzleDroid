@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Player
+import kotlinx.android.synthetic.main.activity_finis_game.*
 
 
 class FinisGameActivity : AppCompatActivity() {
@@ -19,23 +20,19 @@ class FinisGameActivity : AppCompatActivity() {
 
         var player: Player = intent.getSerializableExtra("player") as Player
         var picture:Picture = intent.getSerializableExtra("pictur") as Picture
-
         var df: Number = intent.getIntExtra("dificulty",0) as Number
-        var time :String = intent.getStringExtra("time") as String
 
-
-        var scoreText : TextView = findViewById<View>(R.id.TextScore) as TextView
-        var textTime : TextView = findViewById<View>(R.id.textTime) as TextView
-
+        textTime.text = intent.getStringExtra("time") as String
+        TextScore.text = intent.getIntExtra("score",0).toString()
 
         var imageView4 : View = findViewById<View>(R.id.imageView4) as View
 
-        textTime.text = time
+
 
 
         var btnContine : Button = findViewById<View>(R.id.btnContine) as Button
 
-        var score:Int
+
 
 
         btnContine.setOnClickListener{
