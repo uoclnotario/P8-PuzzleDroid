@@ -68,10 +68,6 @@ class GameActivity : AppCompatActivity() {
             }
         }
 
-
-
-
-
         ivTablero.post {
             _game = Game(pictur!!,dificult,application.applicationContext,  RectF(ivTablero.x,ivTablero.y,ivTablero.width.toFloat(),ivTablero.height.toFloat()
             ))
@@ -98,12 +94,10 @@ class GameActivity : AppCompatActivity() {
             }
         }
     }
-
     override fun onPause() {
         super.onPause()
         timer.cancel()
     }
-
 
 
     //Funcionan que inicializan o vuelven a poner en marcha el contador.
@@ -119,12 +113,6 @@ class GameActivity : AppCompatActivity() {
             txtTimer.text = _game.getTime()
         }
     }
-
-    fun closeStopFrame()
-    {
-        supportFragmentManager.beginTransaction().hide(fragmentStop)
-    }
-
 
     fun checkGameOver(){
         println("check")

@@ -27,10 +27,8 @@
     <string name="FinishContiune">Continue</string>
     <string name="finishScore">Score</string>
     <string name="finisTime">Time to finish</string>
-
-
-
-    
+    <string name="menuInfo">INFO</string>
+    <string name="mainChangueName">CAMBIAR NOMBRE</string>
 
 
 </resources>

@@ -27,6 +27,10 @@
     <string name="FinishContiune">Continue</string>
     <string name="finishScore">Score</string>
     <string name="finisTime">Time to finish</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="menuInfo">INFO</string>
+    <string name="mainChangueName">CHANGUE NAME</string>
 
 
 </resources>

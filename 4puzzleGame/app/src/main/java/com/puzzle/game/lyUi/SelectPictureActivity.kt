@@ -12,8 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Player
+import kotlinx.android.synthetic.main.activity_game.*
 import java.util.*
 import kotlinx.android.synthetic.main.activity_selectpicture.*
+import kotlinx.android.synthetic.main.activity_selectpicture.btnClose
 
 class SelectPictureActivity : AppCompatActivity() {
 
@@ -58,6 +60,18 @@ class SelectPictureActivity : AppCompatActivity() {
                 putExtra("pictur", modalList[i])
             }
             startActivity(intent);
+        }
+
+        btnClose.setOnClickListener{
+
+            if (findViewById<View>(R.id.flMenu) != null) {
+
+                val firstFragment = MenuBarFragment()
+                firstFragment.arguments = intent.extras
+
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.flMenu, firstFragment).commit()
+            }
         }
 
     }

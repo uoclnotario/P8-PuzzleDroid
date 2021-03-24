@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.viewModels.PlayerViewModel
+import kotlinx.android.synthetic.main.activity_game.*
 
 class StartGameActivity : AppCompatActivity() {
     lateinit var player: Player
@@ -19,7 +20,17 @@ class StartGameActivity : AppCompatActivity() {
         player = intent.getSerializableExtra("player") as Player
         println("El player es: ${player.imprimirdatos()}")
 
+        btnClose.setOnClickListener{
 
+            if (findViewById<View>(R.id.flMenu) != null) {
+
+                val firstFragment = MenuBarFragment()
+                firstFragment.arguments = intent.extras
+
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.flMenu, firstFragment).commit()
+            }
+        }
 
     }
 

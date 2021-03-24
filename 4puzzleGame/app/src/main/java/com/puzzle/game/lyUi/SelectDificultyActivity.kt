@@ -2,11 +2,17 @@ package com.puzzle.game.lyUi
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Player
+import kotlinx.android.synthetic.main.activity_game.*
+import kotlinx.android.synthetic.main.activity_game.appBarLayout
+import kotlinx.android.synthetic.main.activity_game.btnClose
+import kotlinx.android.synthetic.main.activity_selectdificulty.*
+
 
 class SelectDificultyActivity : AppCompatActivity() {
      lateinit var _player : Player
@@ -32,6 +38,18 @@ class SelectDificultyActivity : AppCompatActivity() {
 
         btn_click_hard.setOnClickListener{
             launchGame(3)
+        }
+
+        btnClose.setOnClickListener{
+
+            if (findViewById<View>(R.id.flMenu) != null) {
+
+                val firstFragment = MenuBarFragment()
+                firstFragment.arguments = intent.extras
+
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.flMenu, firstFragment).commit()
+            }
         }
     }
 
