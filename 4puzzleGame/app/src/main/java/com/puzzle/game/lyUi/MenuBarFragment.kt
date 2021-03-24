@@ -38,10 +38,14 @@ class MenuBarFragment : Fragment() {
     @SuppressLint("WrongViewCast")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        wevViewInfo.setVisibility(View.INVISIBLE)
 
         btnExit.setOnClickListener {
             getFragmentManager()?.beginTransaction()?.remove(this)?.commit();
+        }
+
+        btnLayoutInfo.setOnClickListener{
+            wevViewInfo.setVisibility(View.VISIBLE)
         }
 
         btnLayoutExit.setOnClickListener {
