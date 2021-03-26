@@ -67,6 +67,12 @@ class stopGameFragment() : Fragment() {
             getFragmentManager()?.beginTransaction()?.remove(this)?.commit();
         }
 
+        btnLayoutHelp.setOnClickListener{
+            wevViewInfo.setVisibility(View.VISIBLE)
+        }
+
+
+
         btnLayoutContinuar.setOnClickListener{
                 activi.timerStart()
                 layout.setVisibility(View.VISIBLE)

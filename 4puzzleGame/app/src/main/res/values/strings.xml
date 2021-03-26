@@ -31,6 +31,7 @@
 
     <string name="menuInfo">INFO</string>
     <string name="mainChangueName">CHANGUE NAME</string>
+    <string name="btnHelp">HELP</string>
 
 
 </resources>
