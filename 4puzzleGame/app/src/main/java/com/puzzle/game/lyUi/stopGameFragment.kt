@@ -30,6 +30,8 @@ class stopGameFragment() : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var inflater: View
+    lateinit var activi:GameActivity
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -55,7 +57,7 @@ class stopGameFragment() : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val toolbar : AppBarLayout = getActivity()?.findViewById<View>(R.id.appBarLayout) as AppBarLayout
         var layout : RelativeLayout = getActivity()?.findViewById<View>(R.id.layout) as RelativeLayout
-        var activi:GameActivity = getActivity() as GameActivity
+        activi = getActivity() as GameActivity
 
 
         btnExit.setOnClickListener {
@@ -81,6 +83,7 @@ class stopGameFragment() : Fragment() {
         }
 
         btnLayoutBack.setOnClickListener{
+            activi.guardarPartida()
             val intent = Intent(getActivity()?.applicationContext, StartGameActivity::class.java).apply {
                 putExtra("player",activi.player)
             }
@@ -88,12 +91,9 @@ class stopGameFragment() : Fragment() {
         }
 
         btnLayoutSalir.setOnClickListener{
+            activi.guardarPartida()
             getActivity()?.finishAffinity();
         }
-
-
-
     }
-
 
 }

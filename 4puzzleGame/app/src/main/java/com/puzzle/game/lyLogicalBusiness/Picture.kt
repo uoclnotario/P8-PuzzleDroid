@@ -1,22 +1,14 @@
 package com.puzzle.game.lyLogicalBusiness
-
-import android.graphics.Bitmap
 import java.io.Serializable
 
 class Picture : Serializable {
-     var imgResource : Int = 0
-
-    lateinit var hasPicture: String
-    lateinit var rute: String
-    var realWidth: Int = 0
-    var realHeigth: Int = 0
-
     var image:Int? = null
 
     constructor( image: Int?) {
         this.image = image
     }
 
+/* Función para identifcar una imagen haciendole has
     fun hashBitmap(bmp: Bitmap): Long {
         var hash: Long = 31 //or a higher prime at your choice
         for (x in 0 until bmp.width) {
@@ -26,7 +18,5 @@ class Picture : Serializable {
         }
         return hash
     }
-
-
-
+ */
 }

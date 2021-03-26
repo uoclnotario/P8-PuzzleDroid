@@ -2,10 +2,11 @@ package com.puzzle.game.lyLogicalBusiness
 
 import android.content.Context
 import android.graphics.*
+import java.io.Serializable
 import java.util.*
 
 
-class Puzzle {
+class Puzzle : Serializable{
     val _picture: Picture
 
     var _pictureResize: Bitmap? = null
@@ -54,6 +55,7 @@ class Puzzle {
         imgReference.bottom += pieceWidth % rows
 
         // Create each bitmap piece and add it to the resulting array
+        var id = 0
         var yCoord = 0;
         for (row in 0 until rows)  {
             var   xCoord = 0;
@@ -64,10 +66,10 @@ class Puzzle {
                         xCoord,yCoord,
                         imgReference.left.toInt() ,imgReference.top.toInt(),
                         determinarTipoPieza(row,col,rows,cols))
-
+                newPart.id = id
                 piezas!!.add(newPart)
                 xCoord += pieceWidth;
-
+                id++
             }
             yCoord += pieceHeight;
         }

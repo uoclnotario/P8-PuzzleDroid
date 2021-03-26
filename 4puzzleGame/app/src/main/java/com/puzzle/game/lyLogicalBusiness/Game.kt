@@ -2,34 +2,30 @@ package com.puzzle.game.lyLogicalBusiness
 
 import android.content.Context
 import android.graphics.RectF
+import com.puzzle.game.lyDataAcces.dto.DtoGame
+import com.puzzle.game.lyDataAcces.dto.DtoPieza
 import java.io.Serializable
 import java.lang.Exception
 import java.util.*
 
 class Game : Serializable {
-    enum class  Estatus{RUN, FINISH,STOPED}
+    private lateinit var dateSatart :Calendar//TODO No esta implementado falta
 
-    lateinit var  _estatus: Estatus
-    private lateinit var dateSatart :Calendar
     var currentIme : Long = 0
-
-
     var _movements : Int = 0
     lateinit var _dificuty : Number
     lateinit var _puzzle:Puzzle
     lateinit var _picture:Picture
+
     var error : Boolean = false
     var getError : Exception? = null
     var finalizado : Boolean = false
 
-    constructor(){
-
-    }
     constructor(imagenData:Picture, dificulty:Number, ctx:Context, referencia: RectF){
        try {
         _picture = imagenData
         _dificuty=dificulty
-        _estatus = Estatus.RUN
+
         var rows :Int = 4
         var cols:Int = 3
 
@@ -55,6 +51,7 @@ class Game : Serializable {
        }
 
     }
+
     fun isFinish() : Boolean{
         var fin : Boolean = true
 
@@ -75,9 +72,6 @@ class Game : Serializable {
         this.finalizado = fin
         return fin
     }
-    fun start(){
-        dateSatart =Calendar.getInstance()
-    }
     fun tick() {
         currentIme++
         println(getScore().toString())
@@ -89,8 +83,6 @@ class Game : Serializable {
 
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
-
-
     fun getScore() : Int{
 /*     NO VA MUY BIEN.
         //Timpo de Puntuación 1
@@ -139,5 +131,26 @@ class Game : Serializable {
             return 0
         }
 
+    fun getDto() : DtoGame{
+        var dto = DtoGame()
+        var piezas : MutableList<DtoPieza> = arrayListOf()
+
+        dto._dificuty = _dificuty
+        dto._movements = _movements
+        dto.currentIme = currentIme
+        dto.resourCePictur = _picture.image!!
+
+       for(i in _puzzle.piezas!!){
+           var part=DtoPieza()
+           part.id = i.id
+           part.posicionada = i.positionOK
+           part.x = i.x.toInt()
+           part.y = i.y.toInt()
+           piezas.add(part)
+       }
+
+        dto.piezas = piezas
+        return dto
+    }
 
 }
