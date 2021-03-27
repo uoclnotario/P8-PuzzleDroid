@@ -21,7 +21,7 @@ class GameRepository(application: Application) {
          */
         try {
             val rutina: Job = GlobalScope.launch {
-                val gameEntity = GameEntity(0,game.idImagen,game.idPlayer, game.dificuty, game.score, game.tiempo, game.totalTime)
+                val gameEntity = GameEntity(0,game.idImagen,game.idPlayer, game.dificuty, game.score, game.tiempo, game.totalTime,game.fechaInicio,game.fechaFin)
                 GameViewModel.long = gameDao?.insertOne(gameEntity)
             }
             rutina.join()
@@ -54,7 +54,7 @@ class GameRepository(application: Application) {
                 lista = ArrayList<SavedGame>()
                 for(g: GameEntity in GameViewModel.gamelist!!)
                 {
-                    lista.set(g.gameId, SavedGame(g.gameId,g.idImagen, g.idPlayer, g.dificuty, g.score,g.tiempo, g.totalTime))
+                    lista.set(g.gameId, SavedGame(g.gameId,g.idImagen, g.idPlayer, g.dificuty, g.score,g.tiempo, g.totalTime,g.fechaInicio,g.fechaFin))
                 }
             }
 
@@ -85,7 +85,9 @@ class GameRepository(application: Application) {
                             jobGame.dificuty,
                             jobGame.score,
                             jobGame.tiempo,
-                            jobGame.totalTime)
+                            jobGame.totalTime,
+                            jobGame.fechaInicio,
+                            jobGame.fechaFin)
             }
             rutina.join()
             joinAll()

@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_finis_game.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 
 class FinisGameActivity : AppCompatActivity() {
@@ -26,6 +27,7 @@ class FinisGameActivity : AppCompatActivity() {
     var score: Long = 0L
     lateinit var time: String
     var currentIme: Long = 0L
+    lateinit var fechaInicio:LocalDateTime
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +42,8 @@ class FinisGameActivity : AppCompatActivity() {
         score = intent.getLongExtra("score",0L)
         time = intent.getStringExtra("time") as String
         currentIme = intent.getLongExtra("currentTime",0L)
+        fechaInicio= intent.getSerializableExtra("fechaInicio") as LocalDateTime
+
         /***
          * Lanzamos el SaveGame
          */
@@ -67,7 +71,7 @@ class FinisGameActivity : AppCompatActivity() {
             }
             GlobalScope.launch {
                 println("Iniciamos rutina para guardar")
-                val saveGame = SavedGame(0,picture.image!!,player.PlayerId, df, score,time,currentIme)
+                val saveGame = SavedGame(0,picture.image!!,player.PlayerId, df, score,time,currentIme,fechaInicio,LocalDateTime.now())
                 var int:Long? = gameViewModel.insertOne(saveGame)
             }
         }catch (e:Exception)

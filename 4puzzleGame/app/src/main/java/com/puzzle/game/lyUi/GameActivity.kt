@@ -4,11 +4,13 @@ import android.R.id
 import android.content.Context
 import android.content.Intent
 import android.graphics.RectF
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.appbar.AppBarLayout
@@ -34,6 +36,7 @@ class GameActivity : AppCompatActivity() {
 
     lateinit var gameSaved: DtoGame
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
@@ -95,6 +98,7 @@ class GameActivity : AppCompatActivity() {
             if(gameLoad){
                 _game._movements = gameSaved._movements
                 _game.currentIme = gameSaved.currentIme
+                _game.dateSatart = gameSaved.fechaInicio
             }
             if (!_game.error) {
                 val touchListener = TouchListener(this, 0, tool.height)
@@ -143,6 +147,7 @@ class GameActivity : AppCompatActivity() {
         return
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDestroy() {
         super.onDestroy()
         //Si se cierra la app y no se ha finalizado el juego se guarda
@@ -159,6 +164,7 @@ class GameActivity : AppCompatActivity() {
             txtTimer.text = _game.getTime()
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     fun checkGameOver(){
         println("check")
         if(_game.isFinish()){
@@ -175,6 +181,7 @@ class GameActivity : AppCompatActivity() {
                 putExtra("score",_game.getScore())
                 putExtra("pictur",pictur)
                 putExtra("currentTime",_game.currentIme)
+                putExtra("fechaInicio",_game.dateSatart)
             }
             startActivity(intent)
         }

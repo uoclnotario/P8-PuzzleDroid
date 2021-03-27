@@ -2,15 +2,20 @@ package com.puzzle.game.lyLogicalBusiness
 
 import android.content.Context
 import android.graphics.RectF
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.puzzle.game.lyDataAcces.dto.DtoGame
 import com.puzzle.game.lyDataAcces.dto.DtoPieza
 import java.io.Serializable
 import java.lang.Exception
+
 import java.util.*
 import kotlin.math.roundToLong
+import java.time.LocalDateTime
 
 class Game : Serializable {
-    private lateinit var dateSatart :Calendar//TODO No esta implementado falta
+    lateinit var dateSatart :LocalDateTime//TODO No esta implementado falta
+
 
     var currentIme : Long = 0
     var _movements : Int = 0
@@ -22,6 +27,7 @@ class Game : Serializable {
     var getError : Exception? = null
     var finalizado : Boolean = false
 
+    @RequiresApi(Build.VERSION_CODES.O)
     constructor(imagenData:Picture, dificulty:Number, ctx:Context, referencia: RectF){
        try {
         _picture = imagenData
@@ -44,8 +50,8 @@ class Game : Serializable {
                cols=12
            }
        }
-
-        _puzzle = Puzzle(imagenData,ctx,referencia,rows,cols)
+           dateSatart = LocalDateTime.now()
+           _puzzle = Puzzle(imagenData,ctx,referencia,rows,cols)
        }catch (ex :Exception){
            this.getError = ex
            error = true
@@ -53,6 +59,7 @@ class Game : Serializable {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun isFinish() : Boolean{
         var fin : Boolean = true
 
@@ -70,6 +77,7 @@ class Game : Serializable {
             }
         }
 
+        //Si finaliza la partida
         this.finalizado = fin
         return fin
     }
@@ -137,6 +145,7 @@ class Game : Serializable {
         dto._movements = _movements
         dto.currentIme = currentIme
         dto.resourCePictur = _picture.image!!
+        dto.fechaInicio = dateSatart
 
        for(i in _puzzle.piezas!!){
            var part=DtoPieza()
