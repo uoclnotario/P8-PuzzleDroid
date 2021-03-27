@@ -19,33 +19,38 @@
             android:layout_width="223dp"
             android:layout_height="42dp"
             android:layout_marginBottom="128dp"
+            android:onClick="onClick"
             android:padding="0dp"
             android:scaleX="1"
             android:text="@string/btnStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:onClick="onClick"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
+            android:id="@+id/imageView2"
             android:layout_width="237dp"
             android:layout_height="57dp"
             android:layout_marginBottom="120dp"
+            android:contentDescription="@string/btnStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/btn_oscuro"
-            android:contentDescription="@string/btnStart"  />
+            app:srcCompat="@drawable/btn_oscuro" />
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="242dp"
+            android:layout_height="322dp"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintBottom_toTopOf="@+id/btnStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.514"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.802"
+            app:srcCompat="@drawable/logo4pieces" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="242dp"
-        android:layout_height="322dp"
-        app:layout_anchor="@+id/constraintLayout"
-        app:layout_anchorGravity="center"
-        app:srcCompat="@drawable/logo4pieces"
-        android:contentDescription="@string/app_name"  />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

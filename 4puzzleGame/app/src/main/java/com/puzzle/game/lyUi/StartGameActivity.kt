@@ -24,10 +24,11 @@ class StartGameActivity : AppCompatActivity() {
 
         println("Estamos en el StartGame Activity")//De esta manera recogemos los datos del intent...
         player = intent.getSerializableExtra("player") as Player
+        userName.text = userName.text.toString() + ", " + player.nombre
         println("El player es: ${player.imprimirdatos()}")
 
         val file = File(filesDir.path,"saveGame")
-
+/*
         if(file.exists()) {
             val d = resources.getDrawable(drawable.btn_oscuro)
             btnContinueGame.setBackground(d)
@@ -38,6 +39,10 @@ class StartGameActivity : AppCompatActivity() {
             btnContinueGame.setBackground(d)
             btnContinueGame.setTextColor(Color.GRAY)
             btnContinueMarco.setImageResource(drawable.btnstop)
+        }*/
+        if(!file.exists()) {
+            btnContinueGame.alpha = 0.4f
+            btnContinueMarco.alpha = 0.4f
         }
         btnContinueGame.isClickable = file.exists()
 

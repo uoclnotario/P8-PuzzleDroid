@@ -7,6 +7,7 @@ import com.puzzle.game.lyDataAcces.dto.DtoPieza
 import java.io.Serializable
 import java.lang.Exception
 import java.util.*
+import kotlin.math.roundToLong
 
 class Game : Serializable {
     private lateinit var dateSatart :Calendar//TODO No esta implementado falta
@@ -83,24 +84,21 @@ class Game : Serializable {
 
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
-    fun getScore() : Int{
+    fun getScore() : Long{
 /*     NO VA MUY BIEN.
         //Timpo de Puntuación 1
         // (piezas / segundos) x (piexasx1000) + BonusDificultad (= 100 x piezas)
+         */
         var piezas = _puzzle.piezas?.count()
         var segundos = currentIme
+        var puntuacion: Long = 0
         if (piezas != null) {
-            var puntuacion : Int = ((piezas / segundos) * (piezas *1000) + (_dificuty.toInt() * 100 * piezas)).toInt()
-            if(puntuacion > 0){
-                return  puntuacion
-            }else{
-                return 0
-            }
-
+            puntuacion = ( ( (piezas.toFloat() / segundos).toFloat() * (piezas.toFloat() *1000.0) ) + (_dificuty.toLong() * 100 * piezas.toLong()).toFloat() ).roundToLong()
+            return  puntuacion
         }
-        return  0
- */
+        return  0L
 
+/*
        //Tipo de puntuación 2
 
         var maximoTime = 0
@@ -118,7 +116,6 @@ class Game : Serializable {
             }
         }
 
-
             when{
                     (currentIme <= maximoTime)->{return maxScore}
                     (currentIme>maximoTime * 5)->{return 0}
@@ -129,6 +126,7 @@ class Game : Serializable {
                 }
 
             return 0
+        */
         }
 
     fun getDto() : DtoGame{

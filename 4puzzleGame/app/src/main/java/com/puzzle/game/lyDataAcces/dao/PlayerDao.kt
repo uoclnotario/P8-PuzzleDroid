@@ -1,6 +1,5 @@
 package com.puzzle.game.lyDataAcces.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.puzzle.game.lyDataAcces.entities.PlayerData
 
