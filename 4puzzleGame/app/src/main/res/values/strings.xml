@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">4puzzleGame</string>
-    <string name="title_activity_main">Welcom</string>
+    <string name="title_activity_main">Welcome</string>
     <string name="hi">Welcome</string>
     <string name="btnStart">Begin</string>
     <string name="newGame">New Game</string>
@@ -10,7 +10,7 @@
     <string name="Easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
-    <string name="name_intro">Before we start... What\'s your name?</string>
+    <string name="name_intro">Before we start… What\'s your name?</string>
     <string name="continua">Continue</string>
     <string name="newPlayerName">Your name</string>
     <string name="continuar">Continue</string>
@@ -30,7 +30,9 @@
     <!-- TODO: Remove or change this placeholder text -->
 
     <string name="menuInfo">INFO</string>
-    <string name="mainChangueName">CHANGUE NAME</string>
+    <string name="mainChangueName">CHANGE NAME</string>
+    <string name="menu">Menu</string>
+    <string name="recordNew">New record!</string>
 
 
 </resources>

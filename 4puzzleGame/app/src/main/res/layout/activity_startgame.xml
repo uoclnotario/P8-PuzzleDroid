@@ -43,10 +43,24 @@
                     android:layout_width="88dp"
                     android:layout_height="72dp"
                     android:layout_marginTop="7dp"
-                    android:contentDescription=""
+                    android:contentDescription="@string/menu"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/menubtn" />
+
+                <TextView
+                    style="@style/Theme.4puzzleGame.SimpleText"
+                    android:textColor="@color/white"
+                    android:textAlignment="textEnd"
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hi"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.826"
+                    app:layout_constraintStart_toEndOf="@+id/btnClose"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
@@ -55,11 +69,12 @@
             android:id="@+id/btnNewGameMarco"
             android:layout_width="237dp"
             android:layout_height="57dp"
-            android:layout_marginTop="200dp"
             android:contentDescription="@string/newGame"
+            app:layout_constraintVertical_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            android:layout_marginTop="70pt"
             app:srcCompat="@drawable/btn_oscuro" />
 
         <Button

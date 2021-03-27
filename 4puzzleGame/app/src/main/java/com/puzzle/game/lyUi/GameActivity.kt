@@ -174,6 +174,7 @@ class GameActivity : AppCompatActivity() {
                 putExtra("moviments",_game._movements)
                 putExtra("score",_game.getScore())
                 putExtra("pictur",pictur)
+                putExtra("currentTime",_game.currentIme)
             }
             startActivity(intent)
         }
