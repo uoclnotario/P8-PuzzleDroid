@@ -27,8 +27,9 @@
     <string name="FinishContiune">Continue</string>
     <string name="finishScore">Score</string>
     <string name="finisTime">Time to finish</string>
-	
-	<string name="btnHelp">HELP</string>
+
+    <string name="mainChangueName">Change Name</string>
+    <string name="btnHelp">HELP</string>
 	<string name="menu">Menu</string>
     <string name="recordNew">New record!</string>
 	<string name="menuInfo">INFO</string>

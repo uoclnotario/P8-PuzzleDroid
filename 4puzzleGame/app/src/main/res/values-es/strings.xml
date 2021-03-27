@@ -31,6 +31,6 @@
     <string name="mainChangueName">CAMBIAR NOMBRE</string>
     <string name="menu">Menú</string>
     <string name="recordNew">¡Nuevo record!</string>
-
+    <string name="btnHelp">AYUDA</string>
 
 </resources>
