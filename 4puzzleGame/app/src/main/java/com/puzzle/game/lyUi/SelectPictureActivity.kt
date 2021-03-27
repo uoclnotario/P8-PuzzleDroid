@@ -51,36 +51,54 @@ class SelectPictureActivity : AppCompatActivity() {
         _player = intent.getSerializableExtra("player") as Player
 
         var customAdapter = CustomAdapter(modalList,this);
+        var ListadoPartidas : MutableList<SavedGame>?  = null
 
+        var rutina =GlobalScope.launch {
+           ListadoPartidas =  gameViewModel.getAllimageMaxScore(_player.PlayerId)
 
-
+            if(ListadoPartidas != null){
+                for(i:SavedGame in ListadoPartidas!!){
+                    println("Partida:"+i.fechaInicio.toString())
+                }
+            }else{
+                println("ERRORRRRRR, VIENE VACIA LA LISTA")
+            }
             for (i in images.indices) {
 
-                    GlobalScope.launch {
-                        var search = gameViewModel.bestByPicture(images[i])
-                        if (search != null) {
-                            modalList.add(Picture(images[i], search.score.toString()))
-                        } else {
-                            modalList.add(Picture(images[i], "0"))
-                        }
+                var search : SavedGame? = null
+                if (ListadoPartidas != null){
+                    var list = ListadoPartidas?.filter { it.idImagen == images[i]}
+                    if (list != null) {
+                        search = list.maxBy {it.score}
                     }
-            }
-
-
-            gridView.adapter = customAdapter;
-
-            btnClose.setOnClickListener{
-
-                if (findViewById<View>(R.id.flMenu) != null) {
-
-                    val firstFragment = MenuBarFragment()
-                    firstFragment.arguments = intent.extras
-
-                    supportFragmentManager.beginTransaction()
-                        .add(R.id.flMenu, firstFragment).commit()
                 }
-            }
+                if (search != null) {
+                    println(search.score.toString())
+                    modalList.add(Picture(images[i], search.score.toString()))
+                } else {
+                    modalList.add(Picture(images[i], "0"))
+                }
 
+            }
+        }
+
+        //Esperamos a que la rutina acabe para finalizar
+        while (rutina.isActive) {}
+
+
+        gridView.adapter = customAdapter;
+
+        btnClose.setOnClickListener{
+
+            if (findViewById<View>(R.id.flMenu) != null) {
+
+                val firstFragment = MenuBarFragment()
+                firstFragment.arguments = intent.extras
+
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.flMenu, firstFragment).commit()
+            }
+        }
 
 
         gridView.setOnItemClickListener { adapterView, view, i, l ->

@@ -22,6 +22,21 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun bestByPicture(num: Int) : SavedGame? { return repository.bestByPicture(num) }
 
-    fun getAllimageMaxScore(idPlayer: Int) : SavedGame? { return repository.getAllMaxScorePictur(idPlayer) }
+    suspend fun getAllimageMaxScore(idPlayer: Int):MutableList<SavedGame>?  {
+            var returnLIst : MutableList<SavedGame>? =  arrayListOf()
+            var lista : List<GameEntity>? = repository.getAllMaxScorePictur(idPlayer)
+
+            if(lista != null){
+                for(i:GameEntity in lista){
+                    if (returnLIst != null) {
+                        returnLIst.add(SavedGame(i.idImagen,i.idPlayer,i.dificuty,i.score,i.tiempo,i.totalTime,i.fechaInicio,i.fechaFin))
+                    }
+                }
+            }else{
+                println("No hay datos")
+            }
+
+            return returnLIst
+         }
 
 }
