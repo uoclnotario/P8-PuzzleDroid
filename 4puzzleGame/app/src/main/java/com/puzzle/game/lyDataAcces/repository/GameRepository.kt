@@ -35,8 +35,7 @@ class GameRepository(application: Application) {
         }
     }
 
-    suspend fun getAll(num: Int): List<SavedGame>?
-    {
+    suspend fun getAll(num: Int): List<SavedGame>? {
         /***
          * Declaramos Variables
          */
@@ -68,9 +67,7 @@ class GameRepository(application: Application) {
 
     }
 
-
-    suspend fun bestByPicture(num: Int): SavedGame?
-    {
+    suspend fun bestByPicture(num: Int): SavedGame? {
         var game: SavedGame? = null
         GameViewModel.gameSave = null
         try {
@@ -91,16 +88,71 @@ class GameRepository(application: Application) {
             }
             rutina.join()
             joinAll()
-            while (rutina.isActive){}
+            while (rutina.isActive) {
+            }
             game = GameViewModel.gameSave
 
-        }catch (e: Exception)
-        {
+        } catch (e: Exception) {
             println("Error buscando mejor score por Imagen: $e")
-        }
-        finally {
+        } finally {
             return game
         }
     }
+
+
+
+    fun getAllMaxScorePictur(num: Int): SavedGame? {
+        var game: SavedGame? = null
+
+        try {
+                val jobGame: GameEntity? = gameDao?.bestByPicture(num)
+                if (jobGame != null)
+                    GameViewModel.gameSave = SavedGame(
+                            jobGame.gameId,
+                            jobGame.idImagen,
+                            jobGame.idPlayer,
+                            jobGame.dificuty,
+                            jobGame.score,
+                            jobGame.tiempo,
+                            jobGame.totalTime,
+                            jobGame.fechaInicio,
+                            jobGame.fechaFin)
+                 game = GameViewModel.gameSave
+            println("Devuelve dato?¿?=="+(jobGame != null).toString())
+            return  game
+        } catch (e: Exception) {
+            println("Error buscando mejor score por Imagen: $e")
+        } finally {
+            return game
+        }
+    }
+    /*
+     fun getAllMaxScorePictur(idPlayer: Int): List<SavedGame>?
+    {
+        var lista: ArrayList<SavedGame>? = null
+        try {
+
+                var daoLista= gameDao?.getAll()
+                if (daoLista != null) {
+                    if (daoLista.count() > 0) {
+                        lista = ArrayList(daoLista.count())
+                        var count = 0
+                        for(g: GameEntity in GameViewModel.gamelist!!)
+                        {
+                            lista[count] = SavedGame(g.idImagen,g.idPlayer,g.dificuty,g.score,g.tiempo,g.totalTime,g.fechaInicio,g.fechaFin)
+                            count++
+                        }
+                    }
+                }else{
+                    println("Hilo no devuelve lista")
+                }
+            }catch (e: Exception)
+            {
+                println("Hilo no devuelve lista: $e")
+            }
+            finally {
+                return lista
+            }
+    }*/
 
 }

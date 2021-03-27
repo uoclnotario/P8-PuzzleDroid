@@ -52,27 +52,18 @@ class SelectPictureActivity : AppCompatActivity() {
 
         var customAdapter = CustomAdapter(modalList,this);
 
-        GlobalScope.launch {
-            var listaScores : ArrayList<SavedGame> = gameViewModel.getAll(_player.PlayerId) as ArrayList<SavedGame>
+
 
             for (i in images.indices) {
-               if(listaScores.size > 0 ){
-                    println("lista De Scores tiene elementos")
 
-                    var search = listaScores.find { it.idImagen ==images[i]}
-
-                    if(search != null){
-                        modalList.add(Picture(images[i], search.score.toString()))
-                    }else{
-                        modalList.add(Picture(images[i], "0"))
+                    GlobalScope.launch {
+                        var search = gameViewModel.bestByPicture(images[i])
+                        if (search != null) {
+                            modalList.add(Picture(images[i], search.score.toString()))
+                        } else {
+                            modalList.add(Picture(images[i], "0"))
+                        }
                     }
-
-                } else{
-                    println("lista De Scores esta vacia")
-                    modalList.add(Picture(images[i], "0"))
-                }
-
-
             }
 
 
@@ -89,7 +80,7 @@ class SelectPictureActivity : AppCompatActivity() {
                         .add(R.id.flMenu, firstFragment).commit()
                 }
             }
-        }
+
 
 
         gridView.setOnItemClickListener { adapterView, view, i, l ->

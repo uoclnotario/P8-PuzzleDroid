@@ -22,5 +22,6 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun bestByPicture(num: Int) : SavedGame? { return repository.bestByPicture(num) }
 
+    fun getAllimageMaxScore(idPlayer: Int) : SavedGame? { return repository.getAllMaxScorePictur(idPlayer) }
 
 }

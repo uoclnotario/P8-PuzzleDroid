@@ -38,6 +38,10 @@ interface GameDao {
     @Query("SELECT * FROM " + GameEntity.TABLE_NAME + " WHERE idImagen == :picture AND idPlayer == :player ORDER BY score DESC LIMIT 1")
     fun bestByPicture(picture: Int, player: Int): GameEntity?
 
+    /*
+    @Query("SELECT * FROM " + GameEntity.TABLE_NAME )
+    fun getMaxScoreOfImage(player: Int): List<GameEntity>?
+*/
     @Insert
     fun insertOne(gameEntity: GameEntity) : Long?
 
