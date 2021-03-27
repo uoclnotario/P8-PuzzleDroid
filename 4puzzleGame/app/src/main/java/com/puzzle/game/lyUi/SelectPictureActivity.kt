@@ -8,19 +8,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Player
+import com.puzzle.game.lyLogicalBusiness.SavedGame
+import com.puzzle.game.viewModels.GameViewModel
 import kotlinx.android.synthetic.main.activity_game.*
 import java.util.*
 import kotlinx.android.synthetic.main.activity_selectpicture.*
 import kotlinx.android.synthetic.main.activity_selectpicture.btnClose
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class SelectPictureActivity : AppCompatActivity() {
 
     lateinit var _player :Player
-
+    private lateinit var gameViewModel: GameViewModel
 
     var modalList = ArrayList<Picture>()
 
@@ -40,17 +47,49 @@ class SelectPictureActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selectpicture)
-
+        gameViewModel = run { ViewModelProvider(this).get(GameViewModel::class.java) }
         _player = intent.getSerializableExtra("player") as Player
-
-
-        for(i in images.indices){
-            modalList.add(Picture(images[i]))
-        }
 
         var customAdapter = CustomAdapter(modalList,this);
 
-        gridView.adapter = customAdapter;
+        GlobalScope.launch {
+            var listaScores : ArrayList<SavedGame> = gameViewModel.getAll(_player.PlayerId) as ArrayList<SavedGame>
+
+            for (i in images.indices) {
+               if(listaScores.size > 0 ){
+                    println("lista De Scores tiene elementos")
+
+                    var search = listaScores.find { it.idImagen ==images[i]}
+
+                    if(search != null){
+                        modalList.add(Picture(images[i], search.score.toString()))
+                    }else{
+                        modalList.add(Picture(images[i], "0"))
+                    }
+
+                } else{
+                    println("lista De Scores esta vacia")
+                    modalList.add(Picture(images[i], "0"))
+                }
+
+
+            }
+
+
+            gridView.adapter = customAdapter;
+
+            btnClose.setOnClickListener{
+
+                if (findViewById<View>(R.id.flMenu) != null) {
+
+                    val firstFragment = MenuBarFragment()
+                    firstFragment.arguments = intent.extras
+
+                    supportFragmentManager.beginTransaction()
+                        .add(R.id.flMenu, firstFragment).commit()
+                }
+            }
+        }
 
 
         gridView.setOnItemClickListener { adapterView, view, i, l ->
@@ -61,25 +100,12 @@ class SelectPictureActivity : AppCompatActivity() {
             }
             startActivity(intent);
         }
-
-        btnClose.setOnClickListener{
-
-            if (findViewById<View>(R.id.flMenu) != null) {
-
-                val firstFragment = MenuBarFragment()
-                firstFragment.arguments = intent.extras
-
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.flMenu, firstFragment).commit()
-            }
-        }
-
     }
 
 
     class CustomAdapter(
-        var itemModel: ArrayList<Picture>,
-        var context: Context
+            var itemModel: ArrayList<Picture>,
+            var context: Context
     ) : BaseAdapter(){
 
         var layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -90,7 +116,11 @@ class SelectPictureActivity : AppCompatActivity() {
             }
 
             var imageView = view?.findViewById<ImageView>(R.id.imageView);
+            var points = view?.findViewById<TextView>(R.id.points)
 
+            if (points != null) {
+                points.text = itemModel[position].points
+            }
             imageView?.setImageResource(itemModel[position].image!!)
 
             return view!!;

@@ -2,6 +2,7 @@ package com.puzzle.game.lyLogicalBusiness
 
 import android.content.Context
 import android.graphics.*
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 
 class Part : AppCompatImageView {
@@ -38,6 +39,7 @@ class Part : AppCompatImageView {
         this.xCoord =  xCoord + marginOffsetX  - offsetX
         this.yCoord = yCoord + marginOffsetY - offsetY
         crearImagen(puzzlePicture,xCoord,yCoord)
+
     }
 
     enum class  TpePart{

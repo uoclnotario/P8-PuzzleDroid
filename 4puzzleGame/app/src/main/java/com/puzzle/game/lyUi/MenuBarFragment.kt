@@ -60,6 +60,8 @@ class MenuBarFragment : Fragment() {
             val settings = webView.settings
             settings.javaScriptEnabled = true
             webView.loadUrl( "https://sites.google.com/view/4piecesgame/inicio?authuser=0")
+
+
             wevViewInfo.setVisibility(View.VISIBLE)
 
         }

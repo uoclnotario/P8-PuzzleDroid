@@ -84,12 +84,12 @@ class GameActivity : AppCompatActivity() {
                 val firstFragment = stopGameFragment()
                 firstFragment.arguments = intent.extras
 
-                appBarLayout.setVisibility(View.INVISIBLE)
-                layout.setVisibility(View.INVISIBLE)
                 timer.cancel()
-
                 supportFragmentManager.beginTransaction()
                     .add(R.id.StopFragment, firstFragment).commit()
+
+                appBarLayout.setVisibility(View.INVISIBLE)
+                layout.setVisibility(View.INVISIBLE)
             }
         }
 
