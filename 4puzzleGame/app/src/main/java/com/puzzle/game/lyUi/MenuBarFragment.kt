@@ -13,7 +13,10 @@ import android.webkit.WebViewClient
 import android.widget.SearchView
 import com.puzzle.game.R
 import kotlinx.android.synthetic.main.fragment_menu_bar.*
-import kotlinx.android.synthetic.main.fragment_menu_bar.searchView
+import kotlinx.android.synthetic.main.fragment_menu_bar.btnExit
+import kotlinx.android.synthetic.main.fragment_menu_bar.webView
+import kotlinx.android.synthetic.main.fragment_menu_bar.wevViewInfo
+import kotlinx.android.synthetic.main.fragment_stop_game.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,8 +30,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class MenuBarFragment : Fragment() {
-    private val BASE_URL = "https://sites.google.com/view/4piecesgame/inicio"
-    private val SEARCH_PATH = "/search?q="
+    private val BASE_URL = "https://sites.google.com/uoc.edu/app4pieces/presentaci%C3%B3n"
+
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -53,36 +56,12 @@ class MenuBarFragment : Fragment() {
         }
 
         btnLayoutInfo.setOnClickListener{
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-                override fun onQueryTextChange(p0: String?): Boolean {
-                    return false
-                }
-                override fun onQueryTextSubmit(p0: String?): Boolean {
 
-                    p0?.let {
-                        if (URLUtil.isValidUrl(it)) {
-                            // Es una url
-                            webView.loadUrl(it)
-                        } else {
-                            // No es una url
-                            webView.loadUrl("$BASE_URL$SEARCH_PATH$it")
-                        }
-                    }
-
-                    return false
-                }
-            })
-
-            //Webview
-            webView.webChromeClient = object : WebChromeClient() {
-            }
-
-            webView.webViewClient = object : WebViewClient() {
-            }
             val settings = webView.settings
             settings.javaScriptEnabled = true
-            webView.loadUrl(BASE_URL)
+            webView.loadUrl( "https://sites.google.com/view/4piecesgame/inicio?authuser=0")
             wevViewInfo.setVisibility(View.VISIBLE)
+
         }
 
         btnLayoutExit.setOnClickListener {
