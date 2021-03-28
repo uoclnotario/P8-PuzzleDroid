@@ -18,24 +18,38 @@ class PlayerRepository(application: Application) {
         println("datos Player: ${player.nombre}")
         if(player.nombre!!.length > 3)
         {
+            var oldId : Int = -1
             try {
                 PlayerViewModel.player = null
                 var bloque = GlobalScope.launch {
-                    PlayerViewModel.player = findByName(player.nombre)
-                    println("Buscando usuario ${PlayerViewModel.player}")
+                    PlayerViewModel.player = findLastPlayer()
+                    oldId = PlayerViewModel.player?.PlayerId ?:-1
+                    println("Buscando usuario ${PlayerViewModel.player}" )
                 }
                 while (bloque.isActive){ delay(1L)}
+
+
                 PlayerViewModel.long = null
                 if(PlayerViewModel.player == null) {
                     println("Agregando usuario")
                     val rutina: Job = GlobalScope.launch {
-                        val playerdata: PlayerData = PlayerData(player.PlayerId, player.nombre, player.last_access!!)
-                        PlayerViewModel.long = playerDao?.insertOne(playerdata)
+                        PlayerViewModel.long = playerDao?.insertOne(PlayerData(player.PlayerId, player.nombre, player.last_access!!))
                     }
                     rutina.join()
                     joinAll()
                     while (rutina.isActive){}
                 }else{
+                    println("Editando usuario")
+                    if(oldId > -1){
+                        val rutina: Job = GlobalScope.launch {
+                            PlayerViewModel.long = playerDao?.updateOne( PlayerData(oldId, player.nombre, player.last_access!!))?.toLong()
+                        }
+                        rutina.join()
+                        joinAll()
+                        while (rutina.isActive) {
+                        }
+
+                    }
                     println("Nombre ya existe")
                 }
                 rs = PlayerViewModel.long

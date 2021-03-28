@@ -27,6 +27,6 @@ interface PlayerDao {
     fun delete(vararg playerData: PlayerData)
 
     @Update
-    fun updateOne(vararg playerData: PlayerData)
+    fun updateOne(vararg playerData: PlayerData): Int?
 
 }

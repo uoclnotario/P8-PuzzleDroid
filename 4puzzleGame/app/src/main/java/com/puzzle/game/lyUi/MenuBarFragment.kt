@@ -11,12 +11,17 @@ import android.webkit.URLUtil
 import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
 import android.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
 import com.puzzle.game.R
+import com.puzzle.game.viewModels.PlayerViewModel
 import kotlinx.android.synthetic.main.fragment_menu_bar.*
 import kotlinx.android.synthetic.main.fragment_menu_bar.btnExit
 import kotlinx.android.synthetic.main.fragment_menu_bar.webView
 import kotlinx.android.synthetic.main.fragment_menu_bar.wevViewInfo
 import kotlinx.android.synthetic.main.fragment_stop_game.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -64,6 +69,11 @@ class MenuBarFragment : Fragment() {
 
             wevViewInfo.setVisibility(View.VISIBLE)
 
+        }
+
+        btnLayoutChnName.setOnClickListener{
+            val intent = Intent(getActivity()?.applicationContext, NamePlayerActivity::class.java)
+            startActivity(intent)
         }
 
         btnLayoutExit.setOnClickListener {

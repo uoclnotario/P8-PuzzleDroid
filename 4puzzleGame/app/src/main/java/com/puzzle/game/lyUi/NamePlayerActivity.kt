@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -24,11 +25,12 @@ import kotlin.Exception
 
 class NamePlayerActivity : AppCompatActivity() {
     var player: Player? = null
+
+
     private lateinit var playerViewModel: PlayerViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nameplayer)
-
         playerViewModel = run { ViewModelProvider(this).get(PlayerViewModel::class.java) }
     }
 

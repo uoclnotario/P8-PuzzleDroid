@@ -24,7 +24,6 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
     suspend fun findLastPlayer() : Player? { return repository.findLastPlayer() }
 
     suspend fun findByName(str : String) : Player? { return repository.findByName(str) }
-
     suspend fun getAll() { repository.getAll() }
     fun updatePlayer(player: Player) { repository.update(player) }
     fun deletePlayer(player: Player) { repository.delete(player) }
