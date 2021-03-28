@@ -3,6 +3,7 @@ package com.puzzle.game.lyLogicalBusiness
 import androidx.room.ColumnInfo
 import java.io.Serializable
 import java.time.LocalDateTime
+import java.util.*
 
 class SavedGame : Serializable {
     @ColumnInfo(name = "gameId")
@@ -21,12 +22,12 @@ class SavedGame : Serializable {
     var totalTime:Long
 
     @ColumnInfo(name = "fechaInicio")
-    var fechaInicio:LocalDateTime
+    var fechaInicio:Date
     @ColumnInfo(name = "fechaFin")
-    var fechaFin:LocalDateTime
+    var fechaFin:Date
 
 
-    constructor(idImagen:Int, idPlayer:Int, dificuty:Int, score:Long, tiempo:String,totalTime:Long,fechaIncio:LocalDateTime,fechaFin:LocalDateTime)
+    constructor(idImagen:Int, idPlayer:Int, dificuty:Int, score:Long, tiempo:String,totalTime:Long,fechaIncio:Date,fechaFin:Date)
     {
         this.gameId = 0
         this.idImagen = idImagen
@@ -39,7 +40,7 @@ class SavedGame : Serializable {
         this.fechaFin = fechaFin
 
     }
-    constructor(gameId:Int, idImagen:Int, idPlayer:Int, dificuty:Int, score:Long, tiempo:String,totalTime:Long,fechaIncio:LocalDateTime,fechaFin:LocalDateTime)
+    constructor(gameId:Int, idImagen:Int, idPlayer:Int, dificuty:Int, score:Long, tiempo:String,totalTime:Long,fechaIncio:Date,fechaFin:Date)
     {
         this.gameId = gameId
         this.idImagen = idImagen

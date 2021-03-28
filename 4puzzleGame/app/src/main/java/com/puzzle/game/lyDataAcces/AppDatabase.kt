@@ -10,7 +10,7 @@ import com.puzzle.game.lyDataAcces.dao.PlayerDao
 import com.puzzle.game.lyDataAcces.entities.GameEntity
 import com.puzzle.game.lyDataAcces.entities.PlayerData
 
-@Database(entities = arrayOf(PlayerData::class, GameEntity::class), version = 3)
+@Database(entities = arrayOf(PlayerData::class, GameEntity::class), version = 4)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun playerDao() : PlayerDao

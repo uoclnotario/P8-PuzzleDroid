@@ -14,7 +14,7 @@ import kotlin.math.roundToLong
 import java.time.LocalDateTime
 
 class Game : Serializable {
-    lateinit var dateSatart :LocalDateTime//TODO No esta implementado falta
+    lateinit var dateSatart :Date//TODO No esta implementado falta
 
 
     var currentIme : Long = 0
@@ -50,7 +50,7 @@ class Game : Serializable {
                cols=12
            }
        }
-           dateSatart = LocalDateTime.now()
+           dateSatart = Date()
            _puzzle = Puzzle(imagenData,ctx,referencia,rows,cols)
        }catch (ex :Exception){
            this.getError = ex
@@ -162,7 +162,7 @@ class Game : Serializable {
         dto._movements = _movements
         dto.currentIme = currentIme
         dto.resourCePictur = _picture.image!!
-        dto.fechaInicio = dateSatart
+        dto.fechaInicio = Date()
 
        for(i in _puzzle.piezas!!){
            var part=DtoPieza()
