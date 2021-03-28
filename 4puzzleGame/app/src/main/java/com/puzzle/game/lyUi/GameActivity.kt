@@ -157,12 +157,15 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun timerStart(){
-   /*   timer = Timer("schedule", true);
+      timer = Timer("schedule", true);
         timer.scheduleAtFixedRate(1000, 1000) {
-            val txtTimer : TextView = findViewById<View>(R.id.timer) as TextView
-            _game.tick()
-            txtTimer.text = _game.getTime()
-        }*/
+           if(_game != null) _game.tick()
+
+            runOnUiThread( Runnable() {
+                val txtTimer: TextView = findViewById<View>(R.id.timer) as TextView
+                txtTimer.text = _game.getTime()
+            })
+        }
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun checkGameOver(){
