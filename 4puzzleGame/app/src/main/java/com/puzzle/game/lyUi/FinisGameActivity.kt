@@ -79,12 +79,6 @@ class FinisGameActivity : AppCompatActivity() {
             println("Error guardando datos de fin de partida: $e")
         }
 
-        //var imageView4 : View = findViewById<View>(R.id.imageView4) as View
-        //var btnContine : Button = findViewById<View>(R.id.btnContine) as Button
-
-
-
-
         btnContine.setOnClickListener{
             //Si existe almacenado un nombre de usuario
             val intent = Intent(this, StartGameActivity::class.java).apply {
@@ -93,16 +87,6 @@ class FinisGameActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-
-
-/*
-        putExtra("player",player)
-        putExtra("dificulty",_game._dificuty)
-        putExtra("time",_game.getTime())
-        putExtra("moviments",_game._movements)
-        putExtra("pictur",pictur)
- */
     }
 
     //Elimina la función de volver atras..

@@ -33,4 +33,6 @@
 	<string name="menu">Menu</string>
     <string name="recordNew">New record!</string>
 	<string name="menuInfo">INFO</string>
+    <string name="pointsTotalTitle">TUS PUNTOS TOTALES</string>
+    <string name="pointsTitleGameList">TUS MEJORE PARTIDAS</string>
 </resources>

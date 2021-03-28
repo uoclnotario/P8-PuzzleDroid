@@ -73,7 +73,12 @@ class StartGameActivity : AppCompatActivity() {
         }
         startActivity(intent)
     }
-    fun onClickPuntuacion(view: View) {}
+    fun onClickPuntuacion(view: View) {
+        val intent = Intent(this, PointsActivity::class.java).apply {
+            putExtra("player",player)
+        }
+        startActivity(intent)
+    }
     fun openMenu(view: View) {}
 
 }
