@@ -4,13 +4,10 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.Room
 import com.puzzle.game.R
-import com.puzzle.game.lyDataAcces.AppDatabase
 import com.puzzle.game.lyDataAcces.entities.PlayerData
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.viewModels.PlayerViewModel
@@ -18,10 +15,8 @@ import kotlinx.android.synthetic.main.activity_nameplayer.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.sql.Time
-import java.sql.Timestamp
-import java.time.Instant
-import kotlin.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NamePlayerActivity : AppCompatActivity() {
     var player: Player? = null
@@ -57,7 +52,8 @@ class NamePlayerActivity : AppCompatActivity() {
 
             try {
                 PlayerViewModel.long = null
-                player = Player(0 ,newName.text.toString(), Time.from(Instant.now()).toString())
+                val sdf = SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z")
+                player = Player(0 ,newName.text.toString(), sdf.format(Date()))
                 val rutina: Job = GlobalScope.launch {
                     val playerdata: PlayerData = PlayerData(0, player!!.nombre, player!!.last_access!!)
                     PlayerViewModel.long = playerViewModel.insertOne(player!!)

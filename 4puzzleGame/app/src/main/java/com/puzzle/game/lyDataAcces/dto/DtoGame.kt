@@ -2,6 +2,7 @@ package com.puzzle.game.lyDataAcces.dto
 
 import java.io.Serializable
 import java.time.LocalDateTime
+import java.util.*
 
 class DtoGame : Serializable {
     var currentIme : Long = 0
@@ -9,7 +10,7 @@ class DtoGame : Serializable {
     lateinit var piezas: MutableList<DtoPieza>
     lateinit var _dificuty : Number
     var resourCePictur:Int = 0
-    lateinit var fechaInicio : LocalDateTime
+    lateinit var fechaInicio : Date
 }
 
 class DtoPieza: Serializable{

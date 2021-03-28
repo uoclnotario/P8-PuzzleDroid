@@ -16,8 +16,8 @@ data class GameEntity (
         @ColumnInfo(name = "score") @NotNull val score:Long,
         @ColumnInfo(name = "tiempo") @NotNull val tiempo:String,
         @ColumnInfo(name = "totalTime") @NotNull val totalTime:Long,
-        @ColumnInfo(name = "fechaInicio") @NotNull val fechaInicio:LocalDateTime,
-        @ColumnInfo(name = "fechaFin") @NotNull val fechaFin:LocalDateTime
+        @ColumnInfo(name = "fechaInicio") @NotNull val fechaInicio:java.util.Date,
+        @ColumnInfo(name = "fechaFin") @NotNull val fechaFin:java.util.Date
 
 ) {
     companion object {
