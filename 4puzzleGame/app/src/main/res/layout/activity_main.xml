@@ -13,6 +13,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="242dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="70dp"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.514"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.802"
+            app:srcCompat="@drawable/logo4pieces" />
+
         <Button
             android:id="@+id/btnStart"
             style="@style/Theme.4puzzleGame.Button"
@@ -37,19 +51,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/btn_oscuro" />
-
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="242dp"
-            android:layout_height="322dp"
-            android:contentDescription="@string/app_name"
-            app:layout_constraintBottom_toTopOf="@+id/btnStart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.514"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.802"
-            app:srcCompat="@drawable/logo4pieces" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

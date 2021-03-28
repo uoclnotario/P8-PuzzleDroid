@@ -66,19 +66,27 @@
 
         <ImageView
             android:id="@+id/ivTablero3"
-            android:layout_width="316dp"
-            android:layout_height="518dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="55dp"
             android:background="#313435"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:layout_constraintVertical_bias="0.422" />
+            app:layout_constraintVertical_bias="0.39" />
 
         <ImageView
             android:id="@+id/ivTablero"
-            android:layout_width="308dp"
-            android:layout_height="501dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="55dp"
+            android:layout_marginBottom="60dp"
             android:background="@drawable/fondotablergame"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
