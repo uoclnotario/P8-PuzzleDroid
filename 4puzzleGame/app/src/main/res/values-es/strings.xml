@@ -5,11 +5,11 @@
     <string name="hi">Hola</string>
     <string name="btnStart">Empezar</string>
     <string name="newGame">Nueva Partida</string>
-    <string name="score">Score</string>
-    <string name="continues">Continues</string>
-    <string name="Easy">Easy</string>
-    <string name="medium">Medium</string>
-    <string name="hard">Hard</string>
+    <string name="score">Puntos</string>
+    <string name="continues">Continuar</string>
+    <string name="Easy">Fácil</string>
+    <string name="medium">Intermedio</string>
+    <string name="hard">Difícil</string>
     <string name="name_intro">Antes de empezar… ¿Cómo te llamas?</string>
     <string name="continua">Continua</string>
     <string name="newPlayerName">Tu nombre</string>
@@ -21,13 +21,13 @@
     <string name="stopGameRestart">REINICIAR</string>
     <string name="stopGameContinue">CONTINUAR</string>
     <string name="stopGamebackMenu">VOLVER AL MENU</string>
-    <string name="Selectimg">Elige la imagen</string>
 
-    <string name="completePuzzle">Puzzle completed</string>
-    <string name="FinishContiune">Continue</string>
-    <string name="finishScore">Score</string>
-    <string name="finisTime">Time to finish</string>
-    <string name="menuInfo">INFO</string>
+    <string name="Selectimg">Elige la imagen</string>
+    <string name="completePuzzle">Puzzle Completado</string>
+    <string name="FinishContiune">Continuar</string>
+    <string name="finishScore">Puntos</string>
+    <string name="finisTime">Tiempo para finalizar</string>
+    <string name="menuInfo">INFORMACIÓN</string>
     <string name="mainChangueName">CAMBIAR NOMBRE</string>
     <string name="menu">Menú</string>
     <string name="recordNew">¡Nuevo record!</string>
