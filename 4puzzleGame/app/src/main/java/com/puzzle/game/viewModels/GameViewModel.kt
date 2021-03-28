@@ -30,6 +30,9 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
                 for(i:GameEntity in lista){
                     if (returnLIst != null) {
                         returnLIst.add(SavedGame(i.idImagen,i.idPlayer,i.dificuty,i.score,i.tiempo,i.totalTime,i.fechaInicio,i.fechaFin))
+                        println("LISTA"+i.idImagen.toString()+" ->"+i.score.toString())
+                    }else{
+                        println("LISTA VIENE VACIA")
                     }
                 }
             }else{

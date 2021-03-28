@@ -66,16 +66,13 @@ class SelectPictureActivity : AppCompatActivity() {
             for (i in images.indices) {
 
                 var search : SavedGame? = null
-                if (ListadoPartidas != null){
-                    var list = ListadoPartidas?.filter { it.idImagen == images[i]}
-                    if (list != null) {
-                        search = list.maxBy {it.score}
-                    }
-                }
+                search = ListadoPartidas?.find{it.idImagen == images[i]}
+
                 if (search != null) {
-                    println(search.score.toString())
+                    println("SCORE->"+search.score.toString())
                     modalList.add(Picture(images[i], search.score.toString()))
                 } else {
+                    println("imagen sin score"+i.toString())
                     modalList.add(Picture(images[i], "0"))
                 }
 
