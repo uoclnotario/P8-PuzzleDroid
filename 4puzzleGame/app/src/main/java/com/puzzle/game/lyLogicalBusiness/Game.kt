@@ -92,11 +92,14 @@ class Game : Serializable {
 
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
-    fun getScore() : Long{
-/*     NO VA MUY BIEN.
-        //Timpo de Puntuación 1
-        // (piezas / segundos) x (piexasx1000) + BonusDificultad (= 100 x piezas)
-         */
+    fun getScore() : Int {
+        return scoreByJaume().toInt()
+    }
+
+    fun scoreByJaume():Long{
+        /*Cada segundo importa para la puntuación.
+        *
+        * */
         var piezas = _puzzle.piezas?.count()
         var segundos = currentIme
         var puntuacion: Long = 0
@@ -105,9 +108,13 @@ class Game : Serializable {
             return  puntuacion
         }
         return  0L
+    }
 
-/*
-       //Tipo de puntuación 2
+    fun scoreByLuis():Int{
+
+        /*Intenta llegar al un tiempo record preestablecido, con puntos establecidos
+        *
+        * */
 
         var maximoTime = 0
         var maxScore = 0
@@ -124,18 +131,28 @@ class Game : Serializable {
             }
         }
 
-            when{
-                    (currentIme <= maximoTime)->{return maxScore}
-                    (currentIme>maximoTime * 5)->{return 0}
-                    (currentIme>maximoTime * 4)->{return (maxScore/4).toInt()}
-                    (currentIme>maximoTime * 3)->{return (maxScore/3).toInt()}
-                    (currentIme>maximoTime * 2)->{return (maxScore/2).toInt()}
-                    (currentIme>maximoTime)->{return (maxScore/1.5).toInt()}
-                }
-
-            return 0
-        */
+        return when{
+            (currentIme <= maximoTime)->{
+                maxScore
+            }
+            (currentIme>maximoTime * 4)->{
+                (maxScore/4).toInt()
+            }
+            (currentIme>maximoTime * 3)->{
+                (maxScore/3).toInt()
+            }
+            (currentIme>maximoTime * 2)->{
+                (maxScore/2).toInt()
+            }
+            (currentIme>maximoTime)->{
+                (maxScore/1.5).toInt()
+            }
+            else->{
+                0
+            }
         }
+    }
+
 
     fun getDto() : DtoGame{
         var dto = DtoGame()

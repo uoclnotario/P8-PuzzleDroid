@@ -166,11 +166,11 @@ class GameActivity : AppCompatActivity() {
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun checkGameOver(){
-        println("check")
         if(_game.isFinish()){
             //Eliminamos las partidas guardadas.
             val file = File(filesDir.path,"saveGame")
             file.delete()
+
 
             //Finalizar
             val intent = Intent(this, FinisGameActivity::class.java).apply {
@@ -178,7 +178,7 @@ class GameActivity : AppCompatActivity() {
                 putExtra("dificulty",_game._dificuty)
                 putExtra("time",_game.getTime())
                 putExtra("moviments",_game._movements)
-                putExtra("score",_game.getScore())
+                putExtra("score",_game.getScore().toLong())
                 putExtra("pictur",pictur)
                 putExtra("currentTime",_game.currentIme)
                 putExtra("fechaInicio",_game.dateSatart)
