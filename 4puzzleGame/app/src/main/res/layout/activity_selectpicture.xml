@@ -45,14 +45,14 @@
                 android:background="#173D8D">
 
                 <ImageView
-                    android:id="@+id/btnClose"
+                    android:id="@+id/btnPlus"
                     android:layout_width="88dp"
                     android:layout_height="72dp"
                     android:layout_marginTop="7dp"
                     android:contentDescription=""
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/menubtn" />
+                    app:srcCompat="@drawable/plusbtn" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>

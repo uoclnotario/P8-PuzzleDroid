@@ -14,7 +14,7 @@ import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
 import com.puzzle.game.viewModels.GameViewModel
 import com.puzzle.game.viewModels.PlayerViewModel
-import kotlinx.android.synthetic.main.activity_game.btnClose
+
 import kotlinx.android.synthetic.main.activity_startgame.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -43,15 +43,16 @@ class StartGameActivity : AppCompatActivity() {
 
         btnClose.setOnClickListener{
 
-            if (findViewById<View>(id.flMenu) != null) {
+            if (findViewById<View>(R.id.flMenu) != null) {
 
                 val firstFragment = MenuBarFragment()
                 firstFragment.arguments = intent.extras
 
                 supportFragmentManager.beginTransaction()
-                    .add(id.flMenu, firstFragment).commit()
+                    .add(R.id.flMenu, firstFragment).commit()
             }
         }
+
 
     }
 
@@ -79,6 +80,10 @@ class StartGameActivity : AppCompatActivity() {
         }
         startActivity(intent)
     }
-    fun openMenu(view: View) {}
+    fun onClickExit(view: View) {
+        finishAffinity()
+    }
+
+
 
 }

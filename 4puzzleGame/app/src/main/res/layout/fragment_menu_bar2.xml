@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#255FA9"
-    tools:context=".lyUi.stopGameFragment">
+    tools:context=".lyUi.MenuBar2Fragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -42,8 +42,9 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+
         <LinearLayout
-            android:id="@+id/btnLayoutHelp"
+            android:id="@+id/btnLayout2Web"
             android:layout_width="386dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -52,16 +53,15 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:layout_constraintVertical_bias="0.05">
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
-                android:id="@+id/txtBtnHelp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:fontFamily="@font/mainfont_bold"
                 android:gravity="center"
                 android:paddingLeft="20dp"
-                android:text="@string/btnHelp"
+                android:text="WEB SEARCH"
                 android:textAlignment="textStart"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
@@ -76,7 +76,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btnLayoutContinuar"
+            android:id="@+id/btnLayoutaBack"
             android:layout_width="386dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -84,73 +84,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnLayoutHelp"
-            app:layout_constraintVertical_bias="0.0">
-
-            <TextView
-                android:id="@+id/txtBtnContinuar"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:fontFamily="@font/mainfont_bold"
-                android:gravity="center"
-                android:paddingLeft="20dp"
-                android:text="@string/stopGameContinue"
-                android:textAlignment="textStart"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="#FAFAFA"
-                android:src="@drawable/ic_launcher_foreground" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnLayoutReiniciar"
-            android:layout_width="386dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnLayoutContinuar"
-            app:layout_constraintVertical_bias="0.0">
-
-            <TextView
-                android:id="@+id/txtBtnReiniciar"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:fontFamily="@font/mainfont_bold"
-                android:gravity="center"
-                android:paddingLeft="20dp"
-                android:text="@string/stopGameRestart"
-                android:textAlignment="textStart"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="#FAFAFA"
-                android:src="@drawable/ic_launcher_foreground" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnLayoutBack"
-            android:layout_width="386dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnLayoutReiniciar"
+            app:layout_constraintTop_toBottomOf="@+id/btnLayout2Web"
             app:layout_constraintVertical_bias="0.0">
 
             <TextView
@@ -159,40 +93,7 @@
                 android:fontFamily="@font/mainfont_bold"
                 android:gravity="center"
                 android:paddingLeft="20dp"
-                android:text="@string/stopGamebackMenu"
-                android:textAlignment="textStart"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="#FAFAFA"
-                android:src="@drawable/ic_launcher_foreground" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnLayoutSalir"
-            android:layout_width="386dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnLayoutBack"
-            app:layout_constraintVertical_bias="0.0">
-
-            <TextView
-                android:id="@+id/txtBtnSalir"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:fontFamily="@font/mainfont_bold"
-                android:gravity="center"
-                android:paddingLeft="20dp"
-                android:text="@string/stopGameExit"
+                android:text="BACK TO MENU"
                 android:textAlignment="textStart"
                 android:textColor="#FFFFFF"
                 android:textSize="25sp"
@@ -208,7 +109,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/wevViewInfo"
-            android:layout_width="0dp"
+            android:layout_width="411dp"
             android:layout_height="0dp"
             android:background="#FFFFFF"
             android:visibility="invisible"
@@ -219,13 +120,13 @@
             app:layout_constraintVertical_bias="0.0">
 
             <WebView
-                android:id="@+id/webViewH"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/webView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.41"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />

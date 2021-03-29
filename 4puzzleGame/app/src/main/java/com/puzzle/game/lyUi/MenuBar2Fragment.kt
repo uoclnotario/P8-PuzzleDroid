@@ -15,11 +15,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.puzzle.game.R
 import com.puzzle.game.viewModels.PlayerViewModel
 import kotlinx.android.synthetic.main.fragment_menu_bar.*
-import kotlinx.android.synthetic.main.fragment_menu_bar.btnExit
-import kotlinx.android.synthetic.main.fragment_menu_bar.webView
-import kotlinx.android.synthetic.main.fragment_menu_bar.wevViewInfo
+
+import kotlinx.android.synthetic.main.fragment_menu_bar2.btnExit
+
 import kotlinx.android.synthetic.main.fragment_menu_bar2.*
+import kotlinx.android.synthetic.main.fragment_menu_bar2.wevViewInfo
 import kotlinx.android.synthetic.main.fragment_stop_game.*
+
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -32,12 +34,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MenuBarFragment.newInstance] factory method to
+ * Use the [MenuBar2Fragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MenuBarFragment : Fragment() {
-    private val BASE_URL = "https://sites.google.com/uoc.edu/app4pieces/presentaci%C3%B3n"
-
+class MenuBar2Fragment : Fragment() {
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -61,27 +61,24 @@ class MenuBarFragment : Fragment() {
             getFragmentManager()?.beginTransaction()?.remove(this)?.commit();
         }
 
-        btnLayoutWeb.setOnClickListener{
+        btnLayout2Web.setOnClickListener{
             val intent = Intent(getActivity()?.applicationContext, WebActivity::class.java).apply {
             }
             startActivity(intent)
         }
 
-        btnLayoutChnName.setOnClickListener{
-            val intent = Intent(getActivity()?.applicationContext, NamePlayerActivity::class.java)
+        btnLayoutaBack.setOnClickListener{
+
+            val intent = Intent(getActivity()?.applicationContext, StartGameActivity::class.java).apply {
+            }
             startActivity(intent)
         }
-
-        btnLayoutExit.setOnClickListener {
-            getActivity()?.finishAffinity();
-        }
-
     }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_menu_bar, container, false)
+        return inflater.inflate(R.layout.fragment_menu_bar2, container, false)
     }
 
 

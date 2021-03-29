@@ -16,11 +16,9 @@ import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
 import com.puzzle.game.viewModels.GameViewModel
-import kotlinx.android.synthetic.main.activity_game.*
 import java.util.*
 import kotlinx.android.synthetic.main.activity_selectpicture.*
-import kotlinx.android.synthetic.main.activity_selectpicture.btnClose
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.android.synthetic.main.activity_selectpicture.btnPlus
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -85,11 +83,11 @@ class SelectPictureActivity : AppCompatActivity() {
 
         gridView.adapter = customAdapter;
 
-        btnClose.setOnClickListener{
+        btnPlus.setOnClickListener{
 
             if (findViewById<View>(R.id.flMenu) != null) {
 
-                val firstFragment = MenuBarFragment()
+                val firstFragment = MenuBar2Fragment()
                 firstFragment.arguments = intent.extras
 
                 supportFragmentManager.beginTransaction()

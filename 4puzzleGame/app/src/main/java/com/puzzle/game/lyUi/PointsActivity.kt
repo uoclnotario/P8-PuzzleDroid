@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Player
 import kotlinx.android.synthetic.main.activity_points.*
-import java.io.File
 
 class PointsActivity : AppCompatActivity() {
 
