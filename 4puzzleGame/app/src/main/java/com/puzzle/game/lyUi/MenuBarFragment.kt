@@ -72,9 +72,7 @@ class MenuBarFragment : Fragment() {
             startActivity(intent)
         }
 
-        btnLayoutExit.setOnClickListener {
-            getActivity()?.finishAffinity();
-        }
+
 
     }
 
