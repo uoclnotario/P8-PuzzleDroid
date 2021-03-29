@@ -35,5 +35,6 @@
     <string name="pointsTotalTitle">TUS PUNTOS TOTALES</string>
     <string name="pointsTitleGameList">TUS MEJORE PARTIDAS</string>
     <string name="pointsBest">Mejores puntuaciones</string>
+    <string name="totalPuntos">YOUR POINTS</string>
 
 </resources>
