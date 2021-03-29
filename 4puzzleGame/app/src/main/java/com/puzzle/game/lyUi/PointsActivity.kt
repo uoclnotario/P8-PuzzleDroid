@@ -1,51 +1,69 @@
 package com.puzzle.game.lyUi
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.puzzle.game.R
-import com.puzzle.game.lyLogicalBusiness.Picture
+import com.puzzle.game.adapters.ScoreListAdapter
+import com.puzzle.game.lyDataAcces.dto.DtoBestScore
 import com.puzzle.game.lyLogicalBusiness.Player
+import com.puzzle.game.lyLogicalBusiness.SavedGame
+import com.puzzle.game.viewModels.GameViewModel
+import com.puzzle.game.viewModels.PlayerViewModel
 import kotlinx.android.synthetic.main.activity_points.*
-import kotlinx.android.synthetic.main.activity_points.btnClose
-import kotlinx.android.synthetic.main.activity_selectpicture.*
-import kotlinx.android.synthetic.main.activity_selectpicture.gridView
-import java.util.ArrayList
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class PointsActivity : AppCompatActivity() {
-
-    var modalList = ArrayList<Picture>()
-
-    var images = intArrayOf(
-            R.drawable.image1,
-            R.drawable.image2,
-            R.drawable.image3,
-            R.drawable.image4,
-            R.drawable.image5,
-            R.drawable.image6,
-            R.drawable.image7,
-            R.drawable.image8,
-            R.drawable.image9,
-            R.drawable.image10
-    )
+    private lateinit var gameViewModel: GameViewModel
+    private lateinit var playerViewModel: PlayerViewModel
+    lateinit var player: Player
+    var gameList: List<SavedGame>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_points)
 
-        var customAdapter = CustomAdapter(modalList,this)
-        //var player = intent.getSerializableExtra("player") as Player
+        player = intent.getSerializableExtra("player") as Player
+        gameViewModel = run { ViewModelProvider(this).get(GameViewModel::class.java) }
+        playerViewModel = run { ViewModelProvider(this).get(PlayerViewModel::class.java) }
 
-        for(i in images.indices){
-            modalList.add(Picture(images[i]))
+        try {
+            GameViewModel.bestScoreList = null
+            val rutina: Job = GlobalScope.launch{
+                var currentPlayer: Player? = null
+                val listaAdapter: MutableList<DtoBestScore> = ArrayList()
+                gameList = gameViewModel.getAll(10)
+                for ( gameItem: SavedGame in gameList!!)
+                {
+                    if(currentPlayer == null || currentPlayer.PlayerId != gameItem.idPlayer) {
+                        currentPlayer = playerViewModel.findById(gameItem.idPlayer)!!
+                    }
+                    val bestScore = DtoBestScore(currentPlayer, gameItem)
+                    listaAdapter.add(bestScore)
+                }
+                GameViewModel.bestScoreList = listaAdapter
+            }
+
+            while (rutina.isActive) {}
+            if(GameViewModel.bestScoreList!!.count() > 0)
+            {
+
+                val adapter = ScoreListAdapter(this, GameViewModel.bestScoreList as ArrayList<DtoBestScore>)
+                listaResultados.adapter = adapter
+            }
+        }catch (e:Exception)
+        {
+            println("Error cargando lista resultados: $e")
         }
 
-        gridViewscore.adapter = customAdapter
+
+
 
         btnClose.setOnClickListener{
             if (findViewById<View>(R.id.flMenu) != null) {
@@ -57,41 +75,5 @@ class PointsActivity : AppCompatActivity() {
             }
         }
     }
-
-    class CustomAdapter(
-            var itemModel: ArrayList<Picture>,
-            var context: Context
-    ) : BaseAdapter(){
-
-        var layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
-            var view = view;
-            if(view == null){
-                view = layoutInflater.inflate(R.layout.row_items_score,viewGroup,false)
-            }
-
-            var imageView = view?.findViewById<ImageView>(R.id.Imagescore)
-
-            imageView?.setImageResource(itemModel[position].image!!)
-
-
-            return view!!
-
-        }
-
-        override fun getItem(p0: Int): Any {
-            return itemModel[p0]
-        }
-
-        override fun getItemId(p0: Int): Long {
-            return p0.toLong()
-        }
-
-        override fun getCount(): Int {
-            return itemModel.size
-        }
-
-    }
-
 
 }

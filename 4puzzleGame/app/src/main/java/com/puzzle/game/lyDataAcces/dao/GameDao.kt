@@ -43,9 +43,6 @@ interface GameDao {
     fun getMaxScoreOfImage(player:Int): List<GameEntity>?
 
 
-
-
-
     @Insert
     fun insertOne(gameEntity: GameEntity) : Long?
 

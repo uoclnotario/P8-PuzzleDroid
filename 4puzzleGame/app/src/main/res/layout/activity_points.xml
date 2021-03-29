@@ -5,34 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_azul"
-    tools:context=".lyUi.PointsActivity">
-
+    tools:context=".lyUi.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="403dp"
-            android:layout_height="485dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7"
-            tools:ignore="MissingConstraints,UnknownId">
-
-            <GridView
-                android:id="@+id/gridViewscore"
-                android:layout_width="match_parent"
-                android:layout_height="483dp"
-                android:layout_marginTop="2dp"
-                android:horizontalSpacing="2dp"
-                android:numColumns="1"
-                android:verticalSpacing="2dp" />
-        </LinearLayout>
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -54,58 +32,12 @@
                     android:layout_width="88dp"
                     android:layout_height="72dp"
                     android:layout_marginTop="7dp"
-                    android:contentDescription=""
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/menubtn" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
-
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:fontFamily="@font/mainfont_bold"
-            android:horizontalSpacing="0dp"
-            android:text="@string/pointsTotalTitle"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="103dp"
-            android:layout_height="29dp"
-            android:fontFamily="@font/mainfont_bold"
-            android:text="800000"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/mainfont_bold"
-            android:horizontalSpacing="0dp"
-            android:text="@string/pointsTitleGameList"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="MissingConstraints" />
 
         <ImageView
             android:id="@+id/ivTablero"
@@ -119,15 +51,34 @@
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             app:srcCompat="@drawable/logo4pieces" />
 
+        <TextView
+            style="@style/Theme.4puzzleGame.SimpleText"
+            android:id="@+id/bestScores"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mainfont_bold"
+            android:textSize="24sp"
+            android:textAllCaps="true"
+            android:paddingBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintVertical_bias="0.04000002"
+            tools:text="@string/pointsBest" />
+
+        <GridView
+            android:id="@+id/listaResultados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:numColumns="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bestScores"
+            app:layout_constraintVertical_bias="0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <FrameLayout
-        android:id="@+id/flMenu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_anchor="@+id/constraintLayout3"
-        app:layout_anchorGravity="center">
-
-    </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
