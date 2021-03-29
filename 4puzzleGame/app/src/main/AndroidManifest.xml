@@ -12,8 +12,8 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.4puzzleGame">
-        <activity android:name=".lyUi.Help"></activity>
-        <activity android:name=".lyUi.WebActivity" />
+        <activity android:name=".lyUi.Help" android:theme="@style/Theme.4puzzleGame.NoActionBar" ></activity>
+        <activity android:name=".lyUi.WebActivity" android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.FinisGameActivity"
             android:theme="@style/Theme.4puzzleGame.NoActionBar" />
