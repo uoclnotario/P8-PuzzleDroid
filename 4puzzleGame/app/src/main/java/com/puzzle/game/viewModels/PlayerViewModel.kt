@@ -22,7 +22,7 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
     suspend fun insertOne(player: Player): Long? { return repository.insertOne(player) }
 
     suspend fun findLastPlayer() : Player? { return repository.findLastPlayer() }
-
+    suspend fun findById(int : Int) : Player? { return repository.findById(int) }
     suspend fun findByName(str : String) : Player? { return repository.findByName(str) }
     suspend fun getAll() { repository.getAll() }
     fun updatePlayer(player: Player) { repository.update(player) }

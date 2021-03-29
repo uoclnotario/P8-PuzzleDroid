@@ -41,6 +41,7 @@ class GameRepository(application: Application) {
          */
         var lista: List<SavedGame>? = null
         try {
+            println("Iniciamos getAll")
             val rutina: Job = GlobalScope.launch {
                 if (num == 0) GameViewModel.gamelist = gameDao?.getAll()
                 else GameViewModel.gamelist = gameDao?.getAll(num)
@@ -48,12 +49,15 @@ class GameRepository(application: Application) {
             rutina.join()
             joinAll()
             while (rutina.isActive){}
+            println("Lista obtenida")
             if(GameViewModel.gamelist!!.count() > 0)
             {
+                println("Si la cuenta es > 0")
                 lista = ArrayList<SavedGame>()
                 for(g: GameEntity in GameViewModel.gamelist!!)
                 {
-                    lista.set(g.gameId, SavedGame(g.gameId,g.idImagen, g.idPlayer, g.dificuty, g.score,g.tiempo, g.totalTime,g.fechaInicio,g.fechaFin))
+                    println("por cada elemento...")
+                    lista.add(SavedGame(g.gameId,g.idImagen, g.idPlayer, g.dificuty, g.score,g.tiempo, g.totalTime,g.fechaInicio,g.fechaFin))
                 }
             }
 
@@ -62,6 +66,9 @@ class GameRepository(application: Application) {
             println("Hilo no devuelve lista: $e")
         }
         finally {
+            if (lista != null) {
+                println("LongitudLista = ${lista.count()}")
+            }
             return lista
         }
 

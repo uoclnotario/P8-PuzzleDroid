@@ -1,10 +1,18 @@
 package com.puzzle.game.viewModels
 
 import android.app.Application
+import android.widget.ArrayAdapter
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.puzzle.game.R
+import com.puzzle.game.lyDataAcces.dto.DtoBestScore
 import com.puzzle.game.lyDataAcces.entities.GameEntity
 import com.puzzle.game.lyDataAcces.repository.GameRepository
+import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class GameViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = GameRepository(application)
@@ -13,7 +21,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         var long: Long? = null
         var gameSave: SavedGame? = null
         var gamelist: List<GameEntity>? = null
-        var listNum: Int = 10
+        var bestScoreList: List<DtoBestScore>? = null
     }
 
     suspend fun insertOne(savedGame: SavedGame): Long? { return repository.insertOne(savedGame) }
@@ -40,6 +48,6 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             return returnLIst
-         }
+    }
 
 }
