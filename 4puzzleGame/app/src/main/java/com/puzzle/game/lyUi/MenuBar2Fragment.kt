@@ -56,6 +56,7 @@ class MenuBar2Fragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         wevViewInfo.setVisibility(View.INVISIBLE)
+        var activi = getActivity() as SelectPictureActivity
 
         btnExit.setOnClickListener {
             getFragmentManager()?.beginTransaction()?.remove(this)?.commit();
@@ -70,6 +71,7 @@ class MenuBar2Fragment : Fragment() {
         btnLayoutaBack.setOnClickListener{
 
             val intent = Intent(getActivity()?.applicationContext, StartGameActivity::class.java).apply {
+                putExtra("player",activi._player)
             }
             startActivity(intent)
         }
