@@ -36,8 +36,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class MenuBarFragment : Fragment() {
-    private val BASE_URL = "https://sites.google.com/uoc.edu/app4pieces/presentaci%C3%B3n"
-
+    /**private val BASE_URL = "https://sites.google.com/uoc.edu/app4pieces/presentaci%C3%B3n" **/
+    private val BASE_URL = "file:///android_asset/Creditos.html"
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -62,7 +62,7 @@ class MenuBarFragment : Fragment() {
         }
 
         btnLayoutWeb.setOnClickListener{
-            val intent = Intent(getActivity()?.applicationContext, WebActivity::class.java).apply {
+            val intent = Intent(getActivity()?.applicationContext, InfoActivity::class.java).apply {
             }
             startActivity(intent)
         }
