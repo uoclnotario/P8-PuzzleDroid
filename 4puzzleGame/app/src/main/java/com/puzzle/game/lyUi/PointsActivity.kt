@@ -14,7 +14,9 @@ import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
 import com.puzzle.game.viewModels.GameViewModel
 import com.puzzle.game.viewModels.PlayerViewModel
+import kotlinx.android.synthetic.main.activity_game.*
 import kotlinx.android.synthetic.main.activity_points.*
+import kotlinx.android.synthetic.main.activity_points.btnClose
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -28,6 +30,19 @@ class PointsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_points)
+
+
+        btnClose.setOnClickListener{
+
+            if (findViewById<View>(R.id.flMenu) != null) {
+
+                val firstFragment = MenuBarFragment()
+                firstFragment.arguments = intent.extras
+
+                supportFragmentManager.beginTransaction()
+                        .add(R.id.flMenu, firstFragment).commit()
+            }
+        }
 
         player = intent.getSerializableExtra("player") as Player
         gameViewModel = run { ViewModelProvider(this).get(GameViewModel::class.java) }
