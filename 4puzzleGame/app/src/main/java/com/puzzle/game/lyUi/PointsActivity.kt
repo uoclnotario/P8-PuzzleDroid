@@ -26,7 +26,7 @@ class PointsActivity : AppCompatActivity() {
     private lateinit var playerViewModel: PlayerViewModel
     lateinit var player: Player
     var gameList: List<SavedGame>? = null
-
+    var scores : MutableList<SavedGame>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_points)
@@ -47,17 +47,20 @@ class PointsActivity : AppCompatActivity() {
         player = intent.getSerializableExtra("player") as Player
         gameViewModel = run { ViewModelProvider(this).get(GameViewModel::class.java) }
         playerViewModel = run { ViewModelProvider(this).get(PlayerViewModel::class.java) }
-        var count:Long = 0
+        var count:Int = 0
         try {
             GameViewModel.bestScoreList = null
+
             val rutina: Job = GlobalScope.launch{
+
                 var currentPlayer: Player? = null
                 val listaAdapter: MutableList<DtoBestScore> = ArrayList()
                 gameList = gameViewModel.getAll(10)
+                scores = gameViewModel.getAllimageMaxScore(player.PlayerId)
+                println(scores?.count())
 
                 for ( gameItem: SavedGame in gameList!!)
                 {
-                    count += gameItem.score
                     if(currentPlayer == null || currentPlayer.PlayerId != gameItem.idPlayer) {
                         currentPlayer = playerViewModel.findById(gameItem.idPlayer)!!
                     }
@@ -70,12 +73,20 @@ class PointsActivity : AppCompatActivity() {
             while (rutina.isActive) {}
             if(GameViewModel.bestScoreList!!.count() > 0)
             {
-                txtPoints.text = count.toString()
+
                 val adapter = ScoreListAdapter(this, GameViewModel.bestScoreList as ArrayList<DtoBestScore>)
                 listaResultados.adapter = adapter
             }
 
+            if(scores != null){
+                if(scores!!.count() > 0 ){
+                    count = scores!!.sumBy { it.score.toInt() }
+                }else{
+                    count = 0
+                }
+            }
 
+            txtPoints.text = count.toString()
         }catch (e:Exception)
         {
             println("Error cargando lista resultados: $e")
