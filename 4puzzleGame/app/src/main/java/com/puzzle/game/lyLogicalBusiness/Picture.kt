@@ -8,7 +8,7 @@ class Picture : Serializable {
         this.image = image
         points = "0"
     }
-    constructor( image: Int?,puntos:String) {
+    constructor(image: Int, puntos: String) {
         this.image = image
         points = puntos
     }

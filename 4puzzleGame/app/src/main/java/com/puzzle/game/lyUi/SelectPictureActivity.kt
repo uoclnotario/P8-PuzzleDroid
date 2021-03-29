@@ -16,11 +16,9 @@ import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
 import com.puzzle.game.viewModels.GameViewModel
-import kotlinx.android.synthetic.main.activity_game.*
 import java.util.*
 import kotlinx.android.synthetic.main.activity_selectpicture.*
 import kotlinx.android.synthetic.main.activity_selectpicture.btnClose
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -50,7 +48,7 @@ class SelectPictureActivity : AppCompatActivity() {
         gameViewModel = run { ViewModelProvider(this).get(GameViewModel::class.java) }
         _player = intent.getSerializableExtra("player") as Player
 
-        var customAdapter = CustomAdapter(modalList,this);
+        var customAdapter = CustomAdapter(modalList,this)
         var ListadoPartidas : MutableList<SavedGame>?  = null
 
         var rutina =GlobalScope.launch {
@@ -83,7 +81,7 @@ class SelectPictureActivity : AppCompatActivity() {
         while (rutina.isActive) {}
 
 
-        gridView.adapter = customAdapter;
+        gridView.adapter = customAdapter
 
         btnClose.setOnClickListener{
 
@@ -118,7 +116,7 @@ class SelectPictureActivity : AppCompatActivity() {
         override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
             var view = view;
             if(view == null){
-                view = layoutInflater.inflate(R.layout.row_items,viewGroup,false);
+                view = layoutInflater.inflate(R.layout.row_items,viewGroup,false)
             }
 
             var imageView = view?.findViewById<ImageView>(R.id.imageView);
@@ -129,7 +127,7 @@ class SelectPictureActivity : AppCompatActivity() {
             }
             imageView?.setImageResource(itemModel[position].image!!)
 
-            return view!!;
+            return view!!
 
         }
 
