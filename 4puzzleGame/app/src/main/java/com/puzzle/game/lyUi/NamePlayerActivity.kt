@@ -12,6 +12,7 @@ import com.puzzle.game.lyDataAcces.entities.PlayerData
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.viewModels.PlayerViewModel
 import kotlinx.android.synthetic.main.activity_nameplayer.*
+import kotlinx.android.synthetic.main.activity_selectdificulty.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch

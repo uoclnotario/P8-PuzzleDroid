@@ -1,6 +1,5 @@
 package com.puzzle.game.lyUi
 
-import android.R.id
 import android.content.Context
 import android.content.Intent
 import android.graphics.RectF

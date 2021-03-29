@@ -8,9 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Player
-import kotlinx.android.synthetic.main.activity_game.*
-import kotlinx.android.synthetic.main.activity_game.appBarLayout
-import kotlinx.android.synthetic.main.activity_game.btnClose
+
 import kotlinx.android.synthetic.main.activity_selectdificulty.*
 
 

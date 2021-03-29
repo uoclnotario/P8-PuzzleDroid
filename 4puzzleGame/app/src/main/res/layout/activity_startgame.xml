@@ -43,23 +43,22 @@
                     android:layout_width="88dp"
                     android:layout_height="72dp"
                     android:layout_marginTop="7dp"
-                    android:contentDescription="@string/menu"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/menubtn" />
 
                 <TextView
-                    style="@style/Theme.4puzzleGame.SimpleText"
-                    android:textColor="@color/white"
-                    android:textAlignment="textEnd"
                     android:id="@+id/userName"
+                    style="@style/Theme.4puzzleGame.SimpleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/hi"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.826"
-                    app:layout_constraintStart_toEndOf="@+id/btnClose"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -74,7 +73,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            android:layout_marginTop="70pt"
+            android:layout_marginTop="50pt"
             app:srcCompat="@drawable/btn_oscuro" />
 
         <Button
@@ -146,6 +145,34 @@
             app:layout_constraintTop_toTopOf="@+id/btnPuntuacionMarco"
             app:layout_constraintVertical_bias="0.468" />
 
+        <ImageView
+            android:id="@+id/btnExitMarco"
+            android:layout_width="237dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="30dp"
+            android:contentDescription="Exit"
+            app:layout_anchor="@+id/capaContenido"
+            app:layout_anchorGravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnPuntuacionMarco"
+            app:srcCompat="@drawable/btn_oscuro" />
+
+        <Button
+            android:id="@+id/btnExit"
+            style="@style/Theme.4puzzleGame.Button"
+            android:layout_width="223dp"
+            android:layout_height="42dp"
+            android:onClick="onClickExit"
+            android:padding="0dp"
+            android:scaleX="1"
+            android:text="Salir"
+            app:layout_constraintBottom_toBottomOf="@+id/btnExitMarco"
+            app:layout_constraintEnd_toEndOf="@+id/btnExitMarco"
+            app:layout_constraintStart_toStartOf="@+id/btnExitMarco"
+            app:layout_constraintTop_toTopOf="@+id/btnExitMarco"
+            app:layout_constraintVertical_bias="0.468" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -153,7 +180,9 @@
     <FrameLayout
         android:id="@+id/flMenu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_anchor="@+id/capaContenido"
+        app:layout_anchorGravity="center">
 
     </FrameLayout>
 

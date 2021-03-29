@@ -15,7 +15,7 @@ import com.puzzle.game.R
 import kotlinx.android.synthetic.main.fragment_menu_bar.*
 import kotlinx.android.synthetic.main.fragment_stop_game.*
 import kotlinx.android.synthetic.main.fragment_stop_game.btnExit
-import kotlinx.android.synthetic.main.fragment_stop_game.webView
+import kotlinx.android.synthetic.main.fragment_stop_game.webViewH
 import kotlinx.android.synthetic.main.fragment_stop_game.wevViewInfo
 
 
@@ -72,14 +72,10 @@ class stopGameFragment() : Fragment() {
         }
 
         btnLayoutHelp.setOnClickListener{
-
-
-            val settings = webView.settings
-            settings.javaScriptEnabled = true
-            webView.loadUrl( "https://sites.google.com/view/4piecesgame/inicio?authuser=0")
-            wevViewInfo.setVisibility(View.VISIBLE)
+            val intent = Intent(getActivity()?.applicationContext, Help::class.java).apply {
+            }
+            startActivity(intent)
         }
-
 
 
         btnLayoutContinuar.setOnClickListener{
