@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_web.*
 
 class Help : AppCompatActivity() {
 
-    private val BASE_URL = "https://sites.google.com/view/4piecesgame/inicio"
+    private val BASE_URL = "file:///android_asset/HelpWeb.html"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
