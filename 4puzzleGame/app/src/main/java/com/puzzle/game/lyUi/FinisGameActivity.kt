@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.R
+import com.puzzle.game.lyLogicalBusiness.Calendario
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
 import com.puzzle.game.viewModels.GameViewModel
@@ -70,11 +71,16 @@ class FinisGameActivity : AppCompatActivity() {
                 newRecord.visibility = View.VISIBLE
 
             }
-            GlobalScope.launch {
+            val rutinaSave: Job = GlobalScope.launch {
                 println("Iniciamos rutina para guardar")
                 val saveGame = SavedGame(0,picture.image!!,player.PlayerId, df, score,time,currentIme,fechaInicio,Date())
+                GameViewModel.gameSave = saveGame
                 var int:Long? = gameViewModel.insertOne(saveGame)
             }
+
+            while (rutinaSave.isActive) {}
+            var calendario = Calendario(this.baseContext )
+                    calendario.addEvento(SavedGame(0,picture.image!!,player.PlayerId, df, score,time,currentIme,fechaInicio,Date()))
         }catch (e:Exception)
         {
             println("Error guardando datos de fin de partida: $e")
