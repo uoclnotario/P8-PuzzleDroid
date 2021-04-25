@@ -142,11 +142,14 @@ class GameActivity : AppCompatActivity() {
 
     //Cuando se pausa la app.
     override fun onPause() {
+        fxfondo.pause()
+
         super.onPause()
         timer.cancel()
     }
     //Funcionan que inicializan o vuelven a poner en marcha el contador.
     override fun onResume() {
+        fxfondo.start()
         super.onResume()
         timerStart()
     }
