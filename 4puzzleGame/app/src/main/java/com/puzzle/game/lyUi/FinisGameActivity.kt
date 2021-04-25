@@ -1,15 +1,19 @@
 package com.puzzle.game.lyUi
 
+import android.content.ContentResolver
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PERMISSION_DENIED
 import android.os.Build
 import android.os.Bundle
+import android.os.Looper
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Calendario
+import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
 import com.puzzle.game.viewModels.GameViewModel
@@ -17,7 +21,6 @@ import kotlinx.android.synthetic.main.activity_finis_game.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 import java.util.*
 
 
@@ -40,10 +43,10 @@ class FinisGameActivity : AppCompatActivity() {
 
         player = intent.getSerializableExtra("player") as Player
         picture = intent.getSerializableExtra("pictur") as Picture
-        df = intent.getIntExtra("dificulty",0)
-        score = intent.getLongExtra("score",0L)
+        df = intent.getIntExtra("dificulty", 0)
+        score = intent.getLongExtra("score", 0L)
         time = intent.getStringExtra("time") as String
-        currentIme = intent.getLongExtra("currentTime",0L)
+        currentIme = intent.getLongExtra("currentTime", 0L)
         fechaInicio= intent.getSerializableExtra("fechaInicio") as Date
 
         /***
@@ -73,15 +76,20 @@ class FinisGameActivity : AppCompatActivity() {
             }
             val rutinaSave: Job = GlobalScope.launch {
                 println("Iniciamos rutina para guardar")
-                val saveGame = SavedGame(0,picture.image!!,player.PlayerId, df, score,time,currentIme,fechaInicio,Date())
+                val saveGame = SavedGame(0, picture.image!!, player.PlayerId, df, score, time, currentIme, fechaInicio, Date())
                 GameViewModel.gameSave = saveGame
                 var int:Long? = gameViewModel.insertOne(saveGame)
             }
 
             while (rutinaSave.isActive) {}
-            var calendario = Calendario(this.baseContext )
-                    calendario.addEvento(SavedGame(0,picture.image!!,player.PlayerId, df, score,time,currentIme,fechaInicio,Date()))
-        }catch (e:Exception)
+
+            GlobalScope.launch {
+                Looper.prepare()
+                var calendario = Calendario(applicationContext)
+                calendario.addEvento(SavedGame(0, picture.image!!, player.PlayerId, df, score, time, currentIme, fechaInicio, Date()))
+            }
+            //Looper.loop();
+        }catch (e: Exception)
         {
             println("Error guardando datos de fin de partida: $e")
         }
@@ -89,7 +97,7 @@ class FinisGameActivity : AppCompatActivity() {
         btnContine.setOnClickListener{
             //Si existe almacenado un nombre de usuario
             val intent = Intent(this, StartGameActivity::class.java).apply {
-                putExtra("player",player)
+                putExtra("player", player)
             }
             startActivity(intent)
         }

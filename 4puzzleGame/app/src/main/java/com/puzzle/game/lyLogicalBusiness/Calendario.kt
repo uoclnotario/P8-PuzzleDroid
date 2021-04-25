@@ -13,7 +13,10 @@ import java.util.*
 
 
 class Calendario(context: Context) : AppCompatActivity() {
-
+    val mContext: Context
+    init {
+        mContext = context
+    }
     companion object {
         const val MY_ACCOUNT_NAME =  "Game 4 Puzzle"
         const val MY_DISPLAY_NAME =  "Game: 4 Puzzle"
@@ -45,7 +48,7 @@ class Calendario(context: Context) : AppCompatActivity() {
             val selArgs = arrayOf(
                     MY_ACCOUNT_NAME,
                     CalendarContract.ACCOUNT_TYPE_LOCAL)
-            val cursor = contentResolver.query(
+            val cursor = mContext.getContentResolver().query(
                     Calendars.CONTENT_URI,
                     projection,
                     selection,
@@ -106,7 +109,7 @@ class Calendario(context: Context) : AppCompatActivity() {
             builder.appendQueryParameter(
                     CalendarContract.CALLER_IS_SYNCADAPTER,
                     "true")
-            val uri: Uri? = contentResolver.insert(builder.build(), values)
+            val uri: Uri? = mContext.getContentResolver().insert(builder.build(), values)
 
         }catch (e:Exception)
         {
@@ -149,7 +152,7 @@ class Calendario(context: Context) : AppCompatActivity() {
             values.put(Events.GUESTS_CAN_INVITE_OTHERS, 0)
             values.put(Events.GUESTS_CAN_MODIFY, 0)
             values.put(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
-            val uri = contentResolver.insert(Events.CONTENT_URI, values)
+            val uri = mContext.getContentResolver().insert(Events.CONTENT_URI, values)
 
         }catch (e:Exception)
         {

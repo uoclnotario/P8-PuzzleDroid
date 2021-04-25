@@ -1,6 +1,7 @@
 package com.puzzle.game.lyUi
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -23,6 +24,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         playerViewModel = run { ViewModelProvider(this).get(PlayerViewModel::class.java) }
+
+        if (checkSelfPermission("android.permission.WRITE_CALENDAR") == PackageManager.PERMISSION_DENIED){ // (Manifest.permission.READ_CALENDAR)) {
+            requestPermissions(arrayOf("android.permission.WRITE_CALENDAR"),42)
+            return;
+        }
 
     }
 
