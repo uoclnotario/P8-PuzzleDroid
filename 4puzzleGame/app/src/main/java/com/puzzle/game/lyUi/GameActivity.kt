@@ -53,8 +53,8 @@ class GameActivity : AppCompatActivity() {
          fxSoundV =  MediaPlayer.create(this.applicationContext,R.raw.v1)
          fxfondo =  MediaPlayer.create(this.applicationContext,R.raw.music)
         fxfondo.isLooping = true
-        fxfondo.setVolume(100F, 100F)
         fxfondo.start()
+        fxfondo.setVolume(1.0f, 1.0f)
 
         player = intent.getSerializableExtra("player") as Player
         gameLoad = intent.getBooleanExtra("load",false)

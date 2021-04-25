@@ -73,9 +73,10 @@ class TouchListener(activity: GameActivity,minx:Int,minh:Int, fxPositionOk:Media
                 if(!fxSoundMove.isPlaying){
                     fxSoundMove.reset()
                     fxSoundMove = MediaPlayer.create(activity.applicationContext,soundSelect)
-                    fxSoundMove.setVolume(50f,50f)
+
                     fxSoundMove.isLooping = true
                     fxSoundMove.start()
+                    fxSoundMove.setVolume(0.09f,0.09f)
                 }
 
 
@@ -116,6 +117,7 @@ class TouchListener(activity: GameActivity,minx:Int,minh:Int, fxPositionOk:Media
 
                     if(!this.fxPositionOk.isPlaying){
                         this.fxPositionOk.start()
+                        this.fxPositionOk.setVolume(0.5f,0.5f)
                     }
 
 
