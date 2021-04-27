@@ -22,36 +22,60 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class SelectPictureActivity : AppCompatActivity() {
-
     lateinit var _player :Player
-    private lateinit var gameViewModel: GameViewModel
+    lateinit var gameViewModel: GameViewModel
+     var _modGame : Int = 2
 
-    var modalList = ArrayList<Picture>()
-
-    var images = intArrayOf(
-        R.drawable.image1,
-        R.drawable.image2,
-        R.drawable.image3,
-        R.drawable.image4,
-        R.drawable.image5,
-        R.drawable.image6,
-        R.drawable.image7,
-        R.drawable.image8,
-        R.drawable.image9,
-        R.drawable.image10
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_selectpicture)
         gameViewModel = run { ViewModelProvider(this).get(GameViewModel::class.java) }
         _player = intent.getSerializableExtra("player") as Player
 
-        var customAdapter = CustomAdapter(modalList,this)
+        if(_modGame == 1){
+            setContentView(R.layout.activity_selectpicture)
+            cargarLayoutModoEstandar()
+        }
+
+        if(_modGame == 2){
+            setContentView(R.layout.activity_selectpicture_random)
+            cargarLayoutModoRandom()
+        }
+
+
+
+
+        //Acción para el botón del menu.
+        btnPlus.setOnClickListener{
+            if (findViewById<View>(R.id.flMenu) != null) {
+                val firstFragment = MenuBar2Fragment()
+                firstFragment.arguments = intent.extras
+                supportFragmentManager.beginTransaction()
+                        .add(R.id.flMenu, firstFragment).commit()
+            }
+        }
+
+    }
+
+    private fun cargarLayoutModoEstandar(){
+        var modalList = ArrayList<Picture>()
+        var images = intArrayOf(
+                R.drawable.image1,
+                R.drawable.image2,
+                R.drawable.image3,
+                R.drawable.image4,
+                R.drawable.image5,
+                R.drawable.image6,
+                R.drawable.image7,
+                R.drawable.image8,
+                R.drawable.image9,
+                R.drawable.image10
+        )
+        var customAdapter = AdapterEstandarMode(modalList,this)
         var ListadoPartidas : MutableList<SavedGame>?  = null
 
         var rutina =GlobalScope.launch {
-           ListadoPartidas =  gameViewModel.getAllimageMaxScore(_player.PlayerId)
+            ListadoPartidas =  gameViewModel.getAllimageMaxScore(_player.PlayerId)
 
             if(ListadoPartidas != null){
                 for(i:SavedGame in ListadoPartidas!!){
@@ -79,22 +103,7 @@ class SelectPictureActivity : AppCompatActivity() {
         //Esperamos a que la rutina acabe para finalizar
         while (rutina.isActive) {}
 
-
         gridView.adapter = customAdapter
-
-        btnPlus.setOnClickListener{
-
-            if (findViewById<View>(R.id.flMenu) != null) {
-
-                val firstFragment = MenuBar2Fragment()
-                firstFragment.arguments = intent.extras
-
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.flMenu, firstFragment).commit()
-            }
-        }
-
-
         gridView.setOnItemClickListener { adapterView, view, i, l ->
 
             var intent = Intent(this,SelectDificultyActivity::class.java).apply {
@@ -104,9 +113,7 @@ class SelectPictureActivity : AppCompatActivity() {
             startActivity(intent);
         }
     }
-
-
-    class CustomAdapter(
+    class AdapterEstandarMode(
             var itemModel: ArrayList<Picture>,
             var context: Context
     ) : BaseAdapter(){
@@ -143,6 +150,104 @@ class SelectPictureActivity : AppCompatActivity() {
         }
 
     }
+
+
+
+
+    private fun cargarLayoutModoRandom(){
+        var modalList = ArrayList<Picture>()
+        var images = intArrayOf(
+                R.drawable.image1,
+                R.drawable.image2,
+                R.drawable.image3,
+                R.drawable.image4,
+                R.drawable.image5,
+                R.drawable.image6,
+                R.drawable.image7,
+                R.drawable.image8,
+                R.drawable.image9,
+                R.drawable.image10
+        )
+        var customAdapter = AdapterEstandarMode(modalList,this)
+        var ListadoPartidas : MutableList<SavedGame>?  = null
+
+        var rutina =GlobalScope.launch {
+            ListadoPartidas =  gameViewModel.getAllimageMaxScore(_player.PlayerId)
+
+            if(ListadoPartidas != null){
+                for(i:SavedGame in ListadoPartidas!!){
+                    println("Partida:"+i.fechaInicio.toString())
+                }
+            }else{
+                println("ERRORRRRRR, VIENE VACIA LA LISTA")
+            }
+            for (i in images.indices) {
+
+                var search : SavedGame? = null
+                search = ListadoPartidas?.find{it.idImagen == images[i]}
+
+                if (search != null) {
+                    println("SCORE->"+search.score.toString())
+                    modalList.add(Picture(images[i], search.score.toString()))
+                } else {
+                    println("imagen sin score"+i.toString())
+                    modalList.add(Picture(images[i], "0"))
+                }
+
+            }
+        }
+
+        //Esperamos a que la rutina acabe para finalizar
+        while (rutina.isActive) {}
+
+        gridView.adapter = customAdapter
+        gridView.setOnItemClickListener { adapterView, view, i, l ->
+
+            var intent = Intent(this,SelectDificultyActivity::class.java).apply {
+                putExtra("player", _player)
+                putExtra("pictur", modalList[i])
+            }
+            startActivity(intent);
+        }
+    }
+    class AdapterRandom(
+            var itemModel: ArrayList<Picture>,
+            var context: Context
+    ) : BaseAdapter(){
+
+        var layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
+            var view = view;
+            if(view == null){
+                view = layoutInflater.inflate(R.layout.row_items,viewGroup,false)
+            }
+
+            var imageView = view?.findViewById<ImageView>(R.id.imageView);
+            var points = view?.findViewById<TextView>(R.id.points)
+
+            if (points != null) {
+                points.text = itemModel[position].points
+            }
+            imageView?.setImageResource(itemModel[position].image!!)
+
+            return view!!
+
+        }
+
+        override fun getItem(p0: Int): Any {
+            return itemModel[p0]
+        }
+
+        override fun getItemId(p0: Int): Long {
+            return p0.toLong()
+        }
+
+        override fun getCount(): Int {
+            return itemModel.size
+        }
+
+    }
+
 
 }
 

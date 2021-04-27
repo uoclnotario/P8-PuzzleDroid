@@ -36,5 +36,7 @@
     <string name="pointsTotalTitle">YOUR TOTAL POINTS</string>
     <string name="pointsTitleGameList">YOUR BEST GAMES</string>
     <string name="pointsBest">Bests scores</string>
+    <string name="GO">GO</string>
+    <string name="pictur">PICTUR RANDOM GAME</string>
 
 </resources>
