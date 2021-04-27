@@ -65,21 +65,10 @@ class StartGameActivity : AppCompatActivity() {
     }
 
     fun onClickNewGame(view: View) {
-        if(Gamemodeoption == 1) {
-            val intent = Intent(this, SelectPictureActivity::class.java).apply {
+            val intent = Intent(this, SelectGameMode::class.java).apply {
                 putExtra("player", player)
             }
             startActivity(intent)
-        }
-        if(Gamemodeoption == 2){
-
-            var intent = Intent(this,SelectDificultyActivity::class.java).apply {
-                putExtra("player", player)
-                putExtra("pictur", RandomPhoto())
-            }
-            startActivity(intent);
-
-        }
     }
 
     fun onClickContinue(view: View) {
@@ -97,16 +86,6 @@ class StartGameActivity : AppCompatActivity() {
     }
     fun onClickExit(view: View) {
         finishAffinity()
-    }
-
-    fun RandomPhoto (): Picture? {
-        var rphoto : Picture? = null
-        
-
-
-
-
-        return rphoto
     }
 
 
