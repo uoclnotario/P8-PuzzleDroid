@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_azul"
+    tools:context=".lyUi.SelectGameMode" >
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="242dp"
+        android:layout_height="322dp"
+        android:alpha="0.2"
+        android:contentDescription="@string/app_name"
+        app:layout_anchor="@+id/capaContenido"
+        app:layout_anchorGravity="center"
+        app:srcCompat="@drawable/logo4pieces" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/capaContenido"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="83dp"
+            android:theme="@style/Theme.4puzzleGame.AppBarOverlay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#173D8D">
+
+                <ImageView
+                    android:id="@+id/btnClose"
+                    android:layout_width="88dp"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="7dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/menubtn" />
+
+                <TextView
+                    android:id="@+id/userName"
+                    style="@style/Theme.4puzzleGame.SimpleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hi"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.826"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ImageView
+            android:id="@+id/btnNormalMode"
+            android:layout_width="237dp"
+            android:layout_height="57dp"
+            android:contentDescription="@string/NormalMode"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            android:layout_marginTop="50pt"
+            app:srcCompat="@drawable/btn_oscuro" />
+
+        <Button
+            android:id="@+id/btnNormalGame"
+            style="@style/Theme.4puzzleGame.Button"
+            android:layout_width="223dp"
+            android:layout_height="42dp"
+            android:onClick="onClickNormalGame"
+            android:padding="0dp"
+            android:scaleX="1"
+            android:text="@string/NormalMode"
+            app:layout_constraintBottom_toBottomOf="@+id/btnNormalMode"
+            app:layout_constraintEnd_toEndOf="@+id/btnNormalMode"
+            app:layout_constraintStart_toStartOf="@+id/btnNormalMode"
+            app:layout_constraintTop_toTopOf="@+id/btnNormalMode"
+            app:layout_constraintVertical_bias="0.468" />
+
+        <ImageView
+            android:id="@+id/btnRandomMode"
+            android:layout_width="237dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="30dp"
+            android:contentDescription="@string/RandomMode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnNormalMode"
+            app:srcCompat="@drawable/btn_oscuro" />
+
+        <Button
+            android:id="@+id/btnrandommode"
+            style="@style/Theme.4puzzleGame.Button"
+            android:layout_width="223dp"
+            android:layout_height="42dp"
+            android:onClick="onClickRandomMode"
+            android:padding="0dp"
+            android:scaleX="1"
+            android:text="@string/RandomMode"
+            app:layout_constraintBottom_toBottomOf="@+id/btnRandomMode"
+            app:layout_constraintEnd_toEndOf="@+id/btnRandomMode"
+            app:layout_constraintStart_toStartOf="@+id/btnRandomMode"
+            app:layout_constraintTop_toTopOf="@+id/btnRandomMode"
+            app:layout_constraintVertical_bias="0.468" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/flMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_anchor="@+id/capaContenido"
+        app:layout_anchorGravity="center">
+
+    </FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

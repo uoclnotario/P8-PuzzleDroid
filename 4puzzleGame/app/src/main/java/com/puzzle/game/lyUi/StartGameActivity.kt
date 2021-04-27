@@ -22,6 +22,8 @@ import java.io.File
 
 
 class StartGameActivity : AppCompatActivity() {
+
+    var Gamemodeoption = 0
     lateinit var player: Player
     private lateinit var playerViewModel: PlayerViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +32,7 @@ class StartGameActivity : AppCompatActivity() {
 
         println("Estamos en el StartGame Activity")//De esta manera recogemos los datos del intent...
         player = intent.getSerializableExtra("player") as Player
+        Gamemodeoption = intent.getSerializableExtra("GameMode") as Int
         userName.text = userName.text.toString() + ", " + player.nombre
         println("El player es: ${player.imprimirdatos()}")
 
@@ -62,11 +65,23 @@ class StartGameActivity : AppCompatActivity() {
     }
 
     fun onClickNewGame(view: View) {
-        val intent = Intent(this, SelectPictureActivity::class.java).apply {
-            putExtra("player",player)
+        if(Gamemodeoption == 1) {
+            val intent = Intent(this, SelectPictureActivity::class.java).apply {
+                putExtra("player", player)
+            }
+            startActivity(intent)
         }
-        startActivity(intent)
+        if(Gamemodeoption == 2){
+
+            var intent = Intent(this,SelectDificultyActivity::class.java).apply {
+                putExtra("player", player)
+                putExtra("pictur", RandomPhoto())
+            }
+            startActivity(intent);
+
+        }
     }
+
     fun onClickContinue(view: View) {
         val intent = Intent(this, GameActivity::class.java).apply {
             putExtra("player",player)
@@ -84,6 +99,15 @@ class StartGameActivity : AppCompatActivity() {
         finishAffinity()
     }
 
+    fun RandomPhoto (): Picture? {
+        var rphoto : Picture? = null
+        
+
+
+
+
+        return rphoto
+    }
 
 
 }

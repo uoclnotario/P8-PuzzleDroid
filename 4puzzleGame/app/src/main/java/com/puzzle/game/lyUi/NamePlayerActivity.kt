@@ -33,7 +33,7 @@ class NamePlayerActivity : AppCompatActivity() {
     private fun changeView()
     {
         println("Lanzamos el ChangeView")
-        val intent = Intent(this, StartGameActivity::class.java)
+        val intent = Intent(this, SelectGameMode::class.java)
         intent.putExtra("player",PlayerViewModel.player)
         startActivity(intent)
     }

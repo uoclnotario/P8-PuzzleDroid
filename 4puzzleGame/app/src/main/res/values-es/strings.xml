@@ -36,5 +36,7 @@
     <string name="pointsTitleGameList">TUS MEJORE PARTIDAS</string>
     <string name="pointsBest">Mejores puntuaciones</string>
     <string name="totalPuntos">YOUR POINTS</string>
+    <string name="NormalMode">Modo Normal</string>
+    <string name="RandomMode">Modo Aleatorio</string>
 
 </resources>
