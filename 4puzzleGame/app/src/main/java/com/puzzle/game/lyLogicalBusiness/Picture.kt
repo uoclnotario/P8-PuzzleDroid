@@ -1,4 +1,5 @@
 package com.puzzle.game.lyLogicalBusiness
+import android.graphics.Bitmap
 import java.io.Serializable
 
 class Picture : Serializable {
@@ -12,15 +13,6 @@ class Picture : Serializable {
         this.image = image
         points = puntos
     }
-/* Función para identifcar una imagen haciendole has
-    fun hashBitmap(bmp: Bitmap): Long {
-        var hash: Long = 31 //or a higher prime at your choice
-        for (x in 0 until bmp.width) {
-            for (y in 0 until bmp.height) {
-                hash *= bmp.getPixel(x, y) + 31
-            }
-        }
-        return hash
-    }
- */
+
+
 }

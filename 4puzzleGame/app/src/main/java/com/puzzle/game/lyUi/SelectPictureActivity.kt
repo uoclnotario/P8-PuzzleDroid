@@ -2,29 +2,42 @@ package com.puzzle.game.lyUi
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Base64.DEFAULT
+import android.util.Base64.encodeToString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.R
+import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
 import com.puzzle.game.viewModels.GameViewModel
-import java.util.*
 import kotlinx.android.synthetic.main.activity_selectpicture.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
+import java.io.FileOutputStream
+import java.io.IOException
+import java.security.MessageDigest
+import java.util.*
 
 class SelectPictureActivity : AppCompatActivity() {
+    val SELECT_PICTURES = 1
     lateinit var _player :Player
     lateinit var gameViewModel: GameViewModel
-     var _modGame : Int = 2
+    var _modGame : Int = 2
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,8 +56,6 @@ class SelectPictureActivity : AppCompatActivity() {
         }
 
 
-
-
         //Acción para el botón del menu.
         btnPlus.setOnClickListener{
             if (findViewById<View>(R.id.flMenu) != null) {
@@ -56,7 +67,19 @@ class SelectPictureActivity : AppCompatActivity() {
         }
 
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+       super.onActivityResult(requestCode, resultCode, data)
+        println("Recibida imagen desde galeria="+_modGame.toString()+" RESULT "+resultCode + " DATA"+data.toString())
+        println("DATOSSSS"+data.toString()+ data?.clipData.toString())
+       if (requestCode == SELECT_PICTURES && resultCode == RESULT_OK && data != null && data.clipData != null) {
+           println("ENTRAAAAAAAAAAAAAAAAAAAAAAA")
+           importarDesdeGaleria(data)
+       }
 
+    }
+
+
+    //MODO DE JUEGO ESTANDAR
     private fun cargarLayoutModoEstandar(){
         var modalList = ArrayList<Picture>()
         var images = intArrayOf(
@@ -150,66 +173,44 @@ class SelectPictureActivity : AppCompatActivity() {
         }
 
     }
+    //***********************
 
 
-
-
+    //MODO DE JUEGO RANDOM
     private fun cargarLayoutModoRandom(){
-        var modalList = ArrayList<Picture>()
-        var images = intArrayOf(
-                R.drawable.image1,
-                R.drawable.image2,
-                R.drawable.image3,
-                R.drawable.image4,
-                R.drawable.image5,
-                R.drawable.image6,
-                R.drawable.image7,
-                R.drawable.image8,
-                R.drawable.image9,
-                R.drawable.image10
-        )
-        var customAdapter = AdapterEstandarMode(modalList,this)
-        var ListadoPartidas : MutableList<SavedGame>?  = null
 
-        var rutina =GlobalScope.launch {
-            ListadoPartidas =  gameViewModel.getAllimageMaxScore(_player.PlayerId)
+        var btnGalery = findViewById<LinearLayout>(R.id.LLGalery) as LinearLayout
 
-            if(ListadoPartidas != null){
-                for(i:SavedGame in ListadoPartidas!!){
-                    println("Partida:"+i.fechaInicio.toString())
-                }
-            }else{
-                println("ERRORRRRRR, VIENE VACIA LA LISTA")
-            }
-            for (i in images.indices) {
-
-                var search : SavedGame? = null
-                search = ListadoPartidas?.find{it.idImagen == images[i]}
-
-                if (search != null) {
-                    println("SCORE->"+search.score.toString())
-                    modalList.add(Picture(images[i], search.score.toString()))
-                } else {
-                    println("imagen sin score"+i.toString())
-                    modalList.add(Picture(images[i], "0"))
-                }
-
-            }
+        btnGalery.setOnClickListener{
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/*"
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURES)
         }
 
-        //Esperamos a que la rutina acabe para finalizar
-        while (rutina.isActive) {}
 
-        gridView.adapter = customAdapter
-        gridView.setOnItemClickListener { adapterView, view, i, l ->
+    }
 
-            var intent = Intent(this,SelectDificultyActivity::class.java).apply {
-                putExtra("player", _player)
-                putExtra("pictur", modalList[i])
+    private fun importarDesdeGaleria(data: Intent?){
+        var imageUri: Uri? = null
+        val count = data?.clipData!!.itemCount //Evalua la cantidad de veces que ha de hacer el loop
+        println(count.toString())
+
+        for (i in 0 until count) {
+            var bitmap: Bitmap? = null
+            imageUri = data.clipData!!.getItemAt(i).uri
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
+                createImageFromBitmap(bitmap)
+            } catch (e: IOException) {
+                println("ERRORRR"+ e.message)
+                e.printStackTrace()
             }
-            startActivity(intent);
+
         }
     }
+    private fun importarDesdeCamara(){}
+
     class AdapterRandom(
             var itemModel: ArrayList<Picture>,
             var context: Context
@@ -247,8 +248,32 @@ class SelectPictureActivity : AppCompatActivity() {
         }
 
     }
+    //**********************
 
 
+    fun createImageFromBitmap(bitmap: Bitmap) {
+            try {
+                val bytes = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+                var fileName: String? =hashBitmap(bytes)
+                println("width"+bitmap.width.toString()+"heigt"+bitmap.height.toString())
+                println("ElnombredeImagenEs:"+fileName)
+                val fo: FileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE)
+                fo.write(bytes.toByteArray())
+                fo.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+    }
+
+    // Función para identifcar una imagen haciendole has
+
+    fun hashBitmap(byteArray: ByteArrayOutputStream): String {
+        val byteArray: ByteArray = byteArray.toByteArray()
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(byteArray)
+        return digest.fold("", { str, it -> str + "%02x".format(it) })
+    }
 }
 
 
@@ -329,7 +354,7 @@ class SelectPictureActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
+/*
     fun createImageFromBitmap(bitmap: Bitmap): String? {
         var fileName: String? = "myImage" //no .png or .jpg needed
         try {
@@ -352,7 +377,7 @@ class SelectPictureActivity : AppCompatActivity() {
 
 
 
-/*
+
 
 
     fun onImageFromCameraClick(view: View?) {
