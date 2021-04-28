@@ -52,6 +52,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/btn_oscuro" />
 
+        <TextView
+            style="@style/Theme.4puzzleGame.SimpleText"
+            android:id="@+id/lastGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lastGame"
+            android:layout_marginTop="10dp"
+            app:layout_anchor="@+id/constraintLayout"
+            app:layout_anchorGravity="top|center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/lastGameValue"
+            style="@style/Theme.4puzzleGame.SimpleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:fontFamily = "@font/mainfont_regular"
+            android:layout_marginTop="5dp"
+            app:layout_anchor="@+id/constraintLayout"
+            app:layout_anchorGravity="top|center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lastGame" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

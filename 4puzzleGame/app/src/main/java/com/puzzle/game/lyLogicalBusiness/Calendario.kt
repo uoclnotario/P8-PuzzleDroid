@@ -2,12 +2,10 @@ package com.puzzle.game.lyLogicalBusiness
 
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.provider.CalendarContract
 import android.provider.CalendarContract.Calendars
 import android.provider.CalendarContract.Events
-import android.provider.ContactsContract
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
@@ -20,6 +18,7 @@ class Calendario(context: Context) : AppCompatActivity() {
     companion object {
         const val MY_ACCOUNT_NAME =  "Game 4 Puzzle"
         const val MY_DISPLAY_NAME =  "Game: 4 Puzzle"
+        lateinit var lastScore: String
     }
 
     fun checkCalendarId(): Long {
@@ -59,7 +58,7 @@ class Calendario(context: Context) : AppCompatActivity() {
                 idFinal = cursor.getLong(0)
             }
 
-        }catch (e:Exception)
+        }catch (e: Exception)
         {
             println("Get Calendar ID: $e")
         }finally {
@@ -111,12 +110,67 @@ class Calendario(context: Context) : AppCompatActivity() {
                     "true")
             val uri: Uri? = mContext.getContentResolver().insert(builder.build(), values)
 
-        }catch (e:Exception)
+        }catch (e: Exception)
         {
             println("Create Calendar: $e")
         }
     }
+    fun readLastEvent() : String
+    {
+        var calendarId = checkCalendarId()
+        var score = ""
+        println("ReadEvent => Calendar ID: $calendarId")
+        if (calendarId == -1L) {
+            // no calendar account; react meaningfully
+            return score;
+        }
+        try {
+            val projection = arrayOf(
+                    Events._ID,
+                    Events.DTSTART,
+                    Events.DTEND,
+                    Events.TITLE,
+                    Events.DESCRIPTION)
+            val selection = Events.CALENDAR_ID + " = ? "
+            val selArgs = arrayOf(calendarId.toString())
+            val sorOrder = Events.DTEND + " DESC"
 
+            val cursor = mContext.getContentResolver().query(
+                    Events.CONTENT_URI,
+                    projection,
+                    selection,
+                    selArgs,
+                    sorOrder)
+
+            if (cursor!!.moveToFirst()) {
+                do {
+                    val id: Long = cursor.getLong(0)
+                    val dStart: Long = cursor.getLong(1)
+                    val dEnd: Long = cursor.getLong(2)
+                    val eTitle: String = cursor.getString(3)
+                    val eScore: String = cursor.getString(4)
+                    score = eScore
+                    println("Evento encontrado tiene la siguiente puntuación:")
+                    println("ID: $id")
+                    println("dStart: $dStart")
+                    println("dEnd: $dEnd")
+                    println("Título: $eTitle")
+                    println("Puntuación: $eScore")
+                    println("=================================================")
+
+                } while (cursor.moveToNext() && score == "")
+
+            }
+        }
+        catch (e: Exception)
+        {
+            println("Read Event Failed: $e")
+        }
+        finally {
+            return score
+        }
+
+    }
      fun addEvento(savedGame: SavedGame) {
         var calendarId = checkCalendarId()
         println("AddEvent => Calendar ID: $calendarId")
@@ -127,13 +181,10 @@ class Calendario(context: Context) : AppCompatActivity() {
 
         try {
             val startMillis: Long = savedGame.fechaInicio.time
-            println("startMillis = $startMillis")
             val endMillis: Long = savedGame.fechaFin.time
-            println("startMillis = $endMillis")
-            val titulo: String = "Puzzle Completed" //getString(R.string.completePuzzle)
-            println("titulo = $titulo")
-            val description: String = "Puzzle Score: " + savedGame.score.toString() + "\r Time Spend: "+ savedGame.tiempo//getString(R.string.finishScore)+": "+savedGame.score.toString()
-            println("description = $description")
+            val titulo: String = "Puzzle Completed"
+            val description: String = savedGame.score.toString()//"Puzzle Score: " + savedGame.score.toString() + "\r Time Spend: "+ savedGame.tiempo
+
 
             val values = ContentValues()
             values.put(Events.DTSTART, startMillis)
@@ -154,7 +205,7 @@ class Calendario(context: Context) : AppCompatActivity() {
             values.put(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
             val uri = mContext.getContentResolver().insert(Events.CONTENT_URI, values)
 
-        }catch (e:Exception)
+        }catch (e: Exception)
         {
             println("Create Calendar: $e")
         }

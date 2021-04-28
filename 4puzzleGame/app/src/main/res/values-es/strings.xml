@@ -36,5 +36,6 @@
     <string name="pointsTitleGameList">TUS MEJORE PARTIDAS</string>
     <string name="pointsBest">Mejores puntuaciones</string>
     <string name="totalPuntos">TUS PUNTOS</string>
+    <string name="lastGame">Última Partida</string>
 
 </resources>
