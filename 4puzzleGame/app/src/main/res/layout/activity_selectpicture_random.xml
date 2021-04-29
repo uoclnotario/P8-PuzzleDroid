@@ -99,7 +99,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView2">
 
             <LinearLayout
-                android:id="@+id/LLGalery"
+                android:id="@+id/btnLGalery"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -115,6 +115,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/btnLCamera"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
