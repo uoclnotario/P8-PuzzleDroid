@@ -1,10 +1,9 @@
 package com.puzzle.game.lyUi
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,10 +14,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Picture
@@ -28,9 +24,7 @@ import com.puzzle.game.viewModels.GameViewModel
 import kotlinx.android.synthetic.main.activity_selectpicture.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
-import java.io.FileOutputStream
-import java.io.IOException
+import java.io.*
 import java.security.MessageDigest
 import java.util.*
 
@@ -74,6 +68,7 @@ class SelectPictureActivity : AppCompatActivity() {
         }
 
     }
+
     //MODO DE JUEGO ESTANDAR
     private fun cargarLayoutModoEstandar(){
         var modalList = ArrayList<Picture>()
@@ -89,7 +84,7 @@ class SelectPictureActivity : AppCompatActivity() {
                 R.drawable.image9,
                 R.drawable.image10
         )
-        var customAdapter = AdapterEstandarMode(modalList,this)
+        var customAdapter = Adapter(modalList,this)
         var ListadoPartidas : MutableList<SavedGame>?  = null
 
         var rutina =GlobalScope.launch {
@@ -131,38 +126,7 @@ class SelectPictureActivity : AppCompatActivity() {
             startActivity(intent);
         }
     }
-    class AdapterEstandarMode(
-            var itemModel: ArrayList<Picture>,
-            var context: Context
-    ) : BaseAdapter(){
 
-        var layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
-            var imageView = view?.findViewById<ImageView>(R.id.imageView);
-            var points = view?.findViewById<TextView>(R.id.points)
-            var view = view;
-
-            if(view == null){
-                view = layoutInflater.inflate(R.layout.row_items,viewGroup,false)
-            }
-
-            if (points != null) {
-                points.text = itemModel[position].points
-            }
-
-            imageView?.setImageResource(itemModel[position].image!!)
-            return view!!
-        }
-        override fun getItem(p0: Int): Any {
-            return itemModel[p0]
-        }
-        override fun getItemId(p0: Int): Long {
-            return p0.toLong()
-        }
-        override fun getCount(): Int {
-            return itemModel.size
-        }
-    }
     //***********************
 
 
@@ -171,6 +135,7 @@ class SelectPictureActivity : AppCompatActivity() {
 
         var btnGalery = findViewById<LinearLayout>(R.id.btnLGalery) as LinearLayout
         var btnCamera = findViewById<LinearLayout>(R.id.btnLCamera) as LinearLayout
+
 
         //Acción para abrir Galería
         btnGalery.setOnClickListener{
@@ -189,45 +154,22 @@ class SelectPictureActivity : AppCompatActivity() {
             }
         }
 
-    }
-    class AdapterRandom(
-            var itemModel: ArrayList<Picture>,
-            var context: Context
-    ) : BaseAdapter(){
-
-        var layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
-            var view = view;
-            if(view == null){
-                view = layoutInflater.inflate(R.layout.row_items,viewGroup,false)
-            }
-
-            var imageView = view?.findViewById<ImageView>(R.id.imageView);
-            var points = view?.findViewById<TextView>(R.id.points)
-
-            if (points != null) {
-                points.text = itemModel[position].points
-            }
-            imageView?.setImageResource(itemModel[position].image!!)
-
-            return view!!
-
-        }
-
-        override fun getItem(p0: Int): Any {
-            return itemModel[p0]
-        }
-
-        override fun getItemId(p0: Int): Long {
-            return p0.toLong()
-        }
-
-        override fun getCount(): Int {
-            return itemModel.size
-        }
+        //Cargar los datos
+        load()
 
     }
     //**********************
+
+    fun load(){
+        var modalList = ArrayList<Picture>()
+        var customAdapter = Adapter(modalList,this)
+        for(item in this.applicationContext.fileList()){
+            var nuevoPicture = Picture(item)
+            modalList.add(nuevoPicture)
+        }
+
+        gridView.adapter = customAdapter
+    }
 
 
     //REcepcón de Imagenes
@@ -264,12 +206,14 @@ class SelectPictureActivity : AppCompatActivity() {
                     e.printStackTrace()
                 }
             }
+            load()
         }else{
             imageUri = data?.data
             if(imageUri != null) {
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, imageUri)
                     createImageFromBitmap(bitmap)
+                    load()
                 } catch (e: IOException) {
                     println("ERRORRR" + e.message)
                     e.printStackTrace()
@@ -284,6 +228,7 @@ class SelectPictureActivity : AppCompatActivity() {
             bitmap = data.extras?.get("data") as Bitmap
             if(bitmap != null)
                 createImageFromBitmap(bitmap)
+            load()
         } catch (e: IOException) {
             println("ERRORRR" + e.message)
             e.printStackTrace()
@@ -316,6 +261,48 @@ class SelectPictureActivity : AppCompatActivity() {
         return digest.fold("", { str, it -> str + "%02x".format(it) })
     }
 
+    class Adapter(
+            var itemModel: ArrayList<Picture>,
+            var context: Context
+    ) : BaseAdapter(){
+        var layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
+            var imageView = view?.findViewById<ImageView>(R.id.imageView);
+            var points = view?.findViewById<TextView>(R.id.points)
+            var view = view;
+
+            if(view == null){
+                view = layoutInflater.inflate(R.layout.row_items,viewGroup,false)
+            }
+
+            if (points != null) {
+                points.text = itemModel[position].points
+            }
+
+            if(itemModel[position].tipo == Picture.Tipo.INTERNALFILE){
+                try {
+                    imageView?.setImageBitmap(BitmapFactory.decodeStream(context.openFileInput(itemModel[position].rute)))
+                } catch (ex: java.lang.Exception){
+                    println("ERRRORRRRRRRRR:"+ex.message)
+                }
+
+
+            }else{
+                imageView?.setImageResource(itemModel[position].image!!)
+            }
+
+            return view!!
+        }
+        override fun getItem(p0: Int): Any {
+            return itemModel[p0]
+        }
+        override fun getItemId(p0: Int): Long {
+            return p0.toLong()
+        }
+        override fun getCount(): Int {
+            return itemModel.size
+        }
+    }
 }
 
 
