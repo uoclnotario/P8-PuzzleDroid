@@ -35,7 +35,10 @@
     <string name="pointsTotalTitle">TUS PUNTOS TOTALES</string>
     <string name="pointsTitleGameList">TUS MEJORE PARTIDAS</string>
     <string name="pointsBest">Mejores puntuaciones</string>
-    <string name="totalPuntos">TUS PUNTOS</string>
     <string name="lastGame">Última Partida</string>
+    <string name="totalPuntos">YOUR POINTS</string>
+    <string name="GO">GO</string>
+    <string name="pictur">PICTUR RANDOM GAME</string>
+
 
 </resources>
