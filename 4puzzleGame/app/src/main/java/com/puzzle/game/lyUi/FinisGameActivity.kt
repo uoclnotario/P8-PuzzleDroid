@@ -22,7 +22,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
-
+import android.media.MediaParser
+import android.media.MediaPlayer
 
 class FinisGameActivity : AppCompatActivity() {
     private lateinit var gameViewModel: GameViewModel
@@ -38,7 +39,8 @@ class FinisGameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_finis_game)
-
+        val fxFinish = MediaPlayer.create(this.applicationContext,R.raw.finish)
+        fxFinish.start()
         gameViewModel = run { ViewModelProvider(this).get(GameViewModel::class.java) }
 
         player = intent.getSerializableExtra("player") as Player

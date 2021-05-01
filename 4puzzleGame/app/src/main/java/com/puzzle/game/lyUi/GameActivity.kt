@@ -3,6 +3,7 @@ package com.puzzle.game.lyUi
 import android.content.Context
 import android.content.Intent
 import android.graphics.RectF
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -21,6 +22,7 @@ import com.puzzle.game.lyLogicalBusiness.Player
 import kotlinx.android.synthetic.main.activity_game.*
 import java.io.*
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.concurrent.scheduleAtFixedRate
 
 
@@ -32,6 +34,8 @@ class GameActivity : AppCompatActivity() {
     var timer =  Timer("schedule", true)
     var gameLoad : Boolean = false
     var dificult : Number = 1
+    lateinit var fxSoundV : MediaPlayer
+    lateinit var fxfondo :  MediaPlayer
 
     lateinit var gameSaved: DtoGame
 
@@ -45,7 +49,12 @@ class GameActivity : AppCompatActivity() {
         val ivTablero  : ImageView = findViewById<View>(R.id.ivTablero) as ImageView
         val tool  : ConstraintLayout = findViewById<View>(R.id.toolbar) as ConstraintLayout
         val appBarLayout  : AppBarLayout = findViewById<View>(R.id.appBarLayout) as AppBarLayout
-
+        val fxSoundOk = MediaPlayer.create(this.applicationContext,R.raw.fxposition)
+         fxSoundV =  MediaPlayer.create(this.applicationContext,R.raw.v1)
+         fxfondo =  MediaPlayer.create(this.applicationContext,R.raw.music)
+        fxfondo.isLooping = true
+        fxfondo.start()
+        fxfondo.setVolume(1.0f, 1.0f)
 
         player = intent.getSerializableExtra("player") as Player
         gameLoad = intent.getBooleanExtra("load",false)
@@ -100,7 +109,7 @@ class GameActivity : AppCompatActivity() {
                 _game.dateSatart = gameSaved.fechaInicio
             }
             if (!_game.error) {
-                val touchListener = TouchListener(this, 0, tool.height)
+                val touchListener = TouchListener(this, 0, tool.height,fxSoundOk,fxSoundV)
                 Collections.shuffle(_game._puzzle.piezas)
                 for (piece in _game._puzzle.piezas!!) {
                     layout.addView(piece)
@@ -133,11 +142,14 @@ class GameActivity : AppCompatActivity() {
 
     //Cuando se pausa la app.
     override fun onPause() {
+        fxfondo.pause()
+
         super.onPause()
         timer.cancel()
     }
     //Funcionan que inicializan o vuelven a poner en marcha el contador.
     override fun onResume() {
+        fxfondo.start()
         super.onResume()
         timerStart()
     }
