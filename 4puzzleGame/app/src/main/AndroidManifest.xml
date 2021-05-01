@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.puzzle.game">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,46 +12,54 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-
         android:supportsRtl="true"
         android:theme="@style/Theme.4puzzleGame">
-        <activity android:name=".lyUi.InfoActivity"></activity>
+        <activity android:name=".lyUi.RandomModeOptions"></activity>
+        <activity android:name=".lyUi.InfoActivity" />
+        <activity
+            android:name=".RandomModeOptions"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
+        <activity
+            android:name=".lyUi.SelectGameMode"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.Help"
-            android:theme="@style/Theme.4puzzleGame.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.WebActivity"
-            android:theme="@style/Theme.4puzzleGame.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.FinisGameActivity"
-            android:theme="@style/Theme.4puzzleGame.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.GameActivity"
-            android:theme="@style/Theme.4puzzleGame.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.StartGameActivity"
-            android:theme="@style/Theme.4puzzleGame.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.SelectPictureActivity"
-            android:theme="@style/Theme.4puzzleGame.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.SelectDificultyActivity"
-            android:theme="@style/Theme.4puzzleGame.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.PointsActivity"
-            android:theme="@style/Theme.4puzzleGame.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.NamePlayerActivity"
-            android:theme="@style/Theme.4puzzleGame.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.MainActivity"
             android:label="@string/title_activity_main"

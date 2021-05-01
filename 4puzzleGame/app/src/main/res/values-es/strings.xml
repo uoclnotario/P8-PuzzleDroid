@@ -39,6 +39,7 @@
     <string name="totalPuntos">YOUR POINTS</string>
     <string name="GO">GO</string>
     <string name="pictur">PICTUR RANDOM GAME</string>
-
+    <string name="NormalMode">Modo Normal</string>
+    <string name="RandomMode">Modo Aleatorio</string>
 
 </resources>

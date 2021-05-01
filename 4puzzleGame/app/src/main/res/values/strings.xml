@@ -40,5 +40,7 @@
     <string name="lastGame">Last Game</string>	
     <string name="GO">GO</string>
     <string name="pictur">PICTUR RANDOM GAME</string>	
+    <string name="NormalMode">Normal Mode</string>
+    <string name="RandomMode">Random Mode</string>
 
 </resources>
