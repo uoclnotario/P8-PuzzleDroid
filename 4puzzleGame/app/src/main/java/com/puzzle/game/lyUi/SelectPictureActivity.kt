@@ -132,10 +132,8 @@ class SelectPictureActivity : AppCompatActivity() {
 
     //MODO DE JUEGO RANDOM
     private fun cargarLayoutModoRandom(){
-
         var btnGalery = findViewById<LinearLayout>(R.id.btnLGalery) as LinearLayout
         var btnCamera = findViewById<LinearLayout>(R.id.btnLCamera) as LinearLayout
-
 
         //Acción para abrir Galería
         btnGalery.setOnClickListener{
@@ -156,7 +154,6 @@ class SelectPictureActivity : AppCompatActivity() {
 
         //Cargar los datos
         load()
-
     }
     //**********************
 
@@ -164,8 +161,7 @@ class SelectPictureActivity : AppCompatActivity() {
         var modalList = ArrayList<Picture>()
         var customAdapter = Adapter(modalList,this)
         for(item in this.applicationContext.fileList()){
-            var nuevoPicture = Picture(item)
-            modalList.add(nuevoPicture)
+            modalList.add(Picture(item))
         }
 
         gridView.adapter = customAdapter
@@ -267,25 +263,25 @@ class SelectPictureActivity : AppCompatActivity() {
     ) : BaseAdapter(){
         var layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         override fun getView(position: Int, view: View?, viewGroup: ViewGroup?): View {
-            var imageView = view?.findViewById<ImageView>(R.id.imageView);
-            var points = view?.findViewById<TextView>(R.id.points)
             var view = view;
-
             if(view == null){
                 view = layoutInflater.inflate(R.layout.row_items,viewGroup,false)
             }
 
+            var imageView = view?.findViewById<ImageView>(R.id.imageView);
+            var points = view?.findViewById<TextView>(R.id.points)
+
+
             if (points != null) {
+                println( itemModel[position].points)
                 points.text = itemModel[position].points
             }
-
             if(itemModel[position].tipo == Picture.Tipo.INTERNALFILE){
                 try {
                     imageView?.setImageBitmap(BitmapFactory.decodeStream(context.openFileInput(itemModel[position].rute)))
                 } catch (ex: java.lang.Exception){
                     println("ERRRORRRRRRRRR:"+ex.message)
                 }
-
 
             }else{
                 imageView?.setImageResource(itemModel[position].image!!)
