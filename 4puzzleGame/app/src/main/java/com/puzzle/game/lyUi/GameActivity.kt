@@ -74,8 +74,9 @@ class GameActivity : AppCompatActivity() {
                 `is`.close()
                 fis.close()
 
+                _modGame = gameSaved.modoJuego
                 dificult = gameSaved._dificuty
-                pictur = Picture(gameSaved.resourCePictur)
+                pictur = gameSaved.imagen
                 movements.text = gameSaved._movements.toString()+" Movimientos"
             }catch (ex : Exception){
                 //REiniciamos la app.
@@ -105,7 +106,7 @@ class GameActivity : AppCompatActivity() {
         }
 
         ivTablero.post {
-            _game = Game(pictur!!,dificult,application.applicationContext,  RectF(ivTablero.x,ivTablero.y,ivTablero.width.toFloat(),ivTablero.height.toFloat()))
+            _game = Game(pictur!!,dificult,application.applicationContext,  RectF(ivTablero.x,ivTablero.y,ivTablero.width.toFloat(),ivTablero.height.toFloat()),_modGame)
             if(gameLoad){
                 _game._movements = gameSaved._movements
                 _game.currentIme = gameSaved.currentIme

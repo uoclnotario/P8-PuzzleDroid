@@ -26,13 +26,13 @@ class Game : Serializable {
     var error : Boolean = false
     var getError : Exception? = null
     var finalizado : Boolean = false
-
+    var modoJuego : Int = 1
     @RequiresApi(Build.VERSION_CODES.O)
-    constructor(imagenData:Picture, dificulty:Number, ctx:Context, referencia: RectF){
+    constructor(imagenData:Picture, dificulty:Number, ctx:Context, referencia: RectF,mojoJuego:Int){
        try {
         _picture = imagenData
         _dificuty=dificulty
-
+        this.modoJuego = modoJuego
         var rows :Int = 4
         var cols:Int = 3
 
@@ -161,9 +161,9 @@ class Game : Serializable {
         dto._dificuty = _dificuty
         dto._movements = _movements
         dto.currentIme = currentIme
-        dto.resourCePictur = _picture.image!!
         dto.fechaInicio = Date()
-
+        dto.imagen = _picture
+        dto.modoJuego = this.modoJuego
        for(i in _puzzle.piezas!!){
            var part=DtoPieza()
            part.id = i.id

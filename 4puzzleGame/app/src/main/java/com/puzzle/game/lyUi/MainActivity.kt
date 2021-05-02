@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         finally {
             if(PlayerViewModel.player != null)
             {
-                val intent = Intent(this, SelectGameMode::class.java)
+                val intent = Intent(this, StartGameActivity::class.java)
                 intent.putExtra("player", PlayerViewModel.player)
                 startActivity(intent)
             }else

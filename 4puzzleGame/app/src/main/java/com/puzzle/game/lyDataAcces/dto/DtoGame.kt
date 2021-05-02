@@ -1,5 +1,6 @@
 package com.puzzle.game.lyDataAcces.dto
 
+import com.puzzle.game.lyLogicalBusiness.Picture
 import java.io.Serializable
 import java.time.LocalDateTime
 import java.util.*
@@ -9,8 +10,9 @@ class DtoGame : Serializable {
     var _movements : Int = 0
     lateinit var piezas: MutableList<DtoPieza>
     lateinit var _dificuty : Number
-    var resourCePictur:Int = 0
     lateinit var fechaInicio : Date
+    lateinit var imagen :Picture
+    var modoJuego : Int = 1
 }
 
 class DtoPieza: Serializable{
