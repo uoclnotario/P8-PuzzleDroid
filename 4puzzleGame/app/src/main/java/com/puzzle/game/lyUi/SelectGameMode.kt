@@ -34,16 +34,18 @@ class SelectGameMode : AppCompatActivity() {
     }
 
     fun onClickNormalGame(view: View) {
-        val intent = Intent(this, SelectPictureActivity::class.java)
-        intent.putExtra("player", PlayerViewModel.player)
+        val intent = Intent(this,SelectPictureActivity::class.java).apply {
+            putExtra("player", player)
+            putExtra("tipoJuego",1)
+        }
         startActivity(intent)
     }
 
 
     fun onClickRandomMode(view: View) {
-        val intent = Intent(this,SelectDificultyActivity::class.java).apply {
+        val intent = Intent(this,SelectPictureActivity::class.java).apply {
             putExtra("player", player)
-            putExtra("pictur", RandomPhoto())
+            putExtra("tipoJuego",2)
         }
         startActivity(intent)
     }

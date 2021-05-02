@@ -34,6 +34,8 @@ class GameActivity : AppCompatActivity() {
     var timer =  Timer("schedule", true)
     var gameLoad : Boolean = false
     var dificult : Number = 1
+    var _modGame : Int = 1
+
     lateinit var fxSoundV : MediaPlayer
     lateinit var fxfondo :  MediaPlayer
 
@@ -50,8 +52,8 @@ class GameActivity : AppCompatActivity() {
         val tool  : ConstraintLayout = findViewById<View>(R.id.toolbar) as ConstraintLayout
         val appBarLayout  : AppBarLayout = findViewById<View>(R.id.appBarLayout) as AppBarLayout
         val fxSoundOk = MediaPlayer.create(this.applicationContext,R.raw.fxposition)
-         fxSoundV =  MediaPlayer.create(this.applicationContext,R.raw.v1)
-         fxfondo =  MediaPlayer.create(this.applicationContext,R.raw.music)
+        fxSoundV =  MediaPlayer.create(this.applicationContext,R.raw.v1)
+        fxfondo =  MediaPlayer.create(this.applicationContext,R.raw.music)
         fxfondo.isLooping = true
         fxfondo.start()
         fxfondo.setVolume(1.0f, 1.0f)
@@ -62,6 +64,7 @@ class GameActivity : AppCompatActivity() {
         if(!gameLoad){
             dificult= intent.getSerializableExtra("dificul") as Number
             pictur = intent.getSerializableExtra("pictur") as Picture
+            _modGame = intent.getIntExtra("tipoJuego",1)
         }else{
             //Si falla  se debe de volver  al menu
             try {
@@ -196,6 +199,7 @@ class GameActivity : AppCompatActivity() {
                 putExtra("pictur",pictur)
                 putExtra("currentTime",_game.currentIme)
                 putExtra("fechaInicio",_game.dateSatart)
+                putExtra("tipoJuego",_modGame)
             }
             startActivity(intent)
         }

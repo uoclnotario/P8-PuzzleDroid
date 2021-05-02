@@ -27,6 +27,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/frPoints"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#E9393535"

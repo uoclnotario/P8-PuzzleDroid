@@ -10,11 +10,9 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Picture
@@ -27,6 +25,9 @@ import kotlinx.coroutines.launch
 import java.io.*
 import java.security.MessageDigest
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.random.Random
+import kotlin.random.Random.Default.nextInt
 
 class SelectPictureActivity : AppCompatActivity() {
     val SELECT_PICTURES = 1
@@ -34,16 +35,18 @@ class SelectPictureActivity : AppCompatActivity() {
     val REQUEST_PERMISSION_READ_EXTERNAL_STORAGE = 3
     val REQUEST_IMAGE_GALLERY = 4
     val REQUEST_IMAGE_CAPTURE = 5
+    var modalList = ArrayList<Picture>()
 
     lateinit var _player :Player
     lateinit var gameViewModel: GameViewModel
-    var _modGame : Int = 2
+    var _modGame : Int = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         gameViewModel = run { ViewModelProvider(this).get(GameViewModel::class.java) }
         _player = intent.getSerializableExtra("player") as Player
+        _modGame = intent.getSerializableExtra("tipoJuego") as Int
 
         if(_modGame == 1){
             setContentView(R.layout.activity_selectpicture)
@@ -71,7 +74,6 @@ class SelectPictureActivity : AppCompatActivity() {
 
     //MODO DE JUEGO ESTANDAR
     private fun cargarLayoutModoEstandar(){
-        var modalList = ArrayList<Picture>()
         var images = intArrayOf(
                 R.drawable.image1,
                 R.drawable.image2,
@@ -122,6 +124,7 @@ class SelectPictureActivity : AppCompatActivity() {
             var intent = Intent(this,SelectDificultyActivity::class.java).apply {
                 putExtra("player", _player)
                 putExtra("pictur", modalList[i])
+                putExtra("tipoJuego",_modGame)
             }
             startActivity(intent);
         }
@@ -134,6 +137,7 @@ class SelectPictureActivity : AppCompatActivity() {
     private fun cargarLayoutModoRandom(){
         var btnGalery = findViewById<LinearLayout>(R.id.btnLGalery) as LinearLayout
         var btnCamera = findViewById<LinearLayout>(R.id.btnLCamera) as LinearLayout
+        var btnGo = findViewById<Button>(R.id.btnGo) as Button
 
         //Acción para abrir Galería
         btnGalery.setOnClickListener{
@@ -152,18 +156,31 @@ class SelectPictureActivity : AppCompatActivity() {
             }
         }
 
+        btnGo.setOnClickListener{
+            var i : Int = Random.nextInt(0, modalList.count()-1)
+            var intent = Intent(this,SelectDificultyActivity::class.java).apply {
+                putExtra("player", _player)
+                putExtra("pictur", modalList[i])
+                putExtra("tipoJuego",_modGame)
+            }
+            startActivity(intent);
+        }
+
         //Cargar los datos
         load()
     }
     //**********************
 
     fun load(){
-        var modalList = ArrayList<Picture>()
+        modalList = ArrayList<Picture>()
+        var btnGo = findViewById<Button>(R.id.btnGo) as Button
         var customAdapter = Adapter(modalList,this)
+
         for(item in this.applicationContext.fileList()){
             modalList.add(Picture(item))
         }
 
+        btnGo.isEnabled = modalList.count() > 0
         gridView.adapter = customAdapter
     }
 
@@ -270,7 +287,7 @@ class SelectPictureActivity : AppCompatActivity() {
 
             var imageView = view?.findViewById<ImageView>(R.id.imageView);
             var points = view?.findViewById<TextView>(R.id.points)
-
+            var pnalePoints = view?.findViewById<ConstraintLayout>(R.id.frPoints) as ConstraintLayout
 
             if (points != null) {
                 println( itemModel[position].points)
@@ -279,12 +296,14 @@ class SelectPictureActivity : AppCompatActivity() {
             if(itemModel[position].tipo == Picture.Tipo.INTERNALFILE){
                 try {
                     imageView?.setImageBitmap(BitmapFactory.decodeStream(context.openFileInput(itemModel[position].rute)))
+                    pnalePoints?.visibility = View.INVISIBLE
                 } catch (ex: java.lang.Exception){
                     println("ERRRORRRRRRRRR:"+ex.message)
                 }
 
             }else{
                 imageView?.setImageResource(itemModel[position].image!!)
+                pnalePoints?.visibility = View.VISIBLE
             }
 
             return view!!

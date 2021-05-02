@@ -63,7 +63,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="8dp"
             android:background="#173D8D"
-            app:layout_constraintBottom_toTopOf="@+id/button3"
+            app:layout_constraintBottom_toTopOf="@+id/btnGo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.484"
             app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +132,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btnGo"
             android:layout_width="0dp"
             android:layout_height="93dp"
             android:layout_marginStart="10dp"

@@ -83,7 +83,7 @@ class Game : Serializable {
     }
     fun tick() {
         currentIme++
-        println(getScore().toString())
+
     }
     fun getTime() : String {
         var hours = currentIme / 3600;

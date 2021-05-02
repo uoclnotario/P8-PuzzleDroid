@@ -32,7 +32,6 @@ class StartGameActivity : AppCompatActivity() {
 
         println("Estamos en el StartGame Activity")//De esta manera recogemos los datos del intent...
         player = intent.getSerializableExtra("player") as Player
-        Gamemodeoption = intent.getSerializableExtra("GameMode") as Int
         userName.text = userName.text.toString() + ", " + player.nombre
         println("El player es: ${player.imprimirdatos()}")
 

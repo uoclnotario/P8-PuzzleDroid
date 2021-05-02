@@ -34,6 +34,7 @@ class FinisGameActivity : AppCompatActivity() {
     lateinit var time: String
     var currentIme: Long = 0L
     lateinit var fechaInicio:Date
+    var _modGame = 1
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +51,7 @@ class FinisGameActivity : AppCompatActivity() {
         time = intent.getStringExtra("time") as String
         currentIme = intent.getLongExtra("currentTime", 0L)
         fechaInicio= intent.getSerializableExtra("fechaInicio") as Date
-
+        _modGame = intent.getIntExtra("tipoJuego",1)
         /***
          * Lanzamos el SaveGame
          */
@@ -58,37 +59,35 @@ class FinisGameActivity : AppCompatActivity() {
 
             textTime.text = time
             TextScore.text = score.toString()
+            if(_modGame == 1){
+                val rutina: Job = GlobalScope.launch{
+                    GameViewModel.gameSave = null
+                    GameViewModel.gameSave = gameViewModel.bestByPicture(picture.image!!)
+                    println("El game actual es: ${GameViewModel.gameSave?.toString()} | El best Score es: ${GameViewModel.gameSave?.score}")
+                }
+                while (rutina.isActive) {}
+                println("El GameViewModel.game es: ${GameViewModel.gameSave.toString()} y el Score es: $score")
+                if(GameViewModel.gameSave == null || GameViewModel.gameSave!!.score < score)
+                {
+                    /***
+                     * Si la mejor puntuación es menor que la actual mostramos cartel de new record
+                     */
+                    println("Modificamos el newRecord para que sea visible")
+                    newRecord.visibility = View.VISIBLE
 
-            val rutina: Job = GlobalScope.launch{
-                GameViewModel.gameSave = null
-                GameViewModel.gameSave = gameViewModel.bestByPicture(picture.image!!)
-                println("El game actual es: ${GameViewModel.gameSave?.toString()} | El best Score es: ${GameViewModel.gameSave?.score}")
-            }
-
-            while (rutina.isActive) {}
-            println("El GameViewModel.game es: ${GameViewModel.gameSave.toString()} y el Score es: $score")
-            if(GameViewModel.gameSave == null || GameViewModel.gameSave!!.score < score)
-            {
-                /***
-                 * Si la mejor puntuación es menor que la actual mostramos cartel de new record
-                 */
-                println("Modificamos el newRecord para que sea visible")
-                newRecord.visibility = View.VISIBLE
-
-            }
-            val rutinaSave: Job = GlobalScope.launch {
-                println("Iniciamos rutina para guardar")
-                val saveGame = SavedGame(0, picture.image!!, player.PlayerId, df, score, time, currentIme, fechaInicio, Date())
-                GameViewModel.gameSave = saveGame
-                var int:Long? = gameViewModel.insertOne(saveGame)
-            }
-
-            while (rutinaSave.isActive) {}
-
-            GlobalScope.launch {
-                Looper.prepare()
-                var calendario = Calendario(applicationContext)
-                calendario.addEvento(SavedGame(0, picture.image!!, player.PlayerId, df, score, time, currentIme, fechaInicio, Date()))
+                }
+                val rutinaSave: Job = GlobalScope.launch {
+                    println("Iniciamos rutina para guardar")
+                    val saveGame = SavedGame(0, picture.image!!, player.PlayerId, df, score, time, currentIme, fechaInicio, Date())
+                    GameViewModel.gameSave = saveGame
+                    var int:Long? = gameViewModel.insertOne(saveGame)
+                }
+                while (rutinaSave.isActive) {}
+                GlobalScope.launch {
+                    Looper.prepare()
+                    var calendario = Calendario(applicationContext)
+                    calendario.addEvento(SavedGame(0, picture.image!!, player.PlayerId, df, score, time, currentIme, fechaInicio, Date()))
+                }
             }
             //Looper.loop();
         }catch (e: Exception)

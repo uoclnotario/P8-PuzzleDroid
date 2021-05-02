@@ -8,7 +8,6 @@ import java.util.*
 
 class Puzzle : Serializable{
     val _picture: Picture
-
     var _pictureResize: Bitmap? = null
     var piezas: ArrayList<Part>? = null
     var rows:Int=4
@@ -31,9 +30,17 @@ class Puzzle : Serializable{
 
     fun redimensionarImagen(ctx :Context){
         try {
-            if (_picture.image != null) {
-                val image = BitmapFactory.decodeResource(ctx.getResources(), _picture.image!!)
-                _pictureResize= Bitmap.createScaledBitmap(image,imgReference.right.toInt(), imgReference.bottom.toInt(),false)
+
+            if(_picture.tipo == Picture.Tipo.INTERNALFILE){
+                if (_picture.rute != null) {
+                    val image = BitmapFactory.decodeStream(ctx.openFileInput(_picture.rute))
+                    _pictureResize= Bitmap.createScaledBitmap(image,imgReference.right.toInt(), imgReference.bottom.toInt(),false)
+                }
+            }else{
+                if (_picture.image != null) {
+                    val image = BitmapFactory.decodeResource(ctx.getResources(), _picture.image!!)
+                    _pictureResize= Bitmap.createScaledBitmap(image,imgReference.right.toInt(), imgReference.bottom.toInt(),false)
+                }
             }
         }catch (e:Exception){
             println("ERRRRRORRRRRRRRRRR0>"+e.message)

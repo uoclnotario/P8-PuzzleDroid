@@ -15,12 +15,13 @@ import kotlinx.android.synthetic.main.activity_selectdificulty.*
 class SelectDificultyActivity : AppCompatActivity() {
      lateinit var _player : Player
      var _pictur = Picture(null)
-
+     var _modGame = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selectdificulty)
         _player = intent.getSerializableExtra("player") as Player
         _pictur = intent.getSerializableExtra("pictur") as Picture
+        _modGame = intent.getIntExtra("tipoJuego",1)
 
         val btn_click_easy = findViewById(R.id.btnEasy) as Button
         val btn_click_medium_ = findViewById(R.id.btnMedium) as Button
@@ -59,6 +60,7 @@ class SelectDificultyActivity : AppCompatActivity() {
             putExtra("player",_player)
             putExtra("pictur",_pictur)
             putExtra("dificul",dificulty)
+            putExtra("tipoJuego",_modGame)
         }
         startActivity(intent)
     }
