@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -22,12 +23,12 @@ import com.puzzle.game.viewModels.GameViewModel
 import kotlinx.android.synthetic.main.activity_selectpicture.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.io.*
+import java.io.ByteArrayOutputStream
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
 import java.security.MessageDigest
-import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.random.Random
-import kotlin.random.Random.Default.nextInt
 
 class SelectPictureActivity : AppCompatActivity() {
     val SELECT_PICTURES = 1
@@ -253,17 +254,32 @@ class SelectPictureActivity : AppCompatActivity() {
     fun createImageFromBitmap(bitmap: Bitmap) {
             try {
                 val bytes = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+                val bytes2 = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bytes)
                 var fileName: String? =hashBitmap(bytes)
-                println("width"+bitmap.width.toString()+"heigt"+bitmap.height.toString())
+                var finalBmp  = resizeBitmap(bitmap,372,457)
+                finalBmp.compress(Bitmap.CompressFormat.JPEG, 100, bytes2)
+
+                println("width"+finalBmp.width.toString()+"heigt"+finalBmp.height.toString())
                 println("ElnombredeImagenEs:"+fileName)
                 val fo: FileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE)
-                fo.write(bytes.toByteArray())
+                fo.write(bytes2.toByteArray())
                 fo.close()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
     }
+    private fun resizeBitmap(bitmap:Bitmap, width:Int, height:Int):Bitmap{
+        return Bitmap.createScaledBitmap(
+                bitmap,
+                width,
+                height,
+                false
+        )
+    }
+
+
+
 
 
     // Función para identifcar una imagen haciendole has
@@ -295,6 +311,7 @@ class SelectPictureActivity : AppCompatActivity() {
             }
             if(itemModel[position].tipo == Picture.Tipo.INTERNALFILE){
                 try {
+
                     imageView?.setImageBitmap(BitmapFactory.decodeStream(context.openFileInput(itemModel[position].rute)))
                     pnalePoints?.visibility = View.INVISIBLE
                 } catch (ex: java.lang.Exception){
@@ -317,7 +334,12 @@ class SelectPictureActivity : AppCompatActivity() {
         override fun getCount(): Int {
             return itemModel.size
         }
+
     }
+
+
+
+
 }
 
 
