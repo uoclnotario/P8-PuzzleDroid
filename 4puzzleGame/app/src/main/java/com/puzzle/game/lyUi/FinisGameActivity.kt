@@ -60,6 +60,8 @@ class FinisGameActivity : AppCompatActivity() {
             textTime.text = time
             TextScore.text = score.toString()
             if(_modGame == 1){
+                var calendario = Calendario(applicationContext)
+
                 val rutina: Job = GlobalScope.launch{
                     GameViewModel.gameSave = null
                     GameViewModel.gameSave = gameViewModel.bestByPicture(picture.image!!)
@@ -78,18 +80,13 @@ class FinisGameActivity : AppCompatActivity() {
                 }
                 val rutinaSave: Job = GlobalScope.launch {
                     println("Iniciamos rutina para guardar")
-                    val saveGame = SavedGame(0, picture.image!!, player.PlayerId, df, score, time, currentIme, fechaInicio, Date())
-                    GameViewModel.gameSave = saveGame
-                    var int:Long? = gameViewModel.insertOne(saveGame)
-                }
-                while (rutinaSave.isActive) {}
-                GlobalScope.launch {
-                    Looper.prepare()
-                    var calendario = Calendario(applicationContext)
+                    var int:Long? = gameViewModel.insertOne(SavedGame(0, picture.image!!, player.PlayerId, df, score, time, currentIme, fechaInicio, Date()))
                     calendario.addEvento(SavedGame(0, picture.image!!, player.PlayerId, df, score, time, currentIme, fechaInicio, Date()))
                 }
+                while (rutinaSave.isActive) {}
+                
             }
-            //Looper.loop();
+
         }catch (e: Exception)
         {
             println("Error guardando datos de fin de partida: $e")
