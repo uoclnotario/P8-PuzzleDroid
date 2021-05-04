@@ -6,15 +6,18 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.puzzle.game.lyDataAcces.dao.GameDao
+import com.puzzle.game.lyDataAcces.dao.PictureDao
 import com.puzzle.game.lyDataAcces.dao.PlayerDao
 import com.puzzle.game.lyDataAcces.entities.GameEntity
+import com.puzzle.game.lyDataAcces.entities.PictureEntity
 import com.puzzle.game.lyDataAcces.entities.PlayerData
 
-@Database(entities = arrayOf(PlayerData::class, GameEntity::class), version =4)
+@Database(entities = arrayOf(PlayerData::class, PictureEntity::class, GameEntity::class), version =5)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun playerDao() : PlayerDao
     abstract fun gameDao() : GameDao
+    abstract fun pictureDao() : PictureDao
 
     companion object {
         private const val DATABASE_NAME = "puzzle-db"

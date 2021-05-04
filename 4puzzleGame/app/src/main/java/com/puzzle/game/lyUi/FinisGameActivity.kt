@@ -59,33 +59,35 @@ class FinisGameActivity : AppCompatActivity() {
 
             textTime.text = time
             TextScore.text = score.toString()
-            if(_modGame == 1){
-                var calendario = Calendario(applicationContext)
-
-                val rutina: Job = GlobalScope.launch{
-                    GameViewModel.gameSave = null
-                    GameViewModel.gameSave = gameViewModel.bestByPicture(picture.image!!)
-                    println("El game actual es: ${GameViewModel.gameSave?.toString()} | El best Score es: ${GameViewModel.gameSave?.score}")
-                }
-                while (rutina.isActive) {}
-                println("El GameViewModel.game es: ${GameViewModel.gameSave.toString()} y el Score es: $score")
-                if(GameViewModel.gameSave == null || GameViewModel.gameSave!!.score < score)
-                {
-                    /***
-                     * Si la mejor puntuación es menor que la actual mostramos cartel de new record
-                     */
-                    println("Modificamos el newRecord para que sea visible")
-                    newRecord.visibility = View.VISIBLE
-
-                }
-                val rutinaSave: Job = GlobalScope.launch {
-                    println("Iniciamos rutina para guardar")
-                    var int:Long? = gameViewModel.insertOne(SavedGame(0, picture.image!!, player.PlayerId, df, score, time, currentIme, fechaInicio, Date()))
-                    calendario.addEvento(SavedGame(0, picture.image!!, player.PlayerId, df, score, time, currentIme, fechaInicio, Date()))
-                }
-                while (rutinaSave.isActive) {}
-                
+            var tipo = Picture.Tipo.INTERNALFILE
+            if(_modGame == 1) {
+                tipo = Picture.Tipo.RESOURCE
             }
+
+            var calendario = Calendario(applicationContext)
+
+            val rutina: Job = GlobalScope.launch{
+                GameViewModel.gameSave = null
+                GameViewModel.gameSave = gameViewModel.bestByPicture(picture.image, tipo)
+                println("El game actual es: ${GameViewModel.gameSave?.toString()} | El best Score es: ${GameViewModel.gameSave?.score}")
+            }
+            while (rutina.isActive) {}
+            println("El GameViewModel.game es: ${GameViewModel.gameSave.toString()} y el Score es: $score")
+            if(GameViewModel.gameSave == null || GameViewModel.gameSave!!.score < score)
+            {
+                /***
+                 * Si la mejor puntuación es menor que la actual mostramos cartel de new record
+                 */
+                println("Modificamos el newRecord para que sea visible")
+                newRecord.visibility = View.VISIBLE
+
+            }
+            val rutinaSave: Job = GlobalScope.launch {
+                println("Iniciamos rutina para guardar")
+                var int:Long? = gameViewModel.insertOne(SavedGame(0, picture.image, player.PlayerId, df, score, time, currentIme, fechaInicio, Date(), tipo))
+                calendario.addEvento(SavedGame(0, picture.image, player.PlayerId, df, score, time, currentIme, fechaInicio, Date(), tipo))
+            }
+            while (rutinaSave.isActive) {}
 
         }catch (e: Exception)
         {

@@ -4,6 +4,7 @@ import android.app.Application
 import com.puzzle.game.lyDataAcces.AppDatabase
 import com.puzzle.game.lyDataAcces.dao.GameDao
 import com.puzzle.game.lyDataAcces.entities.GameEntity
+import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.SavedGame
 import com.puzzle.game.viewModels.GameViewModel
 import kotlinx.coroutines.*
@@ -21,7 +22,7 @@ class GameRepository(application: Application) {
          */
         try {
             val rutina: Job = GlobalScope.launch {
-                val gameEntity = GameEntity(0,game.idImagen,game.idPlayer, game.dificuty, game.score, game.tiempo, game.totalTime,game.fechaInicio,game.fechaFin)
+                val gameEntity = GameEntity(0,game.idImagen,game.idPlayer, game.dificuty, game.score, game.tiempo, game.totalTime,game.fechaInicio,game.fechaFin,game.tipo )
                 GameViewModel.long = gameDao?.insertOne(gameEntity)
             }
             rutina.join()
@@ -35,7 +36,7 @@ class GameRepository(application: Application) {
         }
     }
 
-    suspend fun getAll(num: Int): List<SavedGame>? {
+    suspend fun getAll(num: Int, str: Picture.Tipo): List<SavedGame>? {
         /***
          * Declaramos Variables
          */
@@ -43,8 +44,8 @@ class GameRepository(application: Application) {
         try {
             println("Iniciamos getAll")
             val rutina: Job = GlobalScope.launch {
-                if (num == 0) GameViewModel.gamelist = gameDao?.getAll()
-                else GameViewModel.gamelist = gameDao?.getAll(num)
+                if (num == 0) GameViewModel.gamelist = gameDao?.getAll(str)
+                else GameViewModel.gamelist = gameDao?.getAll(num, str)
             }
             rutina.join()
             joinAll()
@@ -53,11 +54,11 @@ class GameRepository(application: Application) {
             if(GameViewModel.gamelist!!.count() > 0)
             {
                 println("Si la cuenta es > 0")
-                lista = ArrayList<SavedGame>()
+                lista = ArrayList()
                 for(g: GameEntity in GameViewModel.gamelist!!)
                 {
                     println("por cada elemento...")
-                    lista.add(SavedGame(g.gameId,g.idImagen, g.idPlayer, g.dificuty, g.score,g.tiempo, g.totalTime,g.fechaInicio,g.fechaFin))
+                    lista.add(SavedGame(g.gameId,g.idImagen, g.idPlayer, g.dificuty, g.score,g.tiempo, g.totalTime,g.fechaInicio,g.fechaFin,g.tipo))
                 }
             }
 
@@ -74,12 +75,12 @@ class GameRepository(application: Application) {
 
     }
 
-    suspend fun bestByPicture(num: Int): SavedGame? {
+    suspend fun bestByPicture(num: String, str: Picture.Tipo): SavedGame? {
         var game: SavedGame? = null
         GameViewModel.gameSave = null
         try {
             val rutina: Job = GlobalScope.launch {
-                val jobGame: GameEntity? = gameDao?.bestByPicture(num)
+                val jobGame: GameEntity? = gameDao?.bestByPicture(num, str)
                 GameViewModel.gameSave = null
                 if (jobGame != null)
                     GameViewModel.gameSave = SavedGame(
@@ -91,7 +92,8 @@ class GameRepository(application: Application) {
                             jobGame.tiempo,
                             jobGame.totalTime,
                             jobGame.fechaInicio,
-                            jobGame.fechaFin)
+                            jobGame.fechaFin,
+                            jobGame.tipo)
             }
             rutina.join()
             joinAll()
@@ -108,12 +110,12 @@ class GameRepository(application: Application) {
 
 
 
-    suspend fun getAllMaxScorePictur(idPlayer: Int): List<GameEntity>? {
+    suspend fun getAllMaxScorePictur(idPlayer: Int, src: Picture.Tipo): List<GameEntity>? {
 
         var lista : List<GameEntity>? = null
         try {
             val rutina: Job = GlobalScope.launch {
-                lista = gameDao?.getMaxScoreOfImage(idPlayer)
+                lista = gameDao?.getMaxScoreOfImage(idPlayer, src)
 
             }
             rutina.join()

@@ -20,8 +20,10 @@ import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
 import com.puzzle.game.viewModels.GameViewModel
+import com.puzzle.game.viewModels.PictureViewModel
 import kotlinx.android.synthetic.main.activity_selectpicture.*
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
@@ -41,6 +43,7 @@ class SelectPictureActivity : AppCompatActivity() {
     lateinit var _player :Player
     lateinit var gameViewModel: GameViewModel
     var _modGame : Int = 1
+    private lateinit var pictureViewModel: PictureViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,8 +58,10 @@ class SelectPictureActivity : AppCompatActivity() {
         }
 
         if(_modGame == 2){
+            pictureViewModel = run { ViewModelProvider(this).get(PictureViewModel::class.java) }
             setContentView(R.layout.activity_selectpicture_random)
-            cargarLayoutModoRandom()
+            cargarLayoutModoRandom(PictureViewModel.picture)
+
         }
 
 
@@ -88,10 +93,10 @@ class SelectPictureActivity : AppCompatActivity() {
                 R.drawable.image10
         )
         var customAdapter = Adapter(modalList,this)
-        var ListadoPartidas : MutableList<SavedGame>?  = null
+        var ListadoPartidas : MutableList<SavedGame>?
 
         var rutina =GlobalScope.launch {
-            ListadoPartidas =  gameViewModel.getAllimageMaxScore(_player.PlayerId)
+            ListadoPartidas =  gameViewModel.getAllimageMaxScore(_player.PlayerId, Picture.Tipo.RESOURCE)
 
             if(ListadoPartidas != null){
                 for(i:SavedGame in ListadoPartidas!!){
@@ -102,8 +107,8 @@ class SelectPictureActivity : AppCompatActivity() {
             }
             for (i in images.indices) {
 
-                var search : SavedGame? = null
-                search = ListadoPartidas?.find{it.idImagen == images[i]}
+                var search : SavedGame?
+                search = ListadoPartidas?.find{it.idImagen.toInt() == images[i]}
 
                 if (search != null) {
                     println("SCORE->"+search.score.toString())
@@ -135,7 +140,7 @@ class SelectPictureActivity : AppCompatActivity() {
 
 
     //MODO DE JUEGO RANDOM
-    private fun cargarLayoutModoRandom(){
+    private fun cargarLayoutModoRandom(picture: Picture?){
         var btnGalery = findViewById<LinearLayout>(R.id.btnLGalery) as LinearLayout
         var btnCamera = findViewById<LinearLayout>(R.id.btnLCamera) as LinearLayout
         var btnGo = findViewById<Button>(R.id.btnGo) as Button
@@ -203,8 +208,8 @@ class SelectPictureActivity : AppCompatActivity() {
         }
     }
     private fun importarDesdeGaleria(data: Intent?){
-        var imageUri: Uri? = null
-        var bitmap: Bitmap? = null
+        var imageUri: Uri?
+        var bitmap: Bitmap?
 
         //Si cliData no es null, estamos intentado recoger varias imagenes.
         if(data?.clipData != null) {
@@ -319,7 +324,7 @@ class SelectPictureActivity : AppCompatActivity() {
                 }
 
             }else{
-                imageView?.setImageResource(itemModel[position].image!!)
+                imageView?.setImageResource(itemModel[position].image!!.toInt())
                 pnalePoints?.visibility = View.VISIBLE
             }
 

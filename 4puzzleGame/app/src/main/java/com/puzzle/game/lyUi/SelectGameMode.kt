@@ -4,9 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
+import com.puzzle.game.viewModels.GameViewModel
+import com.puzzle.game.viewModels.PictureViewModel
 import com.puzzle.game.viewModels.PlayerViewModel
 import kotlinx.android.synthetic.main.activity_startgame.*
 
@@ -52,6 +55,8 @@ class SelectGameMode : AppCompatActivity() {
 
     fun RandomPhoto (): Picture? {
         var rphoto : Picture? = null
+
+
 
 
 

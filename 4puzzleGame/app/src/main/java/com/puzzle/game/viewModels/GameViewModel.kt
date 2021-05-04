@@ -8,6 +8,7 @@ import com.puzzle.game.R
 import com.puzzle.game.lyDataAcces.dto.DtoBestScore
 import com.puzzle.game.lyDataAcces.entities.GameEntity
 import com.puzzle.game.lyDataAcces.repository.GameRepository
+import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
 import kotlinx.coroutines.GlobalScope
@@ -26,18 +27,18 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
 
     suspend fun insertOne(savedGame: SavedGame): Long? { return repository.insertOne(savedGame) }
 
-    suspend fun getAll(num: Int) : List<SavedGame>? { return repository.getAll(num) }
+    suspend fun getAll(num: Int, src: Picture.Tipo) : List<SavedGame>? { return repository.getAll(num,src) }
 
-    suspend fun bestByPicture(num: Int) : SavedGame? { return repository.bestByPicture(num) }
+    suspend fun bestByPicture(num: String, src: Picture.Tipo) : SavedGame? { return repository.bestByPicture(num, src) }
 
-    suspend fun getAllimageMaxScore(idPlayer: Int):MutableList<SavedGame>?  {
+    suspend fun getAllimageMaxScore(idPlayer: Int, src: Picture.Tipo):MutableList<SavedGame>?  {
             var returnLIst : MutableList<SavedGame>? =  arrayListOf()
-            var lista : List<GameEntity>? = repository.getAllMaxScorePictur(idPlayer)
+            var lista : List<GameEntity>? = repository.getAllMaxScorePictur(idPlayer, src)
 
             if(lista != null){
                 for(i:GameEntity in lista){
                     if (returnLIst != null) {
-                        returnLIst.add(SavedGame(i.idImagen,i.idPlayer,i.dificuty,i.score,i.tiempo,i.totalTime,i.fechaInicio,i.fechaFin))
+                        returnLIst.add(SavedGame(i.idImagen,i.idPlayer,i.dificuty,i.score,i.tiempo,i.totalTime,i.fechaInicio,i.fechaFin, i.tipo))
                         println("LISTA"+i.idImagen.toString()+" ->"+i.score.toString())
                     }else{
                         println("LISTA VIENE VACIA")

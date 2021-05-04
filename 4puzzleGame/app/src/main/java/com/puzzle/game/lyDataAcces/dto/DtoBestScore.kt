@@ -5,7 +5,7 @@ import com.puzzle.game.lyLogicalBusiness.SavedGame
 import java.io.Serializable
 
 class DtoBestScore: Serializable {
-    var idImagen: Int
+    var idImagen: String
     var idPlayer: Int
     var dificuty: Int
     var score: Long

@@ -57,7 +57,7 @@ class ScoreListAdapter(
         fecha.text = bestScore.fechaFin.toString()
         puntuacion.text = bestScore.score.toString()
         println("bestScore.idImagen = ${bestScore.idImagen}")
-        imagenScore.setImageResource(bestScore.idImagen);
+        imagenScore.setImageResource(bestScore.idImagen.toInt());
 
 // Get detail element
 

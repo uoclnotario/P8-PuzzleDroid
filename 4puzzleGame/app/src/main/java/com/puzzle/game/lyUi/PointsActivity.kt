@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.puzzle.game.R
 import com.puzzle.game.adapters.ScoreListAdapter
 import com.puzzle.game.lyDataAcces.dto.DtoBestScore
+import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
 import com.puzzle.game.viewModels.GameViewModel
@@ -55,8 +56,8 @@ class PointsActivity : AppCompatActivity() {
 
                 var currentPlayer: Player? = null
                 val listaAdapter: MutableList<DtoBestScore> = ArrayList()
-                gameList = gameViewModel.getAll(10)
-                scores = gameViewModel.getAllimageMaxScore(player.PlayerId)
+                gameList = gameViewModel.getAll(10, Picture.Tipo.RESOURCE)
+                scores = gameViewModel.getAllimageMaxScore(player.PlayerId, Picture.Tipo.RESOURCE)
                 println(scores?.count())
 
                 for ( gameItem: SavedGame in gameList!!)
