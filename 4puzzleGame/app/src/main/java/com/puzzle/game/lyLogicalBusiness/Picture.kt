@@ -9,7 +9,6 @@ class Picture : Serializable {
     var image:String = ""
     var points:String =""
     var tipo:Tipo = Tipo.RESOURCE
-    var rute:String=""
 
     constructor( image: Int?) {
         this.image = image.toString()

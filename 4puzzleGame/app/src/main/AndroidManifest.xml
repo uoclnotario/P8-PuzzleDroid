@@ -14,12 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.4puzzleGame">
-        <activity android:name=".lyUi.RandomModeOptions"></activity>
         <activity android:name=".lyUi.InfoActivity" />
-        <activity
-            android:name=".RandomModeOptions"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.SelectGameMode"
             android:screenOrientation="portrait"

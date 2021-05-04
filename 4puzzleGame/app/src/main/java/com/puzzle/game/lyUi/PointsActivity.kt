@@ -60,13 +60,16 @@ class PointsActivity : AppCompatActivity() {
                 scores = gameViewModel.getAllimageMaxScore(player.PlayerId, Picture.Tipo.RESOURCE)
                 println(scores?.count())
 
-                for ( gameItem: SavedGame in gameList!!)
-                {
-                    if(currentPlayer == null || currentPlayer.PlayerId != gameItem.idPlayer) {
-                        currentPlayer = playerViewModel.findById(gameItem.idPlayer)!!
+                if(gameList !=null){
+
+                    for ( gameItem: SavedGame in gameList!!)
+                    {
+                        if(currentPlayer == null || currentPlayer.PlayerId != gameItem.idPlayer) {
+                            currentPlayer = playerViewModel.findById(gameItem.idPlayer)!!
+                        }
+                        val bestScore = DtoBestScore(currentPlayer, gameItem)
+                        listaAdapter.add(bestScore)
                     }
-                    val bestScore = DtoBestScore(currentPlayer, gameItem)
-                    listaAdapter.add(bestScore)
                 }
                 GameViewModel.bestScoreList = listaAdapter
             }

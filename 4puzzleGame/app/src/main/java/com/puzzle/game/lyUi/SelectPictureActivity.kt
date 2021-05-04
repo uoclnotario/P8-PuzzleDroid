@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -23,12 +22,10 @@ import com.puzzle.game.viewModels.GameViewModel
 import com.puzzle.game.viewModels.PictureViewModel
 import kotlinx.android.synthetic.main.activity_selectpicture.*
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStream
 import java.security.MessageDigest
 import kotlin.random.Random
 
@@ -43,6 +40,7 @@ class SelectPictureActivity : AppCompatActivity() {
     lateinit var _player :Player
     lateinit var gameViewModel: GameViewModel
     var _modGame : Int = 1
+
     private lateinit var pictureViewModel: PictureViewModel
 
 
@@ -60,7 +58,7 @@ class SelectPictureActivity : AppCompatActivity() {
         if(_modGame == 2){
             pictureViewModel = run { ViewModelProvider(this).get(PictureViewModel::class.java) }
             setContentView(R.layout.activity_selectpicture_random)
-            cargarLayoutModoRandom(PictureViewModel.picture)
+            cargarLayoutModoRandom()
 
         }
 
@@ -140,7 +138,7 @@ class SelectPictureActivity : AppCompatActivity() {
 
 
     //MODO DE JUEGO RANDOM
-    private fun cargarLayoutModoRandom(picture: Picture?){
+    private fun cargarLayoutModoRandom(){
         var btnGalery = findViewById<LinearLayout>(R.id.btnLGalery) as LinearLayout
         var btnCamera = findViewById<LinearLayout>(R.id.btnLCamera) as LinearLayout
         var btnGo = findViewById<Button>(R.id.btnGo) as Button
@@ -178,16 +176,17 @@ class SelectPictureActivity : AppCompatActivity() {
     //**********************
 
     fun load(){
-        modalList = ArrayList<Picture>()
-        var btnGo = findViewById<Button>(R.id.btnGo) as Button
-        var customAdapter = Adapter(modalList,this)
+        modalList = ArrayList()//Reinicializo las imagenes.
+        pictureViewModel.getAllNotPlayed(_player.PlayerId,Picture.Tipo.INTERNALFILE,modalList)!!
 
-        for(item in this.applicationContext.fileList()){
-            modalList.add(Picture(item))
+        if(modalList != null){
+            if(modalList.count() > 0){
+                var btnGo = findViewById<Button>(R.id.btnGo) as Button
+                var customAdapter = Adapter(modalList,this)
+                btnGo.isEnabled = modalList.count() > 0
+                gridView.adapter = customAdapter
+            }
         }
-
-        btnGo.isEnabled = modalList.count() > 0
-        gridView.adapter = customAdapter
     }
 
 
@@ -261,15 +260,15 @@ class SelectPictureActivity : AppCompatActivity() {
                 val bytes = ByteArrayOutputStream()
                 val bytes2 = ByteArrayOutputStream()
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 70, bytes)
-                var fileName: String? =hashBitmap(bytes)
-                var finalBmp  = resizeBitmap(bitmap,372,457)
-                finalBmp.compress(Bitmap.CompressFormat.JPEG, 100, bytes2)
+                var fileName: String =hashBitmap(bytes)
+                if(pictureViewModel.insertOne(Picture(fileName))){
+                    var finalBmp  = resizeBitmap(bitmap,372,457)
+                    finalBmp.compress(Bitmap.CompressFormat.JPEG, 100, bytes2)
 
-                println("width"+finalBmp.width.toString()+"heigt"+finalBmp.height.toString())
-                println("ElnombredeImagenEs:"+fileName)
-                val fo: FileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE)
-                fo.write(bytes2.toByteArray())
-                fo.close()
+                    val fo: FileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE)
+                    fo.write(bytes2.toByteArray())
+                    fo.close()
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -310,6 +309,8 @@ class SelectPictureActivity : AppCompatActivity() {
             var points = view?.findViewById<TextView>(R.id.points)
             var pnalePoints = view?.findViewById<ConstraintLayout>(R.id.frPoints) as ConstraintLayout
 
+            println(itemModel[position].toString())
+
             if (points != null) {
                 println( itemModel[position].points)
                 points.text = itemModel[position].points
@@ -317,7 +318,7 @@ class SelectPictureActivity : AppCompatActivity() {
             if(itemModel[position].tipo == Picture.Tipo.INTERNALFILE){
                 try {
 
-                    imageView?.setImageBitmap(BitmapFactory.decodeStream(context.openFileInput(itemModel[position].rute)))
+                    imageView?.setImageBitmap(BitmapFactory.decodeStream(context.openFileInput(itemModel[position].image)))
                     pnalePoints?.visibility = View.INVISIBLE
                 } catch (ex: java.lang.Exception){
                     println("ERRRORRRRRRRRR:"+ex.message)

@@ -13,8 +13,8 @@ interface PictureDao {
     fun getAll(str: Picture.Tipo): List<PictureEntity>?
     @Query("SELECT * FROM " + PictureEntity.TABLE_NAME + " WHERE NOT EXISTS (SELECT idImagen FROM " + GameEntity.TABLE_NAME + " WHERE idPlayer == :player AND tipo == :src ) AND _ROWID_ >= (abs(random()) % (SELECT max(_ROWID_) FROM " + PictureEntity.TABLE_NAME + ")) LIMIT 1" )
     fun getOneNotPlayed(player:Int, src: Picture.Tipo): PictureEntity?
-    @Query("SELECT * FROM " + PictureEntity.TABLE_NAME + " WHERE NOT EXISTS (SELECT idImagen FROM " + GameEntity.TABLE_NAME + " WHERE idPlayer == :player AND tipo == :src ) AND _ROWID_ >= (abs(random()) % (SELECT max(_ROWID_) FROM " + PictureEntity.TABLE_NAME + ")) " )
-    fun getAllNotPlayed(player:Int, src: Picture.Tipo): List<PictureEntity>?
+    @Query("SELECT * FROM " + PictureEntity.TABLE_NAME +  " WHERE tipo == :src AND NOT EXISTS (SELECT idImagen FROM " + GameEntity.TABLE_NAME + " WHERE tipo == :src  AND  " + GameEntity.TABLE_NAME + ".idImagen = " + PictureEntity.TABLE_NAME + ".image )" )
+    fun getAllNotPlayed( src: Picture.Tipo): List<PictureEntity>?
 
     @Insert
     fun insertOne(pictureEntity: PictureEntity) : Long?
