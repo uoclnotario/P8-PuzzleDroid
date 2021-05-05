@@ -161,7 +161,15 @@ class SelectPictureActivity : AppCompatActivity() {
         }
 
         btnGo.setOnClickListener{
-            var i : Int = Random.nextInt(0, modalList.count()-1)
+
+            var i : Int = 0
+
+            //Si no tenemos mas de una imagen no tiene sentido hacer el random
+            if(modalList.count() > 1){
+                i=Random.nextInt(0, modalList.count()-1)
+            }
+
+
             var intent = Intent(this,SelectDificultyActivity::class.java).apply {
                 putExtra("player", _player)
                 putExtra("pictur", modalList[i])
@@ -176,12 +184,15 @@ class SelectPictureActivity : AppCompatActivity() {
     //**********************
 
     fun load(){
+        var btnGo = findViewById<Button>(R.id.btnGo) as Button
+        btnGo.isEnabled = false
+
         modalList = ArrayList()//Reinicializo las imagenes.
         pictureViewModel.getAllNotPlayed(_player.PlayerId,Picture.Tipo.INTERNALFILE,modalList)!!
-
         if(modalList != null){
+
             if(modalList.count() > 0){
-                var btnGo = findViewById<Button>(R.id.btnGo) as Button
+
                 var customAdapter = Adapter(modalList,this)
                 btnGo.isEnabled = modalList.count() > 0
                 gridView.adapter = customAdapter
