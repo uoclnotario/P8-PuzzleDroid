@@ -49,5 +49,6 @@
     <string name="defaultsound">Default Sound</string>
     <string name="btnsound">Sound</string>
     <string name="txsound">SOUND</string>
+    <string name="btnSoundSelect">Select Sound</string>
 
 </resources>

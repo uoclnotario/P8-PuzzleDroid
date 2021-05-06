@@ -244,7 +244,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="#E3E2E2"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
@@ -288,7 +288,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/swActiveSound" />
 
             <Switch
-                android:id="@+id/switch3"
+                android:id="@+id/swType"
                 android:layout_width="300dp"
                 android:layout_height="39dp"
                 android:showText="true"
@@ -298,6 +298,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+            <Button
+                android:id="@+id/btnSelectSound"
+                android:layout_width="297dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/btnSoundSelect"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/swType" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

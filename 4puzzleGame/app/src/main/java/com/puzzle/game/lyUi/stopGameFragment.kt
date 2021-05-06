@@ -113,7 +113,6 @@ class stopGameFragment() : Fragment() {
 
         btnLySound.setOnClickListener{
             openConfigSound()
-            panelSound.visibility = View.VISIBLE
         }
 
     }
@@ -121,11 +120,33 @@ class stopGameFragment() : Fragment() {
 
 
     private fun openConfigSound(){
+        panelSound.visibility = View.VISIBLE
         configSondio= activi.configSonido
         swActiveSound.isChecked = configSondio!!.volumenEnabled
+        swType.isChecked = configSondio!!.modo != Config.modoMusica.SISTEMA
+
+
+        if(swType.isChecked){
+            btnSelectSound.visibility = View.VISIBLE
+        }else{
+            btnSelectSound.visibility = View.INVISIBLE
+        }
+
 
         swActiveSound.setOnClickListener{
             configSondio!!.volumenEnabled = swActiveSound.isChecked
+        }
+
+        swType.setOnClickListener{
+            if(swType.isChecked){
+                configSondio!!.modo = Config.modoMusica.PERSONALIZADO
+                btnSelectSound.visibility = View.VISIBLE
+            }else{
+                btnSelectSound.visibility = View.INVISIBLE
+                configSondio!!.modo = Config.modoMusica.SISTEMA
+            }
+
+            swType.isChecked = configSondio!!.modo != Config.modoMusica.SISTEMA
         }
 
     }
