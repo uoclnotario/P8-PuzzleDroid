@@ -42,5 +42,13 @@
     <string name="pictur">PICTUR RANDOM GAME</string>	
     <string name="NormalMode">Normal Mode</string>
     <string name="RandomMode">Random Mode</string>
+    <string name="options">Sounds Options</string>
+    <string name="sound">Active Sound</string>
+    <string name="soudMode">Sound Mode</string>
+    <string name="typesound">Type sound</string>
+    <string name="customsound">custom sound</string>
+    <string name="defaultsound">Default Sound</string>
+    <string name="btnsound">SOUND</string>
+    <string name="txsound">SOUND</string>
 
 </resources>

@@ -84,7 +84,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnLayoutHelp"
+            app:layout_constraintTop_toBottomOf="@+id/btnLayoutHelp"
             app:layout_constraintVertical_bias="0.0">
 
             <TextView
@@ -178,12 +178,11 @@
             android:layout_width="386dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnLayoutBack"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/txtBtnSalir"
@@ -206,17 +205,49 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/btnLySound"
+            android:layout_width="386dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLayoutBack"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:fontFamily="@font/mainfont_bold"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:text="@string/txsound"
+                android:textAlignment="textStart"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#FAFAFA"
+                android:src="@drawable/ic_launcher_foreground" />
+
+        </LinearLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/wevViewInfo"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="#FFFFFF"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/btnLayoutSalir"
+            app:layout_constraintEnd_toStartOf="@+id/appBarLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintVertical_bias="0.59000003">
 
             <WebView
                 android:id="@+id/webViewH"
@@ -228,7 +259,72 @@
                 app:layout_constraintHorizontal_bias="0.41"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0">
+
+            </WebView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cnSound"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#E3E2E2"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/wevViewInfo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="373dp"
+                android:layout_height="49dp"
+                android:fontFamily="@font/mainfont_bold"
+                android:text="@string/options"
+                android:textAlignment="center"
+                android:textColor="#1F87A6"
+                android:textSize="36sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Switch
+                android:id="@+id/switch2"
+                android:layout_width="191dp"
+                android:layout_height="43dp"
+                android:checked="true"
+                android:showText="true"
+                android:text="@string/sound"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="373dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/mainfont_bold"
+                android:text="@string/soudMode"
+                android:textAlignment="center"
+                android:textColor="#1F87A6"
+                android:textSize="36sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switch2" />
+
+            <Switch
+                android:id="@+id/switch3"
+                android:layout_width="300dp"
+                android:layout_height="39dp"
+                android:showText="true"
+                android:text="@string/typesound"
+                android:textOff="@string/defaultsound"
+                android:textOn="@string/customsound"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

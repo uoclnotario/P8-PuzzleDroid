@@ -6,17 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import com.puzzle.game.R
-import kotlinx.android.synthetic.main.fragment_menu_bar.*
 import kotlinx.android.synthetic.main.fragment_stop_game.*
 import kotlinx.android.synthetic.main.fragment_stop_game.btnExit
-import kotlinx.android.synthetic.main.fragment_stop_game.webViewH
-import kotlinx.android.synthetic.main.fragment_stop_game.wevViewInfo
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -101,10 +96,7 @@ class stopGameFragment() : Fragment() {
             startActivity(intent)
         }
 
-        btnLayoutSalir.setOnClickListener{
-            activi.guardarPartida()
-            getActivity()?.finishAffinity();
-        }
+
     }
 
 }

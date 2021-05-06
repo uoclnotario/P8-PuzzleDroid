@@ -56,6 +56,8 @@ class MenuBar2Fragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         wevViewInfo.setVisibility(View.INVISIBLE)
+        cnSound.setVisibility(View.VISIBLE)
+
         var activi = getActivity() as SelectPictureActivity
 
         btnExit.setOnClickListener {
@@ -75,6 +77,12 @@ class MenuBar2Fragment : Fragment() {
             }
             startActivity(intent)
         }
+
+        btnLySound.setOnClickListener{
+            cnSound.setVisibility(View.VISIBLE)
+        }
+
+
     }
 
 
