@@ -1,9 +1,13 @@
 package com.puzzle.game.lyUi
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.PERMISSION_DENIED
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
@@ -24,8 +28,13 @@ import kotlinx.coroutines.launch
 import java.util.*
 import android.media.MediaParser
 import android.media.MediaPlayer
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 
 class FinisGameActivity : AppCompatActivity() {
+
+    val CHANNEL_ID = "NOTIFICACION"
+    val NOTIFICACION_ID = 0
     private lateinit var gameViewModel: GameViewModel
     lateinit var player: Player
     lateinit var picture:Picture
@@ -81,6 +90,9 @@ class FinisGameActivity : AppCompatActivity() {
                 println("Modificamos el newRecord para que sea visible")
                 newRecord.visibility = View.VISIBLE
 
+                createNotificationChannel()
+                createNotification()
+
             }
             val rutinaSave: Job = GlobalScope.launch {
                 println("Iniciamos rutina para guardar")
@@ -107,6 +119,26 @@ class FinisGameActivity : AppCompatActivity() {
     //Elimina la función de volver atras..
     override fun onBackPressed() {
         return
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name: CharSequence = "Notificacion"
+            val notificationChannel = NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT)
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+    }
+
+    private fun createNotification() {
+        val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+        builder.setSmallIcon(R.drawable.logo4pieces)
+        builder.setContentTitle("4puzzles!!")
+        builder.setContentText("New record: $score points")
+        builder.priority = NotificationCompat.PRIORITY_DEFAULT
+        builder.setDefaults(Notification.DEFAULT_SOUND)
+        val notificationManagerCompat = NotificationManagerCompat.from(applicationContext)
+        notificationManagerCompat.notify(NOTIFICACION_ID, builder.build())
     }
 
 }
