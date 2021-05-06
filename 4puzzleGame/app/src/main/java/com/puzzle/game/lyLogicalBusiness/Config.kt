@@ -2,6 +2,7 @@ package com.puzzle.game.lyLogicalBusiness
 
 class Config {
     enum class modoMusica{SISTEMA,PERSONALIZADO}
+    var modo:modoMusica = modoMusica.SISTEMA
     var ruteMusic: String =""
-    var volumen:Int = 100
+    var volumenEnabled : Boolean = true
 }

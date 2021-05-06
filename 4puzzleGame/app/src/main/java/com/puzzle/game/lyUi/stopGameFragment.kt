@@ -10,6 +10,7 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import com.puzzle.game.R
+import com.puzzle.game.lyLogicalBusiness.Config
 import kotlinx.android.synthetic.main.fragment_stop_game.*
 import kotlinx.android.synthetic.main.fragment_stop_game.btnExit
 
@@ -30,6 +31,7 @@ class stopGameFragment() : Fragment() {
     private var param2: String? = null
     private lateinit var inflater: View
     lateinit var activi:GameActivity
+    var configSondio:Config? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,10 +58,15 @@ class stopGameFragment() : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val toolbar : AppBarLayout = getActivity()?.findViewById<View>(R.id.appBarLayout) as AppBarLayout
         var layout : RelativeLayout = getActivity()?.findViewById<View>(R.id.layout) as RelativeLayout
+
         activi = getActivity() as GameActivity
 
 
         btnExit.setOnClickListener {
+            if(panelSound.visibility == View.VISIBLE){
+                activi.openSoundConfig(configSondio)
+            }
+
             activi.timerStart()
             layout.setVisibility(View.VISIBLE)
             toolbar.setVisibility(View.VISIBLE)
@@ -67,6 +74,8 @@ class stopGameFragment() : Fragment() {
         }
 
         btnLayoutHelp.setOnClickListener{
+            if(panelSound.visibility == View.VISIBLE)
+                return@setOnClickListener
             val intent = Intent(getActivity()?.applicationContext, Help::class.java).apply {
             }
             startActivity(intent)
@@ -74,6 +83,8 @@ class stopGameFragment() : Fragment() {
 
 
         btnLayoutContinuar.setOnClickListener{
+            if(panelSound.visibility == View.VISIBLE)
+                return@setOnClickListener
                 activi.timerStart()
                 layout.setVisibility(View.VISIBLE)
                 toolbar.setVisibility(View.VISIBLE)
@@ -81,6 +92,8 @@ class stopGameFragment() : Fragment() {
         }
 
         btnLayoutReiniciar.setOnClickListener{
+            if(panelSound.visibility == View.VISIBLE)
+                return@setOnClickListener
             val intent = Intent(getActivity()?.applicationContext, SelectDificultyActivity::class.java).apply {
                 putExtra("player",activi.player)
                 putExtra("pictur",activi.pictur)
@@ -89,6 +102,8 @@ class stopGameFragment() : Fragment() {
         }
 
         btnLayoutBack.setOnClickListener{
+            if(panelSound.visibility == View.VISIBLE)
+                return@setOnClickListener
             activi.guardarPartida()
             val intent = Intent(getActivity()?.applicationContext, StartGameActivity::class.java).apply {
                 putExtra("player",activi.player)
@@ -96,7 +111,24 @@ class stopGameFragment() : Fragment() {
             startActivity(intent)
         }
 
+        btnLySound.setOnClickListener{
+            openConfigSound()
+            panelSound.visibility = View.VISIBLE
+        }
 
     }
+
+
+
+    private fun openConfigSound(){
+        configSondio= activi.configSonido
+        swActiveSound.isChecked = configSondio!!.volumenEnabled
+
+        swActiveSound.setOnClickListener{
+            configSondio!!.volumenEnabled = swActiveSound.isChecked
+        }
+
+    }
+
 
 }

@@ -10,11 +10,12 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.annotation.RequiresApi
 import com.puzzle.game.R
+import com.puzzle.game.lyLogicalBusiness.Config
 import com.puzzle.game.lyLogicalBusiness.Part
 import kotlin.random.Random
 
 
-class TouchListener(activity: GameActivity,minx:Int,minh:Int, fxPositionOk:MediaPlayer, fxSoundMove:MediaPlayer) : OnTouchListener {
+class TouchListener(activity: GameActivity,minx:Int,minh:Int, fxPositionOk:MediaPlayer, fxSoundMove:MediaPlayer, configSound: Config) : OnTouchListener {
 
 
     private var xDelta = 0f
@@ -25,7 +26,7 @@ class TouchListener(activity: GameActivity,minx:Int,minh:Int, fxPositionOk:Media
     private var minh= minh
     private val fxPositionOk : MediaPlayer = fxPositionOk
     private var fxSoundMove = fxSoundMove
-
+    private val configSound = configSound
 
     val TOLERANCIA = 30f
     private val activity: GameActivity
@@ -63,22 +64,27 @@ class TouchListener(activity: GameActivity,minx:Int,minh:Int, fxPositionOk:Media
                 }
 
 
-                if(fxSoundMove.isPlaying){
-                    fxSoundMove.stop()
+
+                if(configSound.modo == Config.modoMusica.SISTEMA){
+                    if(fxSoundMove.isPlaying){
+                        fxSoundMove.stop()
+                    }
                 }
 
-                val afd: AssetFileDescriptor = activity.applicationContext.getResources().openRawResourceFd(soundSelect)
 
-               //fxSoundMove.reset()
-                if(!fxSoundMove.isPlaying){
-                    fxSoundMove.reset()
-                    fxSoundMove = MediaPlayer.create(activity.applicationContext,soundSelect)
+                if(configSound.volumenEnabled && configSound.modo == Config.modoMusica.SISTEMA) {
+                    val afd: AssetFileDescriptor = activity.applicationContext.getResources().openRawResourceFd(soundSelect)
 
-                    fxSoundMove.isLooping = true
-                    fxSoundMove.start()
-                    fxSoundMove.setVolume(0.09f,0.09f)
+                    //fxSoundMove.reset()
+                    if (!fxSoundMove.isPlaying) {
+                        fxSoundMove.reset()
+                        fxSoundMove = MediaPlayer.create(activity.applicationContext, soundSelect)
+
+                        fxSoundMove.isLooping = true
+                        fxSoundMove.start()
+                        fxSoundMove.setVolume(0.09f, 0.09f)
+                    }
                 }
-
 
                 if (!piece.canMove) {
                     piece.x = piece.xCoord.toFloat()

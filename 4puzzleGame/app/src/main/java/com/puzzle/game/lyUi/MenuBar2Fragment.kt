@@ -7,24 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.URLUtil
-import android.webkit.WebChromeClient
-import android.webkit.WebViewClient
-import android.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
 import com.puzzle.game.R
-import com.puzzle.game.viewModels.PlayerViewModel
-import kotlinx.android.synthetic.main.fragment_menu_bar.*
 
 import kotlinx.android.synthetic.main.fragment_menu_bar2.btnExit
 
 import kotlinx.android.synthetic.main.fragment_menu_bar2.*
 import kotlinx.android.synthetic.main.fragment_menu_bar2.wevViewInfo
 import kotlinx.android.synthetic.main.fragment_stop_game.*
-
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -56,7 +45,7 @@ class MenuBar2Fragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         wevViewInfo.setVisibility(View.INVISIBLE)
-        cnSound.setVisibility(View.VISIBLE)
+        panelSound.setVisibility(View.VISIBLE)
 
         var activi = getActivity() as SelectPictureActivity
 
@@ -79,7 +68,7 @@ class MenuBar2Fragment : Fragment() {
         }
 
         btnLySound.setOnClickListener{
-            cnSound.setVisibility(View.VISIBLE)
+            panelSound.setVisibility(View.VISIBLE)
         }
 
 
