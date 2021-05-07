@@ -171,6 +171,15 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onStop() {
+        super.onStop()
+        //Si se cierra la app y no se ha finalizado el juego se guarda
+        if(!_game.isFinish()){
+            guardarPartida()
+        }
+    }
+
     fun timerStart(){
       timer = Timer("schedule", true);
         timer.scheduleAtFixedRate(1000, 1000) {
