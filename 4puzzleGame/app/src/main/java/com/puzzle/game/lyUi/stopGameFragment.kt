@@ -6,17 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import com.puzzle.game.R
-import kotlinx.android.synthetic.main.fragment_menu_bar.*
+import com.puzzle.game.lyLogicalBusiness.Config
 import kotlinx.android.synthetic.main.fragment_stop_game.*
 import kotlinx.android.synthetic.main.fragment_stop_game.btnExit
-import kotlinx.android.synthetic.main.fragment_stop_game.webViewH
-import kotlinx.android.synthetic.main.fragment_stop_game.wevViewInfo
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,6 +31,7 @@ class stopGameFragment() : Fragment() {
     private var param2: String? = null
     private lateinit var inflater: View
     lateinit var activi:GameActivity
+    var configSondio:Config? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,10 +58,15 @@ class stopGameFragment() : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val toolbar : AppBarLayout = getActivity()?.findViewById<View>(R.id.appBarLayout) as AppBarLayout
         var layout : RelativeLayout = getActivity()?.findViewById<View>(R.id.layout) as RelativeLayout
+
         activi = getActivity() as GameActivity
 
 
         btnExit.setOnClickListener {
+            if(panelSound.visibility == View.VISIBLE){
+                activi.openSoundConfig(configSondio)
+            }
+
             activi.timerStart()
             layout.setVisibility(View.VISIBLE)
             toolbar.setVisibility(View.VISIBLE)
@@ -72,6 +74,8 @@ class stopGameFragment() : Fragment() {
         }
 
         btnLayoutHelp.setOnClickListener{
+            if(panelSound.visibility == View.VISIBLE)
+                return@setOnClickListener
             val intent = Intent(getActivity()?.applicationContext, Help::class.java).apply {
             }
             startActivity(intent)
@@ -79,6 +83,8 @@ class stopGameFragment() : Fragment() {
 
 
         btnLayoutContinuar.setOnClickListener{
+            if(panelSound.visibility == View.VISIBLE)
+                return@setOnClickListener
                 activi.timerStart()
                 layout.setVisibility(View.VISIBLE)
                 toolbar.setVisibility(View.VISIBLE)
@@ -86,6 +92,8 @@ class stopGameFragment() : Fragment() {
         }
 
         btnLayoutReiniciar.setOnClickListener{
+            if(panelSound.visibility == View.VISIBLE)
+                return@setOnClickListener
             val intent = Intent(getActivity()?.applicationContext, SelectDificultyActivity::class.java).apply {
                 putExtra("player",activi.player)
                 putExtra("pictur",activi.pictur)
@@ -94,6 +102,8 @@ class stopGameFragment() : Fragment() {
         }
 
         btnLayoutBack.setOnClickListener{
+            if(panelSound.visibility == View.VISIBLE)
+                return@setOnClickListener
             activi.guardarPartida()
             val intent = Intent(getActivity()?.applicationContext, StartGameActivity::class.java).apply {
                 putExtra("player",activi.player)
@@ -101,10 +111,45 @@ class stopGameFragment() : Fragment() {
             startActivity(intent)
         }
 
-        btnLayoutSalir.setOnClickListener{
-            activi.guardarPartida()
-            getActivity()?.finishAffinity();
+        btnLySound.setOnClickListener{
+            openConfigSound()
         }
+
     }
+
+
+
+    private fun openConfigSound(){
+        panelSound.visibility = View.VISIBLE
+        configSondio= activi.configSonido
+        swActiveSound.isChecked = configSondio!!.volumenEnabled
+        swType.isChecked = configSondio!!.modo != Config.modoMusica.SISTEMA
+
+
+        if(swType.isChecked){
+            btnSelectSound.visibility = View.VISIBLE
+        }else{
+            btnSelectSound.visibility = View.INVISIBLE
+        }
+
+
+        swActiveSound.setOnClickListener{
+            configSondio!!.volumenEnabled = swActiveSound.isChecked
+        }
+
+        swType.setOnClickListener{
+            if(swType.isChecked){
+                configSondio!!.modo = Config.modoMusica.PERSONALIZADO
+                btnSelectSound.visibility = View.VISIBLE
+            }else{
+                btnSelectSound.visibility = View.INVISIBLE
+                configSondio!!.modo = Config.modoMusica.SISTEMA
+            }
+
+            swType.isChecked = configSondio!!.modo != Config.modoMusica.SISTEMA
+        }
+
+    }
+
 
 }

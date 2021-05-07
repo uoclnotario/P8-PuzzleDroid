@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.appbar.AppBarLayout
 import com.puzzle.game.R
 import com.puzzle.game.lyDataAcces.dto.DtoGame
+import com.puzzle.game.lyLogicalBusiness.Config
 import com.puzzle.game.lyLogicalBusiness.Game
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
@@ -35,6 +36,7 @@ class GameActivity : AppCompatActivity() {
     var gameLoad : Boolean = false
     var dificult : Number = 1
     var _modGame : Int = 1
+    lateinit var configSonido : Config
 
     lateinit var fxSoundV : MediaPlayer
     lateinit var fxfondo :  MediaPlayer
@@ -52,14 +54,12 @@ class GameActivity : AppCompatActivity() {
         val tool  : ConstraintLayout = findViewById<View>(R.id.toolbar) as ConstraintLayout
         val appBarLayout  : AppBarLayout = findViewById<View>(R.id.appBarLayout) as AppBarLayout
         val fxSoundOk = MediaPlayer.create(this.applicationContext,R.raw.fxposition)
-        fxSoundV =  MediaPlayer.create(this.applicationContext,R.raw.v1)
-        fxfondo =  MediaPlayer.create(this.applicationContext,R.raw.music)
-        fxfondo.isLooping = true
-        fxfondo.start()
-        fxfondo.setVolume(1.0f, 1.0f)
 
+        fileLoadSound()
+        openSoundConfig()
         player = intent.getSerializableExtra("player") as Player
         gameLoad = intent.getBooleanExtra("load",false)
+
 
         if(!gameLoad){
             dificult= intent.getSerializableExtra("dificul") as Number
@@ -88,6 +88,17 @@ class GameActivity : AppCompatActivity() {
         btnClose.setOnClickListener{
 
             if (findViewById<View>(R.id.StopFragment) != null) {
+                try{
+                    if(fxfondo.isPlaying)
+                        fxfondo.pause()
+
+                    if(fxSoundV.isPlaying)
+                        fxSoundV.pause()
+
+                }catch (ex:Exception){
+                    println("Error al pausar." + ex.toString())
+                }
+
 
                 if (savedInstanceState != null) {
                     return@setOnClickListener
@@ -112,8 +123,9 @@ class GameActivity : AppCompatActivity() {
                 _game.currentIme = gameSaved.currentIme
                 _game.dateSatart = gameSaved.fechaInicio
             }
+
             if (!_game.error) {
-                val touchListener = TouchListener(this, 0, tool.height,fxSoundOk,fxSoundV)
+                val touchListener = TouchListener(this, 0, tool.height,fxSoundOk,fxSoundV,configSonido)
                 Collections.shuffle(_game._puzzle.piezas)
                 for (piece in _game._puzzle.piezas!!) {
                     layout.addView(piece)
@@ -146,14 +158,26 @@ class GameActivity : AppCompatActivity() {
 
     //Cuando se pausa la app.
     override fun onPause() {
-        fxfondo.pause()
+    try{
+        if(fxfondo.isPlaying)
+            fxfondo.pause()
 
+    }catch (ex:Exception){
+        println("Error al pausar." + ex.toString())
+    }
         super.onPause()
         timer.cancel()
     }
     //Funcionan que inicializan o vuelven a poner en marcha el contador.
     override fun onResume() {
-        fxfondo.start()
+        try{
+            openSoundConfig()
+
+        }catch (ex:Exception){
+            println("Error al pausar." + ex.toString())
+        }
+
+
         super.onResume()
         timerStart()
     }
@@ -227,6 +251,60 @@ class GameActivity : AppCompatActivity() {
         os.close()
         fos.close()
     }
+
+    fun openSoundConfig(cambioConfig : Config? = null){
+
+        if(cambioConfig != null){
+            //Si se recibe un parametro no null es que desde la interfaz se pretende cambiar la configuración
+            configSonido = cambioConfig
+            try {
+                val fos: FileOutputStream = openFileOutput("soundConfig", Context.MODE_PRIVATE)
+                val os = ObjectOutputStream(fos)
+                os.writeObject(configSonido)
+                os.close()
+                fos.close()
+            }catch (ex:java.lang.Exception){
+                println("Error al guardar SoundConfig"+ex.message)
+            }
+        }
+
+
+        if(configSonido.modo == Config.modoMusica.SISTEMA){
+            fxSoundV =  MediaPlayer.create(this.applicationContext,R.raw.v1)
+            fxfondo =  MediaPlayer.create(this.applicationContext,R.raw.music)
+        }else{
+            //Abrir archivo de sonido
+
+
+            fxSoundV =  MediaPlayer.create(this.applicationContext,R.raw.v1)
+            fxfondo =  MediaPlayer.create(this.applicationContext,R.raw.music)
+        }
+
+
+        if (configSonido.volumenEnabled) {
+            //En el caso de que el volumen este habilitado se inicia el sonido.
+            fxfondo.isLooping = true
+            fxfondo.start()
+            fxfondo.setVolume(1.0f, 1.0f)
+        }
+    }
+
+    fun fileLoadSound(){
+        //Cargar xml
+        try {
+            val fis: FileInputStream = openFileInput("soundConfig")
+            val `is` = ObjectInputStream(fis)
+            configSonido = `is`.readObject() as Config
+            `is`.close()
+            fis.close()
+        }catch (ex : Exception){
+            println("Error al cargar"+ex.message)
+            configSonido = Config()
+            configSonido.volumenEnabled = true
+            configSonido.modo=Config.modoMusica.SISTEMA
+        }
+    }
+
 
 }
 

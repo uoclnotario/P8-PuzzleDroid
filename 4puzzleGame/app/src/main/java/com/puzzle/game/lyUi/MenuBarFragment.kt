@@ -71,9 +71,6 @@ class MenuBarFragment : Fragment() {
             val intent = Intent(getActivity()?.applicationContext, NamePlayerActivity::class.java)
             startActivity(intent)
         }
-
-
-
     }
 
 
