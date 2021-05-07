@@ -1,6 +1,8 @@
 package com.puzzle.game.lyLogicalBusiness
 
-class Config {
+import java.io.Serializable
+
+class Config: Serializable {
     enum class modoMusica{SISTEMA,PERSONALIZADO}
     var modo:modoMusica = modoMusica.SISTEMA
     var ruteMusic: String =""

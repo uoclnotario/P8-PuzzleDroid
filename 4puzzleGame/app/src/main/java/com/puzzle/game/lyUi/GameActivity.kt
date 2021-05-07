@@ -55,6 +55,7 @@ class GameActivity : AppCompatActivity() {
         val appBarLayout  : AppBarLayout = findViewById<View>(R.id.appBarLayout) as AppBarLayout
         val fxSoundOk = MediaPlayer.create(this.applicationContext,R.raw.fxposition)
 
+        fileLoadSound()
         openSoundConfig()
         player = intent.getSerializableExtra("player") as Player
         gameLoad = intent.getBooleanExtra("load",false)
@@ -243,13 +244,19 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun openSoundConfig(cambioConfig : Config? = null){
+
         if(cambioConfig != null){
+            //Si se recibe un parametro no null es que desde la interfaz se pretende cambiar la configuración
             configSonido = cambioConfig
-        }else{
-            //Cargar xml
-            configSonido = Config()
-            configSonido.volumenEnabled = true
-            configSonido.modo=Config.modoMusica.SISTEMA
+            try {
+                val fos: FileOutputStream = openFileOutput("soundConfig", Context.MODE_PRIVATE)
+                val os = ObjectOutputStream(fos)
+                os.writeObject(configSonido)
+                os.close()
+                fos.close()
+            }catch (ex:java.lang.Exception){
+                println("Error al guardar SoundConfig"+ex.message)
+            }
         }
 
 
@@ -258,22 +265,36 @@ class GameActivity : AppCompatActivity() {
             fxfondo =  MediaPlayer.create(this.applicationContext,R.raw.music)
         }else{
             //Abrir archivo de sonido
+
+
             fxSoundV =  MediaPlayer.create(this.applicationContext,R.raw.v1)
             fxfondo =  MediaPlayer.create(this.applicationContext,R.raw.music)
         }
 
 
         if (configSonido.volumenEnabled) {
+            //En el caso de que el volumen este habilitado se inicia el sonido.
             fxfondo.isLooping = true
             fxfondo.start()
             fxfondo.setVolume(1.0f, 1.0f)
         }
-
-
-
     }
 
-
+    fun fileLoadSound(){
+        //Cargar xml
+        try {
+            val fis: FileInputStream = openFileInput("soundConfig")
+            val `is` = ObjectInputStream(fis)
+            configSonido = `is`.readObject() as Config
+            `is`.close()
+            fis.close()
+        }catch (ex : Exception){
+            println("Error al cargar"+ex.message)
+            configSonido = Config()
+            configSonido.volumenEnabled = true
+            configSonido.modo=Config.modoMusica.SISTEMA
+        }
+    }
 
 
 }
