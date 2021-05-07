@@ -27,7 +27,7 @@ class Game : Serializable {
     var getError : Exception? = null
     var finalizado : Boolean = false
     var modoJuego : Int = 1
-    @RequiresApi(Build.VERSION_CODES.O)
+
     constructor(imagenData:Picture, dificulty:Number, ctx:Context, referencia: RectF,mojoJuego:Int){
        try {
         _picture = imagenData
@@ -59,7 +59,7 @@ class Game : Serializable {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     fun isFinish() : Boolean{
         var fin : Boolean = true
 

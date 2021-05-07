@@ -1,11 +1,16 @@
 package com.puzzle.game.lyUi
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.RectF
+import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.DocumentsContract
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -21,9 +26,9 @@ import com.puzzle.game.lyLogicalBusiness.Game
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
 import kotlinx.android.synthetic.main.activity_game.*
+import kotlinx.android.synthetic.main.fragment_stop_game.*
 import java.io.*
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.concurrent.scheduleAtFixedRate
 
 
@@ -38,8 +43,8 @@ class GameActivity : AppCompatActivity() {
     var _modGame : Int = 1
     lateinit var configSonido : Config
 
-    lateinit var fxSoundV : MediaPlayer
-    lateinit var fxfondo :  MediaPlayer
+    var fxSoundV : MediaPlayer? = null
+    var fxfondo :  MediaPlayer? = null
 
     lateinit var gameSaved: DtoGame
 
@@ -89,11 +94,15 @@ class GameActivity : AppCompatActivity() {
 
             if (findViewById<View>(R.id.StopFragment) != null) {
                 try{
-                    if(fxfondo.isPlaying)
-                        fxfondo.pause()
+                    if(fxfondo != null )
+                        if(fxfondo!!.isPlaying)
+                            fxfondo!!.pause()
 
-                    if(fxSoundV.isPlaying)
-                        fxSoundV.pause()
+                    if(fxfondo != null )
+                        if(fxSoundV!!.isPlaying)
+                            fxSoundV!!.pause()
+
+
 
                 }catch (ex:Exception){
                     println("Error al pausar." + ex.toString())
@@ -125,7 +134,7 @@ class GameActivity : AppCompatActivity() {
             }
 
             if (!_game.error) {
-                val touchListener = TouchListener(this, 0, tool.height,fxSoundOk,fxSoundV,configSonido)
+                val touchListener = fxSoundV?.let { TouchListener(this, 0, tool.height,fxSoundOk, it,configSonido) }
                 Collections.shuffle(_game._puzzle.piezas)
                 for (piece in _game._puzzle.piezas!!) {
                     layout.addView(piece)
@@ -159,8 +168,8 @@ class GameActivity : AppCompatActivity() {
     //Cuando se pausa la app.
     override fun onPause() {
     try{
-        if(fxfondo.isPlaying)
-            fxfondo.pause()
+        if(fxfondo?.isPlaying!!)
+            fxfondo!!.pause()
 
     }catch (ex:Exception){
         println("Error al pausar." + ex.toString())
@@ -169,9 +178,13 @@ class GameActivity : AppCompatActivity() {
         timer.cancel()
     }
     //Funcionan que inicializan o vuelven a poner en marcha el contador.
+
     override fun onResume() {
         try{
-            openSoundConfig()
+            if(StopFragment.visibility != View.VISIBLE){
+                openSoundConfig()
+            }
+
 
         }catch (ex:Exception){
             println("Error al pausar." + ex.toString())
@@ -186,7 +199,7 @@ class GameActivity : AppCompatActivity() {
         return
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun onDestroy() {
         super.onDestroy()
         //Si se cierra la app y no se ha finalizado el juego se guarda
@@ -195,7 +208,7 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun onStop() {
         super.onStop()
         //Si se cierra la app y no se ha finalizado el juego se guarda
@@ -215,7 +228,7 @@ class GameActivity : AppCompatActivity() {
             })
         }
     }
-    @RequiresApi(Build.VERSION_CODES.O)
+
     fun checkGameOver(){
         if(_game.isFinish()){
             //Eliminamos las partidas guardadas.
@@ -252,6 +265,7 @@ class GameActivity : AppCompatActivity() {
         fos.close()
     }
 
+
     fun openSoundConfig(cambioConfig : Config? = null){
 
         if(cambioConfig != null){
@@ -268,24 +282,41 @@ class GameActivity : AppCompatActivity() {
             }
         }
 
+        fxSoundV =  MediaPlayer.create(this.applicationContext,R.raw.v1)
 
         if(configSonido.modo == Config.modoMusica.SISTEMA){
-            fxSoundV =  MediaPlayer.create(this.applicationContext,R.raw.v1)
             fxfondo =  MediaPlayer.create(this.applicationContext,R.raw.music)
         }else{
-            //Abrir archivo de sonido
+            try{
+                var uri: Uri
+                uri = Uri.parse(configSonido.ruteMusic)
+                fxfondo = MediaPlayer().apply {
+                        setDataSource(application, uri)
+                        setAudioAttributes(AudioAttributes.Builder()
+                                .setUsage(AudioAttributes.USAGE_MEDIA)
+                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                .build()
+                        )
+                        prepare()
+                    }
+            }catch (ex:Exception){
+                println("Error"+ex.message)
+                fxfondo =  MediaPlayer()
+            }
 
-
-            fxSoundV =  MediaPlayer.create(this.applicationContext,R.raw.v1)
-            fxfondo =  MediaPlayer.create(this.applicationContext,R.raw.music)
         }
 
 
         if (configSonido.volumenEnabled) {
             //En el caso de que el volumen este habilitado se inicia el sonido.
-            fxfondo.isLooping = true
-            fxfondo.start()
-            fxfondo.setVolume(1.0f, 1.0f)
+            try {
+                fxfondo!!.isLooping = true
+                fxfondo!!.start()
+                fxfondo!!.setVolume(1.0f, 1.0f)
+            }catch (ex:Exception){
+                println("Error al iniciar")
+            }
+
         }
     }
 

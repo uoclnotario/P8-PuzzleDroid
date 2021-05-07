@@ -32,10 +32,11 @@ class MainActivity : AppCompatActivity() {
 
         playerViewModel = run { ViewModelProvider(this).get(PlayerViewModel::class.java) }
 
-        if (checkSelfPermission("android.permission.WRITE_CALENDAR") == PackageManager.PERMISSION_DENIED ||
-                checkSelfPermission("android.permission.READ_CALENDAR") == PackageManager.PERMISSION_DENIED){ // (Manifest.permission.READ_CALENDAR)) {
-            requestPermissions(arrayOf("android.permission.WRITE_CALENDAR","android.permission.READ_CALENDAR"),42)
+
+        if (checkSelfPermission("android.permission.WRITE_CALENDAR") == PackageManager.PERMISSION_DENIED){
+            requestPermissions(arrayOf("android.permission.WRITE_CALENDAR","android.permission.READ_CALENDAR"),41)
         }
+
 
         var bestScore: Job = GlobalScope.launch {
             Looper.prepare()
@@ -87,6 +88,4 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-
 }

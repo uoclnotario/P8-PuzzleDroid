@@ -1,18 +1,21 @@
 package com.puzzle.game.lyUi
 
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Config
 import kotlinx.android.synthetic.main.fragment_stop_game.*
-import kotlinx.android.synthetic.main.fragment_stop_game.btnExit
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -52,6 +55,7 @@ class stopGameFragment() : Fragment() {
         return inflater.inflate(R.layout.fragment_stop_game, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("WrongViewCast")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         // TODO Auto-generated method stub
@@ -149,7 +153,30 @@ class stopGameFragment() : Fragment() {
             swType.isChecked = configSondio!!.modo != Config.modoMusica.SISTEMA
         }
 
+        btnSelectSound.setOnClickListener{
+            val intent_upload = Intent()
+            intent_upload.type = "audio/*"
+            intent_upload.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(intent_upload, 101)
+        }
+
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 101) {
+            if (resultCode == RESULT_OK) {
+
+                //the selected audio.
+                if (data != null) {
+                    configSondio?.ruteMusic = data.data.toString()
+                }
+                println(data!!.data.toString())
+            }else{
+                swType.isChecked = false
+            }
+        }
+
+    }
 
 }
