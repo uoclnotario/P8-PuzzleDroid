@@ -32,35 +32,34 @@ class MainActivity : AppCompatActivity() {
 
         playerViewModel = run { ViewModelProvider(this).get(PlayerViewModel::class.java) }
 
-        if (checkSelfPermission("android.permission.WRITE_CALENDAR") == PackageManager.PERMISSION_DENIED){ // (Manifest.permission.READ_CALENDAR)) {
-            requestPermissions(arrayOf("android.permission.WRITE_CALENDAR"),42)
-            return;
-        }else
-        {
-            var bestScore: Job = GlobalScope.launch {
-                Looper.prepare()
-                var calendario = Calendario(applicationContext)
-                Calendario.lastScore = calendario.readLastEvent()
-            }
-            while(bestScore.isActive){
-                imageView2.visibility = INVISIBLE
-                btnStart.visibility = INVISIBLE
-                btnStart.isClickable = false
-            }
-            imageView2.visibility = VISIBLE
-            btnStart.visibility = VISIBLE
-            btnStart.isClickable = true
-            if(Calendario.lastScore != "")
-            {
-                lastGame.visibility = VISIBLE
-                lastGameValue.visibility = VISIBLE
-                lastGameValue.text = Calendario.lastScore
-            }
+        if (checkSelfPermission("android.permission.WRITE_CALENDAR") == PackageManager.PERMISSION_DENIED ||
+                checkSelfPermission("android.permission.READ_CALENDAR") == PackageManager.PERMISSION_DENIED){ // (Manifest.permission.READ_CALENDAR)) {
+            requestPermissions(arrayOf("android.permission.WRITE_CALENDAR","android.permission.READ_CALENDAR"),42)
         }
 
+        var bestScore: Job = GlobalScope.launch {
+            Looper.prepare()
+            var calendario = Calendario(applicationContext)
+            Calendario.lastScore = calendario.readLastEvent()
+        }
+        while(bestScore.isActive){
+            imageView2.visibility = INVISIBLE
+            btnStart.visibility = INVISIBLE
+            btnStart.isClickable = false
+        }
+
+        imageView2.visibility = VISIBLE
+        btnStart.visibility = VISIBLE
+        btnStart.isClickable = true
+        if(Calendario.lastScore != "")
+        {
+            lastGame.visibility = VISIBLE
+            lastGameValue.visibility = VISIBLE
+            lastGameValue.text = Calendario.lastScore
+        }
+
+
     }
-
-
 
     fun onClick(view: View) {
         try {
