@@ -50,5 +50,7 @@
     <string name="btnsound">Sonido</string>
     <string name="txsound">Sonido</string>
     <string name="btnSoundSelect">Seleccionar sonido</string>
+    <string name="btnOnlineMode">Online</string>
+    <string name="titleLogin">Login</string>
 
 </resources>

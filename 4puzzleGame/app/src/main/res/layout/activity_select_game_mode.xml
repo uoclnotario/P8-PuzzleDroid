@@ -103,6 +103,32 @@
             app:layout_constraintTop_toTopOf="@+id/btnRandomMode"
             app:layout_constraintVertical_bias="0.468" />
 
+        <ImageView
+            android:id="@+id/btnBorderOnline"
+            android:layout_width="237dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="30dp"
+            android:contentDescription="@string/RandomMode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRandomMode"
+            app:srcCompat="@drawable/btn_oscuro" />
+
+        <Button
+            android:id="@+id/btnOnlineMode"
+            style="@style/Theme.4puzzleGame.Button"
+            android:layout_width="223dp"
+            android:layout_height="42dp"
+            android:onClick="onClickOnlineMode"
+            android:padding="0dp"
+            android:scaleX="1"
+            android:text="@string/btnOnlineMode"
+            app:layout_constraintBottom_toBottomOf="@+id/btnBorderOnline"
+            app:layout_constraintEnd_toEndOf="@+id/btnBorderOnline"
+            app:layout_constraintStart_toStartOf="@+id/btnBorderOnline"
+            app:layout_constraintTop_toBottomOf="@+id/btnRandomMode"
+            app:layout_constraintVertical_bias="0.81" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

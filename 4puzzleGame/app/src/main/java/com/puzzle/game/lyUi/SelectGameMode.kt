@@ -53,16 +53,14 @@ class SelectGameMode : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun RandomPhoto (): Picture? {
-        var rphoto : Picture? = null
 
-
-
-
-
-
-
-        return rphoto
+    fun onClickOnlineMode(view: View) {
+        val intent = Intent(this,LoginActivity::class.java).apply {
+            putExtra("player", player)
+        }
+        startActivity(intent)
     }
+
+
 
 }
