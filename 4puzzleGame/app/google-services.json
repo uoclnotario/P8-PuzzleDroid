@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:826100725094:android:a408570712ea3d4f8404a7",
+        "mobilesdk_app_id": "1:826100725094:android:aa1ea3b788fc61f98404a7",
         "android_client_info": {
-          "package_name": "com.puzzle.game"
+          "package_name": "com.puzzle.Game"
         }
       },
       "oauth_client": [
