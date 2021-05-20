@@ -1,6 +1,8 @@
 package com.puzzle.game.lyLogicalBusiness
 
 import androidx.room.ColumnInfo
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import java.io.Serializable
 
 class Player : Serializable  {
@@ -10,6 +12,9 @@ class Player : Serializable  {
     var nombre:String
     @ColumnInfo(name = "last_access")
     var last_access:String?
+
+    lateinit var PlayerUID : String
+    lateinit var playerAuth : FirebaseUser
 
 
 

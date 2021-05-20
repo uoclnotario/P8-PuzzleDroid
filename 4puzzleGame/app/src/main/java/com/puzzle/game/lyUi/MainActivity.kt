@@ -32,21 +32,20 @@ class MainActivity : AppCompatActivity() {
 
         playerViewModel = run { ViewModelProvider(this).get(PlayerViewModel::class.java) }
 
-
         if (checkSelfPermission("android.permission.WRITE_CALENDAR") == PackageManager.PERMISSION_DENIED){
             requestPermissions(arrayOf("android.permission.WRITE_CALENDAR","android.permission.READ_CALENDAR"),41)
-        }
-
-
-        var bestScore: Job = GlobalScope.launch {
-            Looper.prepare()
+        }else{
             var calendario = Calendario(applicationContext)
-            Calendario.lastScore = calendario.readLastEvent()
-        }
-        while(bestScore.isActive){
-            imageView2.visibility = INVISIBLE
-            btnStart.visibility = INVISIBLE
-            btnStart.isClickable = false
+            var bestScore: Job = GlobalScope.launch {
+                Looper.prepare()
+                Calendario.lastScore = calendario.readLastEvent()
+            }
+            while(bestScore.isActive){
+                imageView2.visibility = INVISIBLE
+                btnStart.visibility = INVISIBLE
+                btnStart.isClickable = false
+            }
+
         }
 
         imageView2.visibility = VISIBLE
@@ -58,7 +57,6 @@ class MainActivity : AppCompatActivity() {
             lastGameValue.visibility = VISIBLE
             lastGameValue.text = Calendario.lastScore
         }
-
 
     }
 
