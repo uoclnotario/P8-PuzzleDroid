@@ -72,11 +72,12 @@ class LoginActivity : AppCompatActivity() {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 val user = FirebaseAuth.getInstance().currentUser
+                val auth = FirebaseAuth.getInstance()
                 println("Autenticación correcta" + user.toString())
                 val addPlayer : playerFbDao = playerFbDao()
                 var userName : String = "Anonymous"
                 if(!user!!.isAnonymous)
-                    userName = user!!.displayName!!
+                    userName = user.displayName!!
 
                 var tmpPlayer : PlayerFbEntity = PlayerFbEntity(
                     user!!.uid,
@@ -87,6 +88,7 @@ class LoginActivity : AppCompatActivity() {
                         .format(Instant.now()))
 
                 addPlayer.writeUser(tmpPlayer)
+                player.playerAuth = user!!
                 // ...
             } else {
                 // Sign in failed. If response is null the user canceled the
