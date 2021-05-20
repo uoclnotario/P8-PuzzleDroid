@@ -21,6 +21,7 @@ import com.puzzle.game.lyLogicalBusiness.SavedGame
 import com.puzzle.game.viewModels.GameViewModel
 import com.puzzle.game.viewModels.PictureViewModel
 import kotlinx.android.synthetic.main.activity_selectpicture.*
+import kotlinx.android.synthetic.main.activity_selectpicture_online.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
@@ -40,7 +41,6 @@ class SelectPictureActivity : AppCompatActivity() {
     lateinit var _player :Player
     lateinit var gameViewModel: GameViewModel
     var _modGame : Int = 1
-
     private lateinit var pictureViewModel: PictureViewModel
 
 
@@ -59,22 +59,28 @@ class SelectPictureActivity : AppCompatActivity() {
             pictureViewModel = run { ViewModelProvider(this).get(PictureViewModel::class.java) }
             setContentView(R.layout.activity_selectpicture_random)
             cargarLayoutModoRandom()
-
         }
 
+        if(_modGame == 3){
+            setContentView(R.layout.activity_selectpicture_online)
+            cargarLayoutModoOnline()
+        }else{
+            //El modo 3 no tiene este botón
+            //Acción para el botón del menu.
+            btnPlus.setOnClickListener{
+                if (findViewById<View>(R.id.flMenu) != null) {
+                        val firstFragment = MenuBar2Fragment()
+                        firstFragment.arguments = intent.extras
+                        supportFragmentManager.beginTransaction()
+                                .add(R.id.flMenu, firstFragment).commit()
 
-        //Acción para el botón del menu.
-        btnPlus.setOnClickListener{
-            if (findViewById<View>(R.id.flMenu) != null) {
-                    val firstFragment = MenuBar2Fragment()
-                    firstFragment.arguments = intent.extras
-                    supportFragmentManager.beginTransaction()
-                            .add(R.id.flMenu, firstFragment).commit()
-
+                }
             }
         }
 
     }
+
+
 
     //MODO DE JUEGO ESTANDAR
     private fun cargarLayoutModoEstandar(){
@@ -133,7 +139,6 @@ class SelectPictureActivity : AppCompatActivity() {
             startActivity(intent);
         }
     }
-
     //***********************
 
 
@@ -181,9 +186,7 @@ class SelectPictureActivity : AppCompatActivity() {
         //Cargar los datos
         load()
     }
-    //**********************
-
-    fun load(){
+    private fun load(){
         var btnGo = findViewById<Button>(R.id.btnGo) as Button
         btnGo.isEnabled = false
 
@@ -199,6 +202,31 @@ class SelectPictureActivity : AppCompatActivity() {
             }
         }
     }
+    //**********************
+
+    // MODO DE JUEGO ONLINE
+    private fun cargarLayoutModoOnline(){
+        btnGo.setOnClickListener{
+            var i : Int = 0
+
+           //TODO Se lanza un tread para descargar la imagen de firebase
+            //Cuando finalice de cargar tendra que mostrar la imagen en pantalla y habilitar
+            //el botón GO Y poner invisible el textview de loading.
+
+            //para depuración hasta implemntar la carga de storage...
+            var debugImg = Picture(R.drawable.image1)
+
+
+            var intent = Intent(this,SelectDificultyActivity::class.java).apply {
+                putExtra("player", _player)
+                putExtra("pictur", debugImg)
+                putExtra("tipoJuego",_modGame)
+            }
+            startActivity(intent);
+        }
+    }
+    //**********************
+
 
 
     //REcepcón de Imagenes
@@ -264,7 +292,6 @@ class SelectPictureActivity : AppCompatActivity() {
         }
     }
 
-
     //Función para la creación de los datos en la carpeta privada de la app
     fun createImageFromBitmap(bitmap: Bitmap) {
             try {
@@ -292,10 +319,6 @@ class SelectPictureActivity : AppCompatActivity() {
                 false
         )
     }
-
-
-
-
 
     // Función para identifcar una imagen haciendole has
     fun hashBitmap(byteArray: ByteArrayOutputStream): String {
@@ -351,7 +374,6 @@ class SelectPictureActivity : AppCompatActivity() {
         override fun getCount(): Int {
             return itemModel.size
         }
-
     }
 
 }

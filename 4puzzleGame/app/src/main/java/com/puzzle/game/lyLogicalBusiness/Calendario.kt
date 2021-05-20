@@ -18,7 +18,7 @@ class Calendario(context: Context) : AppCompatActivity() {
     companion object {
         const val MY_ACCOUNT_NAME =  "Game 4 Puzzle"
         const val MY_DISPLAY_NAME =  "Game: 4 Puzzle"
-        lateinit var lastScore: String
+        var lastScore: String  = ""
     }
 
     fun checkCalendarId(): Long {

@@ -26,7 +26,6 @@ class LoginActivity : AppCompatActivity() {
     val RC_SIGN_IN = 121
     lateinit var player: Player
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onlinelogin)
@@ -62,44 +61,5 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == RC_SIGN_IN) {
-            val response = IdpResponse.fromResultIntent(data)
-            println(resultCode.toString())
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                val user = FirebaseAuth.getInstance().currentUser
-                val auth = FirebaseAuth.getInstance()
-                println("Autenticación correcta" + user.toString())
-                val addPlayer : playerFbDao = playerFbDao()
-                var userName : String = "Anonymous"
-                if(!user!!.isAnonymous)
-                    userName = user.displayName!!
-
-                var tmpPlayer : PlayerFbEntity = PlayerFbEntity(
-                    user!!.uid,
-                    userName,
-                    DateTimeFormatter
-                        .ofPattern("yyyy-MM-dd HH:mm:ss")
-                        .withZone(ZoneOffset.UTC)
-                        .format(Instant.now()))
-
-                addPlayer.writeUser(tmpPlayer)
-                player.playerAuth = user!!
-                // ...
-            } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
-                if (response != null) {
-                    println("Fallo al conectar"+ response.getError()?.getErrorCode().toString())
-                }
-
-            }
-        }
-    }
 }
