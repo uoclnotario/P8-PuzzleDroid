@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,7 +15,10 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
+import com.google.common.io.Resources
+import com.google.rpc.context.AttributeContext
 import com.puzzle.game.R
+import com.puzzle.game.lyDataAcces.firebaseDDBB.storage.fbStorage
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
@@ -212,9 +216,14 @@ class SelectPictureActivity : AppCompatActivity() {
            //TODO Se lanza un tread para descargar la imagen de firebase
             //Cuando finalice de cargar tendra que mostrar la imagen en pantalla y habilitar
             //el botón GO Y poner invisible el textview de loading.
+            var fbstorage = fbStorage()
 
             //para depuración hasta implemntar la carga de storage...
             var debugImg = Picture(R.drawable.image1)
+            if(fbstorage.getImage(_player) != null)
+            {
+                debugImg = fbstorage.getImage(_player)!!
+            }
 
 
             var intent = Intent(this,SelectDificultyActivity::class.java).apply {

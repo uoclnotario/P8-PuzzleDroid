@@ -35,7 +35,7 @@ class GameFbDao  : fbAccessDDBB() {
         val childUpdates = hashMapOf<String, Any>(
             "/${GameFbEntity.tableName}/$key" to gameValues,                                                                // Agregamos la partida a la clave partidas
             "/${PictureFbEntity.tableName}/${gamedata.idImagen}/${PlayerFbEntity.tableName}/${gamedata.idPlayer}" to true,  // Agregamos a la imagen el jugador que la ha jugado
-            "/${ScoresFbEntity.tableName}/$key" to scoreValues                                                              // Agregamos la puntuación de la partida.
+            "/${ScoresFbEntity.tableName}/${gamedata.dificuty}/${gamedata.idImagen}/$key" to scoreValues                                         // Agregamos la puntuación de la partida.
         )
 
         getReferenciaRaiz().updateChildren(childUpdates)

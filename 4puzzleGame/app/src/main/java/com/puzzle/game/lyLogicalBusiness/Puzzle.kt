@@ -30,8 +30,14 @@ class Puzzle : Serializable{
 
     fun redimensionarImagen(ctx :Context){
         try {
-            if (_picture.image != "") {
-                val image: Bitmap
+            val image: Bitmap
+            if(_picture.bitmap != null)
+            {
+                image = _picture.bitmap!!
+                _pictureResize= Bitmap.createScaledBitmap(image,imgReference.right.toInt(), imgReference.bottom.toInt(),false)
+            }
+            else if (_picture.image != "") {
+
                 if(_picture.tipo == Picture.Tipo.INTERNALFILE)
                 { image = BitmapFactory.decodeStream(ctx.openFileInput(_picture.image)) }
                 else

@@ -14,6 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.puzzle.game.R
 import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.PlayerFbEntity
+import com.puzzle.game.lyDataAcces.firebaseDDBB.PictureFbDao
 import com.puzzle.game.lyDataAcces.firebaseDDBB.playerFbDao
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
@@ -55,10 +56,14 @@ class SelectGameMode : AppCompatActivity() {
                                 .build(),
                         RC_SIGN_IN)
             }else{
+                player.PlayerUID = account.id!!
                 val intent = Intent(this,SelectPictureActivity::class.java).apply {
                     putExtra("player", player)
                     putExtra("tipoJuego",3)
                 }
+
+                var tmp = PictureFbDao()
+                tmp.GetPicturesPlayer(player)
                 startActivity(intent)
             }
 
