@@ -5,27 +5,25 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 import com.puzzle.game.lyDataAcces.entities.PlayerData
 
 @IgnoreExtraProperties
-data class PlayerFbEntity(
-    private val PlayerId: String,
-    val nombre:String,
-    val last_access:String
-) {
-    fun PlayerFbEntity() {}
-
+data class ScoresFbEntity(
+    var gameId: String,
+    var score: Long,
+    var playerId: String,
+    var imageId: String,
+    val totalTime:Long
+)
+{
     companion object {
-        const val tableName = PlayerData.TABLE_NAME
-    }
-    fun getPlayerId(): String
-    {
-        return PlayerId;
+        const val tableName : String = "scores"
     }
 
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
-            "nombre" to nombre,
-            "last_access" to last_access
+            "score" to score,
+            "playerId" to playerId,
+            "imageId" to imageId,
+            "totalTime" to totalTime
         )
     }
-
 }

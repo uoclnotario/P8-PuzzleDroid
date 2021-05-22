@@ -16,7 +16,6 @@ import java.time.format.DateTimeFormatter
 class playerFbDao : fbAccessDDBB() {
 
     companion object {
-        const val tableName = PlayerFbEntity.TABLE_NAME;
         private var user: PlayerFbEntity? = null
     }
 
@@ -43,7 +42,7 @@ class playerFbDao : fbAccessDDBB() {
     fun writeUser(userdata: PlayerFbEntity) {
 
         val userValues = userdata.toMap()
-        getReferenciaClave(tableName).child(userdata.getPlayerId()).updateChildren(userValues)
+        getReferenciaClave(PlayerFbEntity.tableName).child(userdata.getPlayerId()).updateChildren(userValues)
         SetUser(userdata)
     }
 
