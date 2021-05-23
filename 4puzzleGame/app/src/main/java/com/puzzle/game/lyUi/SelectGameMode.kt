@@ -65,9 +65,6 @@ class SelectGameMode : AppCompatActivity() {
                 }
 
 
-                var tmp = PictureFbDao()
-                tmp.GetPicturesPlayer(player)
-				
                 startActivity(intent)
             }
 

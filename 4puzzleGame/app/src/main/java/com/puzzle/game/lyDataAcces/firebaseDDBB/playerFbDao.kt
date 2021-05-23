@@ -1,19 +1,14 @@
 package com.puzzle.game.lyDataAcces.firebaseDDBB
 
 import android.content.ContentValues.TAG
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.PlayerFbEntity
-import java.time.Instant
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
-class playerFbDao : fbAccessDDBB() {
+class playerFbDao : FbAccessDDBB() {
 
     companion object {
         private var user: PlayerFbEntity? = null

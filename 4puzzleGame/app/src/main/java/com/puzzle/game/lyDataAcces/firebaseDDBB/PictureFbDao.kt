@@ -1,10 +1,9 @@
 package com.puzzle.game.lyDataAcces.firebaseDDBB
 
-import com.puzzle.game.lyDataAcces.entities.PictureEntity
 import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.PictureFbEntity
 import com.puzzle.game.lyLogicalBusiness.Player
 
-class PictureFbDao : fbAccessDDBB() {
+class PictureFbDao : FbAccessDDBB() {
 
     fun GetPicturesPlayer(player: Player)
     {

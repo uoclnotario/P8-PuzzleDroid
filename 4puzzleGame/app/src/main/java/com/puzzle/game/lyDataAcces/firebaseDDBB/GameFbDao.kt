@@ -5,7 +5,7 @@ import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.PictureFbEntity
 import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.PlayerFbEntity
 import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.ScoresFbEntity
 
-class GameFbDao  : fbAccessDDBB() {
+class GameFbDao  : FbAccessDDBB() {
 
     companion object {
         private var game: GameFbEntity? = null

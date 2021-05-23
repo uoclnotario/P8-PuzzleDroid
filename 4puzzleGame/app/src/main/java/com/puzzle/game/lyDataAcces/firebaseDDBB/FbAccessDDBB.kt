@@ -9,7 +9,7 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 
-open class fbAccessDDBB {
+open class FbAccessDDBB {
 
     companion object
     {

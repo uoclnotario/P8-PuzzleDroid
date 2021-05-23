@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,10 +14,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
-import com.google.common.io.Resources
-import com.google.rpc.context.AttributeContext
 import com.puzzle.game.R
-import com.puzzle.game.lyDataAcces.firebaseDDBB.storage.fbStorage
+import com.puzzle.game.lyDataAcces.firebaseDDBB.storage.FbStorage
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
@@ -84,8 +81,6 @@ class SelectPictureActivity : AppCompatActivity() {
 
     }
 
-
-
     //MODO DE JUEGO ESTANDAR
     private fun cargarLayoutModoEstandar(){
         var images = intArrayOf(
@@ -144,7 +139,6 @@ class SelectPictureActivity : AppCompatActivity() {
         }
     }
     //***********************
-
 
     //MODO DE JUEGO RANDOM
     private fun cargarLayoutModoRandom(){
@@ -210,25 +204,35 @@ class SelectPictureActivity : AppCompatActivity() {
 
     // MODO DE JUEGO ONLINE
     private fun cargarLayoutModoOnline(){
-        btnGo.setOnClickListener{
-            var i : Int = 0
+        //TODO Se lanza un tread para descargar la imagen de firebase
+        //Cuando finalice de cargar tendra que mostrar la imagen en pantalla y habilitar
+        //el botón GO Y poner invisible el textview de loading.
+        val imgPresentacion : ImageView = findViewById(R.id.ivTablero)
+        var fbstorage = FbStorage()
 
-           //TODO Se lanza un tread para descargar la imagen de firebase
-            //Cuando finalice de cargar tendra que mostrar la imagen en pantalla y habilitar
-            //el botón GO Y poner invisible el textview de loading.
+       //para depuración hasta implemntar la carga de storage...
+        var debugImg = Picture(R.drawable.image1)
+        fbstorage.loadConcurrencyList()
+        {
+            println("Recibida imagenes" + it.count())
+            if(it.count() > 1){
+                //Randomize image
+                debugImg = Picture(it[Random.nextInt(1, it.count()-1)])
+                fbstorage.downloadFile(debugImg,getDir("mydir", Context.MODE_PRIVATE))
+/*
+                var bitmap = fbstorage.loadBmp(debugImg)
+                if(bitmap != null){
+                    txtVLoading.visibility = View.INVISIBLE
+                    btnGo.isEnabled = true
+                    imgPresentacion.setImageBitmap(bitmap)
+                }*/
 
-
-            var fbstorage = fbStorage()
-			
-            //para depuración hasta implemntar la carga de storage...
-            var debugImg = Picture(R.drawable.image1)
-            if(fbstorage.getImage(_player) != null)
-            {
-                debugImg = fbstorage.getImage(_player)!!
             }
+        }
 
 
 
+        btnGo.setOnClickListener{
             var intent = Intent(this,SelectDificultyActivity::class.java).apply {
                 putExtra("player", _player)
                 putExtra("pictur", debugImg)
