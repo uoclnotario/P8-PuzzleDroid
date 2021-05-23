@@ -212,24 +212,23 @@ class SelectPictureActivity : AppCompatActivity() {
 
        //para depuración hasta implemntar la carga de storage...
         var debugImg = Picture(R.drawable.image1)
-        fbstorage.loadConcurrencyList()
+        fbstorage.loadAsyncList()
         {
             println("Recibida imagenes" + it.count())
-            if(it.count() > 1){
+            if(it.count() > 1) {
                 //Randomize image
-                debugImg = Picture(it[Random.nextInt(1, it.count()-1)])
-                fbstorage.downloadFile(debugImg,getDir("mydir", Context.MODE_PRIVATE))
-/*
-                var bitmap = fbstorage.loadBmp(debugImg)
-                if(bitmap != null){
-                    txtVLoading.visibility = View.INVISIBLE
-                    btnGo.isEnabled = true
-                    imgPresentacion.setImageBitmap(bitmap)
-                }*/
+                debugImg = Picture(it[Random.nextInt(1, it.count() - 1)])
+                // fbstorage.downloadFile(debugImg,getDir("mydir", Context.MODE_PRIVATE))
 
+               fbstorage.loadAsyncBmp(debugImg){
+                   if (it != null) {
+                       txtVLoading.visibility = View.INVISIBLE
+                       btnGo.isEnabled = true
+                       imgPresentacion.setImageBitmap(it)
+                   }
+                }
             }
         }
-
 
 
         btnGo.setOnClickListener{
@@ -242,7 +241,6 @@ class SelectPictureActivity : AppCompatActivity() {
         }
     }
     //**********************
-
 
 
     //REcepcón de Imagenes

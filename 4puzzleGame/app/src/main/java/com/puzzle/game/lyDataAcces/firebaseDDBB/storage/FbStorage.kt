@@ -1,19 +1,18 @@
 package com.puzzle.game.lyDataAcces.firebaseDDBB.storage
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.os.Environment
 import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.component1
 import com.google.firebase.storage.ktx.component2
 import com.google.firebase.storage.ktx.storage
 import com.puzzle.game.lyLogicalBusiness.Picture
+import kotlinx.android.synthetic.main.activity_selectpicture_online.*
 import java.io.File
 import kotlin.random.Random
 
@@ -34,7 +33,7 @@ class FbStorage {
         return storage.reference.child(key)
     }
 
-    fun loadConcurrencyList(myCallback: (MutableList<String>) -> Unit)
+    fun loadAsyncList(myCallback: (MutableList<String>) -> Unit)
     {
         var listado : MutableList<String> = ArrayList<String>()
        /* var picturefbdao = PictureFbDao()
@@ -96,60 +95,23 @@ class FbStorage {
         return result
     }
 
-    fun loadBmp(path: Picture) : Bitmap?
+    fun loadAsyncBmp(path:Picture,myCallback: (Bitmap?) -> Unit?)
     {
         var bitmap : Bitmap? = null
-        try {
+        val firebaseStorage = FirebaseStorage.getInstance()
+        val storageReferenc = firebaseStorage.getReference()
+        val remoteFile = storageReferenc.child(path.image)
 
-            val storageRef = storage.reference
-            val list = storageRef.child("images")
-            val listRef = list.child(path.image)
+        val ONE_MEGABYTE: Long = 1024 * 1024
+        val task =remoteFile.getBytes(ONE_MEGABYTE).addOnSuccessListener {
+            bitmap = BitmapFactory.decodeByteArray(it,0,it.count())
+            myCallback(bitmap)
 
-
-            var t = listRef.stream.addOnProgressListener(){
-                bitmap = BitmapFactory.decodeStream(it.stream)
-            }
-            while(!t.isInProgress){
-                println("Esperando")
-                Thread.sleep(90)
-            }
-            return bitmap;
-        }catch (e:Exception)
-        {
-            println("Error obteniendo imagen: $e")
-            return  bitmap
-        }
+        }.addOnFailureListener(OnFailureListener { exception ->
+            val errorCode = (exception as StorageException).errorCode
+            val errorMessage = exception.message
+            println("firebase ;local tem file not created  created $errorMessage")
+        })
     }
-    fun downloadFile(path: Picture, rootPath:File) {
-        val storageReference = Firebase.storage.reference
-        val storageRef = Companion.storage.reference
-        val islandRef = storageRef.child(path.image)
-        if (!rootPath.exists()) {
-            rootPath.mkdirs()
-        }
 
-        
-        val localFile = File(rootPath, path.image)
-        islandRef.getFile(localFile)
-            .addOnSuccessListener(OnSuccessListener<FileDownloadTask.TaskSnapshot?> {
-                println("firebase ;local tem file created  created " + localFile.toString())
-                //  updateDb(timestamp,localFile.toString(),position);
-            }).addOnFailureListener(OnFailureListener { exception ->
-                println(
-                    "firebase ;local tem file not created  created $exception"
-                )
-            })
-    }
-    /*
-    fun logBmp(context: Context,picture: Picture, img: ImageView){
-
-        val storageReference = Firebase.storage.reference
-        val storageRef = storage.reference
-        val listRef = storageRef.child("images")
-        val file = storageRef.child(picture.image)
-        Glide.with(context)
-            .load(file)
-            .into(img)
-    }
-*/
 }
