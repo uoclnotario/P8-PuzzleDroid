@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.puzzle.game.R
+import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.PictureFbEntity
 import com.puzzle.game.lyDataAcces.firebaseDDBB.PictureFbDao
 import com.puzzle.game.lyDataAcces.firebaseDDBB.storage.FbStorage
 import com.puzzle.game.lyLogicalBusiness.Picture
@@ -206,6 +207,11 @@ class SelectPictureActivity : AppCompatActivity() {
 
     // MODO DE JUEGO ONLINE
     private fun cargarLayoutModoOnline(){
+
+        //Prueba de guardado de imagen
+        //PictureFbDao().writePicture(PictureFbEntity("prueba_imagen2", listOf<String?>(_player.PlayerId.toString())))
+
+
         var imagenCargada = false
         //TODO Se lanza un tread para descargar la imagen de firebase
         //Cuando finalice de cargar tendra que mostrar la imagen en pantalla y habilitar

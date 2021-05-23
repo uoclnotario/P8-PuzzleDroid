@@ -21,7 +21,7 @@ open class FbAccessDDBB {
     private var rootDatabaseRef: DatabaseReference = databaseInstance.reference
 
 
-    private fun GetDatabase(): FirebaseDatabase {
+    fun GetDatabase(): FirebaseDatabase {
         return databaseInstance
     }
 

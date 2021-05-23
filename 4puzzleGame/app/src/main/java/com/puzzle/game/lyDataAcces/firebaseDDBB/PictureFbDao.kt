@@ -1,6 +1,7 @@
 package com.puzzle.game.lyDataAcces.firebaseDDBB
 
 import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.PictureFbEntity
+import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.PlayerFbEntity
 import com.puzzle.game.lyLogicalBusiness.Player
 
 class PictureFbDao : FbAccessDDBB() {
@@ -37,6 +38,13 @@ class PictureFbDao : FbAccessDDBB() {
             Thread.sleep(50)
             println("esperando por la descarga de datos")
         }
+    }
+
+
+    fun writePicture(imagen: PictureFbEntity) {
+
+        val imgValue = imagen.toMap()
+        GetDatabase().getReference(PictureFbEntity.tableName).push().setValue(imgValue)
     }
 
 }

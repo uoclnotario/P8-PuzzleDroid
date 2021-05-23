@@ -23,23 +23,27 @@ class GameFbDao  : FbAccessDDBB() {
 
     fun saveGame(gamedata: GameFbEntity) {
 
+        //Guardado de imagenes
+        PictureFbDao().writePicture(PictureFbEntity(gamedata.idImagen,listOf<String?>(gamedata.idPlayer)))
+        val keyImg = getReferenciaClave(PictureFbEntity.tableName).push().key
+        if (keyImg != null) {
+            gamedata.idImagen = keyImg
+        }
+
         val gameValues = gamedata.toMap()
+        val saveGame = GetDatabase().getReference(GameFbEntity.tableName).push()
         val key = getReferenciaClave(GameFbEntity.tableName).push().key
+        saveGame.updateChildren(gameValues)
+
+
         if (key == null) {
             println("No se ha podido obtener la clave para la partida")
             return
         }
-        gamedata.setGameKey(key)
 
         var scoreValues = ScoresFbEntity(key,gamedata.score, gamedata.idPlayer, gamedata.idImagen, gamedata.totalTime)
-        val childUpdates = hashMapOf<String, Any>(
-            "/${GameFbEntity.tableName}/$key" to gameValues,                                                                // Agregamos la partida a la clave partidas
-            "/${PictureFbEntity.tableName}/${gamedata.idImagen}/${PlayerFbEntity.tableName}/${gamedata.idPlayer}" to true,  // Agregamos a la imagen el jugador que la ha jugado
-            "/${ScoresFbEntity.tableName}/${gamedata.dificuty}/${gamedata.idImagen}/$key" to scoreValues                                         // Agregamos la puntuación de la partida.
-        )
-
-        getReferenciaRaiz().updateChildren(childUpdates)
-        setGame(gamedata)
+        val saveGameScore = GetDatabase().getReference(ScoresFbEntity.tableName).push()
+        saveGameScore.updateChildren(scoreValues.toMap())
 
     }
 

@@ -1,16 +1,13 @@
 package com.puzzle.game.lyDataAcces.firebaseDDBB.Entities
 
-import android.graphics.Bitmap
 import com.google.firebase.database.Exclude
 import com.google.firebase.firestore.IgnoreExtraProperties
 import com.puzzle.game.lyDataAcces.entities.PictureEntity
-import com.puzzle.game.lyLogicalBusiness.Picture
 
 @IgnoreExtraProperties
 data class PictureFbEntity(
-    val image: String,
-    val playersPlayed: Map<String, Boolean>?,
-    val bitmap: Bitmap
+        val image: String,
+        val playersPlayed: List<String?>?
 )
 {
     companion object {
@@ -22,6 +19,7 @@ data class PictureFbEntity(
 
     @Exclude
     fun toMap(): Map<String, Any?> {
+
         return mapOf(
             "image" to image,
             "playersPlayed" to playersPlayed

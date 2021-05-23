@@ -7,15 +7,15 @@ import com.puzzle.game.lyLogicalBusiness.Picture
 
 @IgnoreExtraProperties
 data class GameFbEntity(
-    private var gameId: String,
-    val idImagen:String,
-    val idPlayer:String,
-    val dificuty:Int,
-    val score:Long,
-    val tiempo:String,
-    val totalTime:Long,
-    val fechaInicio:java.util.Date,
-    val fechaFin:java.util.Date
+        private var gameId: String,
+        var idImagen:String,
+        val idPlayer:String,
+        val dificuty:Int,
+        val score:Long,
+        val tiempo:String,
+        val totalTime:Long,
+        val fechaInicio:java.util.Date,
+        val fechaFin:java.util.Date
     )
 {
     companion object {

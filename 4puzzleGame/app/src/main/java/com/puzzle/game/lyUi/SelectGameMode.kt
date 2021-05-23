@@ -6,24 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.ViewModelProvider
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.puzzle.game.R
+import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.PictureFbEntity
 import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.PlayerFbEntity
 import com.puzzle.game.lyDataAcces.firebaseDDBB.PictureFbDao
 import com.puzzle.game.lyDataAcces.firebaseDDBB.playerFbDao
-import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
-import com.puzzle.game.viewModels.GameViewModel
-import com.puzzle.game.viewModels.PictureViewModel
-import com.puzzle.game.viewModels.PlayerViewModel
-import kotlinx.android.synthetic.main.activity_onlinelogin.*
 import kotlinx.android.synthetic.main.activity_select_game_mode.*
-import kotlinx.android.synthetic.main.activity_startgame.*
 import kotlinx.android.synthetic.main.activity_startgame.btnClose
 import java.time.Instant
 import java.time.ZoneOffset
@@ -36,8 +30,9 @@ class SelectGameMode : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_game_mode)
-
         player = intent.getSerializableExtra("player") as Player
+
+
 
         btnOnlineMode.setOnClickListener{
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
