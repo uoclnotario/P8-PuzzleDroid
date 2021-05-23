@@ -36,10 +36,6 @@ class FbStorage {
     fun loadAsyncList(myCallback: (MutableList<String>) -> Unit)
     {
         var listado : MutableList<String> = ArrayList<String>()
-       /* var picturefbdao = PictureFbDao()
-        picturefbdao.GetPicturesPlayer(player)
-        println("pictures obtenidas....")
-*/
         //Nos iventamos algo para esperar al callback
         readData() {
             listado = it
@@ -60,7 +56,7 @@ class FbStorage {
                 items.forEach { item ->
                     // All the items under listRef.
                     println("AÑADIDA IMAGEN "+ item.name.toString() )
-                    listado.add(item.path)
+                    listado.add(item.name)
                     println(listado.count().toString())
                 }
                 myCallback(listado)
@@ -100,7 +96,7 @@ class FbStorage {
         var bitmap : Bitmap? = null
         val firebaseStorage = FirebaseStorage.getInstance()
         val storageReferenc = firebaseStorage.getReference()
-        val remoteFile = storageReferenc.child(path.image)
+        val remoteFile = storageReferenc.child("images/"+path.image)
 
         val ONE_MEGABYTE: Long = 1024 * 1024
         val task =remoteFile.getBytes(ONE_MEGABYTE).addOnSuccessListener {

@@ -4,6 +4,8 @@ import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.PictureFbEntity
 import com.puzzle.game.lyLogicalBusiness.Player
 
 class PictureFbDao : FbAccessDDBB() {
+    var listPlayedPictures: List<String>? = null
+    var listedFinished = true
 
     fun GetPicturesPlayer(player: Player)
     {
@@ -28,14 +30,13 @@ class PictureFbDao : FbAccessDDBB() {
             listedFinished = true
         }.addOnFailureListener{
             println("error obteniendo fotos: ${it.message}")
+            listedFinished = true
+        }.addOnCanceledListener { listedFinished = true }.addOnCompleteListener{listedFinished = true}
+
+        while(!picturesPlayer.isComplete){
+            Thread.sleep(50)
+            println("esperando por la descarga de datos")
         }
-
-
-    }
-
-    companion object {
-        var listPlayedPictures: List<String>? = null
-        var listedFinished = true
     }
 
 }

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.puzzle.game.R
+import com.puzzle.game.lyDataAcces.firebaseDDBB.PictureFbDao
 import com.puzzle.game.lyDataAcces.firebaseDDBB.storage.FbStorage
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.lyLogicalBusiness.Player
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.activity_selectpicture_online.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.security.MessageDigest
@@ -204,6 +206,7 @@ class SelectPictureActivity : AppCompatActivity() {
 
     // MODO DE JUEGO ONLINE
     private fun cargarLayoutModoOnline(){
+        var imagenCargada = false
         //TODO Se lanza un tread para descargar la imagen de firebase
         //Cuando finalice de cargar tendra que mostrar la imagen en pantalla y habilitar
         //el botón GO Y poner invisible el textview de loading.
@@ -214,18 +217,52 @@ class SelectPictureActivity : AppCompatActivity() {
         var debugImg = Picture(R.drawable.image1)
         fbstorage.loadAsyncList()
         {
-            println("Recibida imagenes" + it.count())
-            if(it.count() > 1) {
-                //Randomize image
-                debugImg = Picture(it[Random.nextInt(1, it.count() - 1)])
-                // fbstorage.downloadFile(debugImg,getDir("mydir", Context.MODE_PRIVATE))
+            if(!imagenCargada) {
+                imagenCargada = true
+                println("Recibida imagenes" + it.count())
+                if (it.count() > 1) {
+                    //Descargar los datos de las imagenes jugadas por el jugador
+                    var picturefbdao = PictureFbDao()
+                    picturefbdao.GetPicturesPlayer(_player)
+                    println("pictures obtenidas....")
 
-               fbstorage.loadAsyncBmp(debugImg){
-                   if (it != null) {
-                       txtVLoading.visibility = View.INVISIBLE
-                       btnGo.isEnabled = true
-                       imgPresentacion.setImageBitmap(it)
-                   }
+
+                    println("ESPERANDO POR LISTA DE PARTIDAS")
+
+
+                    //Randomize image
+                    debugImg = Picture(it[Random.nextInt(1, it.count() - 1)])
+                    // fbstorage.downloadFile(debugImg,getDir("mydir", Context.MODE_PRIVATE))
+
+                    //Hay que determinar si la imagen y se encuentra descargada
+
+
+                    val dir: File = filesDir
+                    val file = File(dir, debugImg.image)
+                    if (file.exists()) {
+                        txtVLoading.visibility = View.INVISIBLE
+                        btnGo.isEnabled = true
+                        imgPresentacion.setImageBitmap(BitmapFactory.decodeStream(openFileInput(debugImg.image)))
+                        println("CARGADA LA IMAGEN DESDE ARCHIVO")
+
+                    } else {
+                        fbstorage.loadAsyncBmp(debugImg) {
+                            if (it != null) {
+
+                                val bytes2 = ByteArrayOutputStream()
+                                it.compress(Bitmap.CompressFormat.JPEG, 100, bytes2)
+                                val fo: FileOutputStream = openFileOutput(debugImg.image, Context.MODE_PRIVATE)
+                                fo.write(bytes2.toByteArray())
+                                fo.close()
+
+                                txtVLoading.visibility = View.INVISIBLE
+                                btnGo.isEnabled = true
+                                imgPresentacion.setImageBitmap(it)
+                                println("DESCARGADA LA IMAGEN")
+
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -316,7 +353,6 @@ class SelectPictureActivity : AppCompatActivity() {
                 if(pictureViewModel.insertOne(Picture(fileName))){
                     var finalBmp  = resizeBitmap(bitmap,372,457)
                     finalBmp.compress(Bitmap.CompressFormat.JPEG, 100, bytes2)
-
                     val fo: FileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE)
                     fo.write(bytes2.toByteArray())
                     fo.close()

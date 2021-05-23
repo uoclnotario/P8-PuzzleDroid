@@ -137,6 +137,7 @@ class SelectGameMode : AppCompatActivity() {
                     putExtra("player", player)
                     putExtra("tipoJuego",3)
                 }
+                //TODO() ESTO DA FALLO
                 startActivity(intent)
             } else {
                 if (response != null) {

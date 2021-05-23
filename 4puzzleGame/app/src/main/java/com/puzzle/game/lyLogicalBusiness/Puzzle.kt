@@ -28,6 +28,7 @@ class Puzzle : Serializable{
         generarPiezas(ctx)
     }
 
+
     fun redimensionarImagen(ctx :Context){
         try {
             val image: Bitmap
