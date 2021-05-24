@@ -54,5 +54,5 @@
     <string name="titleLogin">Login</string>
     <string name="onlineGame">Online Image to Play</string>
     <string name="loading">Loading</string>
-
+    <string name="noMoreImageOnline">No hay mas imagenes online</string>
 </resources>

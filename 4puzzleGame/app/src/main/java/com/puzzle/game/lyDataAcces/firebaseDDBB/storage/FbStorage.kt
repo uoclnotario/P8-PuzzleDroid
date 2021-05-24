@@ -11,6 +11,7 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.component1
 import com.google.firebase.storage.ktx.component2
 import com.google.firebase.storage.ktx.storage
+import com.puzzle.game.lyDataAcces.firebaseDDBB.PictureFbDao
 import com.puzzle.game.lyLogicalBusiness.Picture
 import kotlinx.android.synthetic.main.activity_selectpicture_online.*
 import java.io.File
@@ -28,24 +29,25 @@ class FbStorage {
     fun getReferenciaRaiz(): StorageReference {
         return storage.reference
     }
-
     fun getReferenciaSpace(key: String): StorageReference {
         return storage.reference.child(key)
     }
-
-    fun loadAsyncList(myCallback: (MutableList<String>) -> Unit)
-    {
+    fun loadAsyncList(idPlayer : String,myCallback: (MutableList<String>) -> Unit) {
         var listado : MutableList<String> = ArrayList<String>()
         //Nos iventamos algo para esperar al callback
-        readData() {
-            listado = it
-            println("RESULTADO CALLBACK:"+listado.count().toString())
-            myCallback(listado)
 
+        PictureFbDao().pictureJugada(idPlayer){
+            readData(it) {
+                listado = it
+                println("RESULTADO CALLBACK:"+listado.count().toString())
+                myCallback(listado)
+                return@readData
+            }
         }
 
+
     }
-    fun readData(myCallback: (MutableList<String>) -> Unit) {
+    fun readData(lista:MutableList<String>,myCallback: (MutableList<String>) -> Unit) {
         val listado : MutableList<String> = ArrayList<String>()
 
         val storageRef = storage.reference
@@ -55,11 +57,23 @@ class FbStorage {
             .addOnSuccessListener { (items, prefixes) ->
                 items.forEach { item ->
                     // All the items under listRef.
-                    println("AÑADIDA IMAGEN "+ item.name.toString() )
-                    listado.add(item.name)
+                    var jugada = false
+                    for(playerPic in lista){
+                        if(playerPic.equals(item.name)){
+                            jugada = true
+                            break;
+                        }
+                    }
+                    if(!jugada)
+                    {
+                        println("AÑADIDA IMAGEN "+ item.name.toString() )
+                        listado.add(item.name)
+                    }
+
                     println(listado.count().toString())
                 }
                 myCallback(listado)
+                return@addOnSuccessListener
             }
             .addOnFailureListener {
                 println("error capturando lista de imágenes: $it")
@@ -68,10 +82,7 @@ class FbStorage {
             .addOnCompleteListener{myCallback(listado)}
             .addOnCanceledListener {myCallback(listado)}
     }
-
-
-    fun getImage(list:MutableList<String>) : Picture?
-    {
+    fun getImage(list:MutableList<String>) : Picture? {
         var result : Picture? = null
         try {
                 var randomItem = 0
@@ -90,9 +101,7 @@ class FbStorage {
 
         return result
     }
-
-    fun loadAsyncBmp(path:Picture,myCallback: (Bitmap?) -> Unit?)
-    {
+    fun loadAsyncBmp(path:Picture,myCallback: (Bitmap?) -> Unit?) {
         var bitmap : Bitmap? = null
         val firebaseStorage = FirebaseStorage.getInstance()
         val storageReferenc = firebaseStorage.getReference()

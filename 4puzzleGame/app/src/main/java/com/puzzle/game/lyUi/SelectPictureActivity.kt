@@ -14,6 +14,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.firebase.auth.FirebaseAuth
 import com.puzzle.game.R
 import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.PictureFbEntity
 import com.puzzle.game.lyDataAcces.firebaseDDBB.PictureFbDao
@@ -221,23 +223,21 @@ class SelectPictureActivity : AppCompatActivity() {
 
        //para depuración hasta implemntar la carga de storage...
         var debugImg = Picture(R.drawable.image1)
-        fbstorage.loadAsyncList()
-        {
-            if(!imagenCargada) {
-                imagenCargada = true
+
+            fbstorage.loadAsyncList(FirebaseAuth.getInstance().currentUser!!.uid)
+            {
                 println("Recibida imagenes" + it.count())
                 if (it.count() > 1) {
                     //Descargar los datos de las imagenes jugadas por el jugador
-                    var picturefbdao = PictureFbDao()
-                    picturefbdao.GetPicturesPlayer(_player)
-                    println("pictures obtenidas....")
-
-
                     println("ESPERANDO POR LISTA DE PARTIDAS")
 
-
                     //Randomize image
-                    debugImg = Picture(it[Random.nextInt(1, it.count() - 1)])
+                    if(it.count()==2){
+                        debugImg = Picture(it[1])
+                    }else{
+                        debugImg = Picture(it[Random.nextInt(1, it.count() - 1)])
+                    }
+
                     // fbstorage.downloadFile(debugImg,getDir("mydir", Context.MODE_PRIVATE))
 
                     //Hay que determinar si la imagen y se encuentra descargada
@@ -269,11 +269,10 @@ class SelectPictureActivity : AppCompatActivity() {
                             }
                         }
                     }
+                }else{
+                    txtVLoading.text =getString(R.string.noMoreImageOnline)
                 }
-            }
         }
-
-
         btnGo.setOnClickListener{
             var intent = Intent(this,SelectDificultyActivity::class.java).apply {
                 putExtra("player", _player)
