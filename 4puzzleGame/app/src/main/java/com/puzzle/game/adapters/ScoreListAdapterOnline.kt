@@ -2,6 +2,8 @@ package com.puzzle.game.adapters
 
 import com.puzzle.game.R
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +13,14 @@ import android.widget.TextView
 import com.puzzle.game.lyDataAcces.dto.DtoBestScore
 import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.ScoresFbEntity
 import kotlinx.android.synthetic.main.list_view_score.view.*
+import java.io.File
 
 
-class ScoreListAdapter(
+class ScoreListAdapterOnline(
         private val context: Context,
-        private val dataSource: ArrayList<DtoBestScore>
+        private val dataSource: MutableList<ScoresFbEntity>
 ): BaseAdapter() {
+
 
     private val inflater: LayoutInflater
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -41,24 +45,21 @@ class ScoreListAdapter(
         val fecha = rowView.fecha as TextView
         val puntuacion = rowView.puntuacion as TextView
 
-        var images = intArrayOf(
-                R.drawable.image1,
-                R.drawable.image2,
-                R.drawable.image3,
-                R.drawable.image4,
-                R.drawable.image5,
-                R.drawable.image6,
-                R.drawable.image7,
-                R.drawable.image8,
-                R.drawable.image9,
-                R.drawable.image10
-        )
-        val bestScore = getItem(position) as DtoBestScore
-        playerName.text = bestScore.nombre
-        fecha.text = bestScore.fechaFin.toString()
+
+        val bestScore = getItem(position) as ScoresFbEntity
+        playerName.text = bestScore.namePlayer
+        fecha.text = bestScore.gameId + "º"
         puntuacion.text = bestScore.score.toString()
-        println("bestScore.idImagen = ${bestScore.idImagen}")
-        imagenScore.setImageResource(bestScore.idImagen.toInt());
+
+        if(bestScore.imgRute != null){
+            val dir: File = context.filesDir
+            val file = File(dir, bestScore.imgRute)
+            if (file.exists()) {
+                imagenScore.setImageBitmap(BitmapFactory.decodeStream(context.openFileInput(bestScore.imgRute)))
+            }
+        }
+
+
 
 // Get detail element
 

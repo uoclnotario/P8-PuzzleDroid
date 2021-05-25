@@ -2,16 +2,11 @@ package com.puzzle.game.lyUi
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import butterknife.BindView
-import butterknife.ButterKnife
+
 import com.puzzle.game.R
 import com.puzzle.game.adapters.ScoreListAdapter
 import com.puzzle.game.lyDataAcces.dto.DtoBestScore
@@ -20,7 +15,6 @@ import com.puzzle.game.lyLogicalBusiness.Player
 import com.puzzle.game.lyLogicalBusiness.SavedGame
 import com.puzzle.game.viewModels.GameViewModel
 import com.puzzle.game.viewModels.PlayerViewModel
-import kotlinx.android.synthetic.main.activity_game.*
 import kotlinx.android.synthetic.main.activity_points.*
 import kotlinx.android.synthetic.main.activity_points.btnClose
 import kotlinx.coroutines.GlobalScope
@@ -34,12 +28,11 @@ class PointsActivity : AppCompatActivity() {
     var gameList: List<SavedGame>? = null
     var scores : MutableList<SavedGame>? = null
 
-    @BindView(R.id.BtnOnlineScore) lateinit var btn_click_online_score : LinearLayout
+    lateinit var btn_click_online_score : LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_points)
-        ButterKnife.bind(this)
 
         btnClose.setOnClickListener{
 
@@ -56,6 +49,7 @@ class PointsActivity : AppCompatActivity() {
         player = intent.getSerializableExtra("player") as Player
         gameViewModel = run { ViewModelProvider(this).get(GameViewModel::class.java) }
         playerViewModel = run { ViewModelProvider(this).get(PlayerViewModel::class.java) }
+
         var count:Int = 0
         try {
             GameViewModel.bestScoreList = null
@@ -104,13 +98,6 @@ class PointsActivity : AppCompatActivity() {
             println("Error cargando lista resultados: $e")
         }
 
-        this.btn_click_online_score.setOnClickListener(){
-            val intent = Intent(this, LeaderBoardScore::class.java)
-            intent.putExtra("player", player)
-            startActivity(intent)
-        }
-
-
         btnClose.setOnClickListener{
             if (findViewById<View>(R.id.flMenu) != null) {
                 val firstFragment = MenuBarFragment()
@@ -120,6 +107,12 @@ class PointsActivity : AppCompatActivity() {
                         .add(R.id.flMenu, firstFragment).commit()
             }
         }
+
+        BtnOnlineScore.setOnClickListener(){
+            val intent = Intent(this, PointsOnlineActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
 }

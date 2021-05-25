@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.4puzzleGame">
-        <activity android:name=".lyUi.LeaderBoardScore"></activity>
+
+
         <activity android:name=".lyUi.InfoActivity" />
         <activity
             android:name=".lyUi.SelectGameMode"
@@ -59,6 +60,10 @@
             android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity
             android:name=".lyUi.PointsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.4puzzleGame.NoActionBar" />
+        <activity
+            android:name=".lyUi.PointsOnlineActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.4puzzleGame.NoActionBar" />
         <activity

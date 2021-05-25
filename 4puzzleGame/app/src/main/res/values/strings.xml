@@ -57,5 +57,6 @@
     <string name="loading">Loading</string>
     <string name="noMoreImageOnline">No Images Online</string>
     <string name="LeaderBoard">LeaderBoard</string>
+    <string name="scoreonline">Online Score</string>
 
 </resources>

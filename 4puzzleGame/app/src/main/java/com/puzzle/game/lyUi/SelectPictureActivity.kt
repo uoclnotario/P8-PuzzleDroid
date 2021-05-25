@@ -18,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth
 import com.puzzle.game.R
 import com.puzzle.game.lyDataAcces.firebaseDDBB.Entities.PictureFbEntity
+import com.puzzle.game.lyDataAcces.firebaseDDBB.GameFbDao
 import com.puzzle.game.lyDataAcces.firebaseDDBB.PictureFbDao
 import com.puzzle.game.lyDataAcces.firebaseDDBB.storage.FbStorage
 import com.puzzle.game.lyLogicalBusiness.Picture
