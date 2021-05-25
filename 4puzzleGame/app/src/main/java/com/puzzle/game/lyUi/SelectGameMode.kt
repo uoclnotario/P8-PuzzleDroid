@@ -1,5 +1,6 @@
 package com.puzzle.game.lyUi
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -25,10 +26,12 @@ import java.time.format.DateTimeFormatter
 
 class SelectGameMode : AppCompatActivity() {
     val RC_SIGN_IN = 121
+    var context : Context? = null
     lateinit var player: Player
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        context = applicationContext
         setContentView(R.layout.activity_select_game_mode)
         player = intent.getSerializableExtra("player") as Player
 
@@ -93,9 +96,6 @@ class SelectGameMode : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun onClickOnlineMode(view: View) {
-
-    }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -124,16 +124,12 @@ class SelectGameMode : AppCompatActivity() {
                                 .format(Instant.now()))
 
                 addPlayer.writeUser(tmpPlayer)
-				
-                player.playerAuth = user
                 player.PlayerUID = user.uid
 
-                val intent = Intent(this,SelectPictureActivity::class.java).apply {
+                startActivity(Intent(applicationContext,SelectPictureActivity::class.java).apply {
                     putExtra("player", player)
                     putExtra("tipoJuego",3)
-                }
-                //TODO() ESTO DA FALLO
-                startActivity(intent)
+                })
             } else {
                 if (response != null) {
                     println("Fallo al conectar"+ response.getError()?.getErrorCode().toString())
