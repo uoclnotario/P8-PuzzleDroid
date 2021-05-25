@@ -36,6 +36,25 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/menubtn" />
 
+                <LinearLayout
+                    android:id="@+id/BtnOnlineScore"
+                    android:layout_width="95dp"
+                    android:layout_height="84dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/btnClose"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/leaderboard_icon" />
+                </LinearLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 

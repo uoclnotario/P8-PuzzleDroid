@@ -1,12 +1,17 @@
 package com.puzzle.game.lyUi
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.puzzle.game.R
 import com.puzzle.game.adapters.ScoreListAdapter
 import com.puzzle.game.lyDataAcces.dto.DtoBestScore
@@ -28,10 +33,13 @@ class PointsActivity : AppCompatActivity() {
     lateinit var player: Player
     var gameList: List<SavedGame>? = null
     var scores : MutableList<SavedGame>? = null
+
+    @BindView(R.id.BtnOnlineScore) lateinit var btn_click_online_score : LinearLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_points)
-
+        ButterKnife.bind(this)
 
         btnClose.setOnClickListener{
 
@@ -96,7 +104,11 @@ class PointsActivity : AppCompatActivity() {
             println("Error cargando lista resultados: $e")
         }
 
-
+        this.btn_click_online_score.setOnClickListener(){
+            val intent = Intent(this, StartGameActivity::class.java)
+            intent.putExtra("player", player)
+            startActivity(intent)
+        }
 
 
         btnClose.setOnClickListener{
