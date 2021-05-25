@@ -82,7 +82,8 @@ dependencies {
     //SDK Pord 3
 
     //Butterknife  in SelectDificultyActivity
-    implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    kapt 'com.jakewharton:butterknife-compiler:10.2.3'
     //RxKotlin
     implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
     //Retrofit

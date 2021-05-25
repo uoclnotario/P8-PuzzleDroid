@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.BindView
+import butterknife.ButterKnife
 import com.puzzle.game.lyLogicalBusiness.Picture
 import com.puzzle.game.R
 import com.puzzle.game.lyLogicalBusiness.Player
@@ -29,19 +30,21 @@ class SelectDificultyActivity : AppCompatActivity() {
         _pictur = intent.getSerializableExtra("pictur") as Picture
         _modGame = intent.getIntExtra("tipoJuego",1)
 
+        ButterKnife.bind(this)
+
         //val btn_click_easy = findViewById(R.id.btnEasy) as Button
         //val btn_click_medium_ = findViewById(R.id.btnMedium) as Button
         //val btn_click_hard = findViewById(R.id.btnHard) as Button
 
-        btn_click_easy.setOnClickListener{
+        this.btn_click_easy.setOnClickListener{
             launchGame(1)
         }
 
-        btn_click_medium_.setOnClickListener{
+        this.btn_click_medium_.setOnClickListener{
             launchGame(2)
         }
 
-        btn_click_hard.setOnClickListener{
+        this.btn_click_hard.setOnClickListener{
             launchGame(3)
         }
 
