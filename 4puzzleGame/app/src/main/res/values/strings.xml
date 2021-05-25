@@ -56,5 +56,6 @@
     <string name="onlineGame">Online Image to Play</string>
     <string name="loading">Loading</string>
     <string name="noMoreImageOnline">No Images Online</string>
+    <string name="LeaderBoard">LeaderBoard</string>
 
 </resources>
