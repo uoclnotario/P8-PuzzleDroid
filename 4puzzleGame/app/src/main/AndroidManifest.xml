@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.4puzzleGame">
-
+        <activity android:name=".lyUi.LeaderBoardScore"></activity>
         <activity android:name=".lyUi.InfoActivity" />
         <activity
             android:name=".lyUi.SelectGameMode"

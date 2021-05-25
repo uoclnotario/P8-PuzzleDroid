@@ -105,7 +105,7 @@ class PointsActivity : AppCompatActivity() {
         }
 
         this.btn_click_online_score.setOnClickListener(){
-            val intent = Intent(this, StartGameActivity::class.java)
+            val intent = Intent(this, LeaderBoardScore::class.java)
             intent.putExtra("player", player)
             startActivity(intent)
         }
